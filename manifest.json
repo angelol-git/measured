@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Size Compare",
+    "version": "1.0",
+    "description": "Compare clothing measurements to your own items.",
+    "action":{
+        "default_popup": "popup.html"
+    },
+    "background":{
+        "service_worker":"background.js"
+    },
+    "content_scripts":[
+        {
+            "js":["scripts/content.js"],
+            "matches": [ 
+                "https://www.grailed.com/listings/*"
+            ]
+        }
+    ]
+}
