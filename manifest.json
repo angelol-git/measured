@@ -11,10 +11,10 @@
     },
     "content_scripts":[
         {
+            "matches": ["https://www.grailed.com/listings/*"],
             "js":["scripts/content.js"],
-            "matches": [ 
-                "https://www.grailed.com/listings/*"
-            ]
+            "css" : ["styles.css"]
+           
         }
     ]
 }

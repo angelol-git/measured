@@ -18,10 +18,10 @@ function checkTable() {
 
 function compareMeasurements(measurementTable) {
     const staticMeasurements = [
-        ["Chest", "22", "80"],
-        ["Length", "22", "80"],
-        ["Shoulders", "22", "80"],
-        ["Sleeve Length", "22", "80"],
+        ["Chest", "22", "55.9"],
+        ["Length", "30", "76.2"],
+        ["Shoulders", "18", "45.7"],
+        ["Sleeve Length", "25", "63.5"],
         ["Hem", "22", "80"]
     ]
 
@@ -45,19 +45,24 @@ function compareMeasurements(measurementTable) {
 
 function addDifference(measurementTable, position, inchDifference, cmDifference) {
     const inchCell = measurementTable.children[position].children[1];
+    const cmCell = measurementTable.children[position].children[2];
     //const inchDiv = document.createElement("div");
     //inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
     //inchDiv.innerText = `${inchDifference} in`;
     //console.log("html", inchDiv.innerHTML);
-    inchCell.innerHTML += ` ${inchDifference}`;
-    //inchCell.appendChild(inchDiv);
 
-    // const cmDiv = document.createElement("div");
-    const cmCell = measurementTable.children[position].children[2];
-    // cmDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
-    // cmDiv.innerText = `${cmDifference} cm`;
-    cmCell.innerHTML += ` ${cmDifference}`;
-    // cmCell.appendChild(cmDiv);
+    let formattedInch = "";
+    let formattedCm = "";
+    if (parseFloat(inchDifference) === 0.00) {
+        formattedInch = "=";
+        formattedCm = "=";
+    }
+    else {
+        formattedInch = inchDifference.match(/^\d/) ? `+${inchDifference} in` : `${inchDifference} in`;
+        formattedCm = cmDifference.match(/^\d/) ? `+${cmDifference} cm` : `${cmDifference} cm`;
+    }
+    inchCell.innerHTML += ` ${formattedInch}`;
+    cmCell.innerHTML += ` ${formattedCm}`;
 }
 
 function parseMeasurements(measurementTable) {
