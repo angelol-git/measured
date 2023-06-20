@@ -4,17 +4,15 @@
     "version": "1.0",
     "description": "Compare clothing measurements to your own items.",
     "action":{
-        "default_popup": "popup.html"
+        "default_popup": "index.html"
     },
     "background":{
-        "service_worker":"background.js"
+        "service_worker": "background.js"
     },
     "content_scripts":[
         {
             "matches": ["https://www.grailed.com/listings/*"],
-            "js":["scripts/content.js"],
-            "css" : ["styles.css"]
-           
+            "js":["content.js"]
         }
     ]
 }
