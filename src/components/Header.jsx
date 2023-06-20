@@ -1,5 +1,4 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-
 import "./header.css";
 
 function Header() {

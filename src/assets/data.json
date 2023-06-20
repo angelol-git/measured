@@ -1,0 +1,24 @@
+{
+  "tops": {
+    "title": "Undercover Oversized Dracula T shirt",
+    "imageSrc": "./assets/dracula.jpeg",
+    "measurements": {
+      "Chest": ["22", "55.9"],
+      "Length": ["30", "76.2"],
+      "Shoulders": ["18", "45.7"],
+      "Sleeve Length": ["25", "63.5"],
+      "Hem": ["22", "80"]
+    }
+  },
+  "Outerwear": {
+    "title": "MA-1 Anatomicouture Bomber FW13 SZ2 46/4",
+    "imageSrc": "./assets/bomber.jpeg",
+    "measurements": {
+      "Chest": ["22", "55.9"],
+      "Length": ["30", "76.2"],
+      "Shoulders": ["18", "45.7"],
+      "Sleeve Length": ["25", "63.5"],
+      "Hem": ["22", "80"]
+    }
+  }
+}
