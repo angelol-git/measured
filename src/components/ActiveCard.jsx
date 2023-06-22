@@ -4,20 +4,24 @@ import "./ActiveCard.css";
 
 function ActiveCard(props) {
   const [detailView, setDetailView] = useState(false);
-  const detailsClass = detailView ? " show" : "";
-  console.log(detailsClass);
-  const measurementElements = () => {
-    return (
-      <div>
-        {Object.entries(props.measurements).map(([key, values]) => (
-          // <p key={key}>
-          //   <strong>{key}:</strong> {values.join(" / ")}
-          // </p>
-          <p>{key}</p>
-        ))}
+
+  const measurementElements = Object.entries(props.measurements).map(
+    ([key, values]) => (
+      <div className="detail-row" key={key}>
+        <p className="detail-header bold-text">{key}:</p>
+        <div className="detail-measurements">
+          <div className="detail-container">
+            <p className="detail-value">{values[0]}</p>
+            <p>in</p>
+          </div>
+          <div className="detail-container">
+            <p className="detail-value">{values[1]}</p>
+            <p>cm</p>
+          </div>
+        </div>
       </div>
-    );
-  };
+    )
+  );
 
   function handleClick() {
     setDetailView((detailView) => !detailView);
@@ -32,12 +36,8 @@ function ActiveCard(props) {
         </div>
         <img className="mini-thumbnail" src={props.imageSrc}></img>
       </div>
-      <div className={"active-details" + detailsClass}>
-        {Object.entries(props.measurements).map(([key, values]) => (
-          <p key={key}>
-            <strong>{key}:</strong> {values.join(" / ")}
-          </p>
-        ))}
+      <div className={"active-details" + (detailView ? " show" : "")}>
+        {measurementElements}
       </div>
     </div>
   );

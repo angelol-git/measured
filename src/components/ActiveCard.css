@@ -29,16 +29,37 @@
 }
 
 .active-details {
-    height: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    max-height: 0px;
     visibility: hidden;
-    transition: height 0.2s ease;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
 }
 
 .active-details.show {
-    height: 75px;
+    max-height: 75px;
     visibility: visible;
 }
 
-.hidden {
-    display: none;
+.detail-row {
+    display: flex;
+}
+
+.detail-header {
+    width: 150px;
+}
+
+.detail-measurements {
+    display: flex;
+    width: 55%;
+    gap: 10px;
+}
+
+.detail-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    width: 100%;
 }
