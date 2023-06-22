@@ -1,0 +1,12 @@
+.item-card {
+    cursor: pointer;
+}
+
+
+
+.large-thumbnail {
+    border: 1px solid var(--primary-text-color);
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+}
