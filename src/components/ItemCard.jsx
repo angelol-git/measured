@@ -2,18 +2,22 @@ import { useState } from "react";
 import React from "react";
 import "./ItemCard.css";
 
-function ActiveCard(props) {
-  const [detailView, setDetailView] = useState(false);
-
-  function handleClick() {
-    setDetailView((detailView) => !detailView);
-  }
+function ItemCard(props) {
+  const [hover, setHover] = useState(false);
+  const toggleHover = () => setHover(!hover);
+  let hoverView = "";
 
   return (
-    <div className="item-card" onClick={handleClick}>
+    <div
+      className="item-card"
+      onMouseEnter={toggleHover}
+      onMouseLeave={toggleHover}
+    >
       <img className="large-thumbnail" src={props.imageSrc}></img>
-      <div className=""></div>
+      <div className={"title-hover" + (hover ? " show" : "")}>
+        <p>{props.title}</p>
+      </div>
     </div>
   );
 }
-export default ActiveCard;
+export default ItemCard;
