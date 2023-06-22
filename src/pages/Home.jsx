@@ -16,7 +16,9 @@ function Home(props) {
 
   return (
     <section className="home-container">
-      <h1 className="tab-header">Active items</h1>
+      <p className="page-header">
+        {props.data.activeItems.length} Active items
+      </p>
       {activeCardElements}
     </section>
   );

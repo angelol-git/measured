@@ -6,6 +6,7 @@ import Items from "./pages/Items";
 import "./App.css";
 
 function App() {
+  console.log(data.activeItems.length);
   return (
     <div className="app">
       <Header />

@@ -4,6 +4,9 @@ import "./header.css";
 function Header() {
   return (
     <header className="header">
+      <div className="header-row">
+        <h1 className="header-title">Title</h1>
+      </div>
       <nav className="nav-bar">
         <ul>
           <CustomLink to="/">Home</CustomLink>

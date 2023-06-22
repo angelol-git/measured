@@ -1,6 +1,6 @@
 .active-card {
     padding: 5px 10px 5px 10px;
-    background-color: rgb(217, 215, 215);
+    background-color: var(--secondary-bkg-color);
     font-size: 0.7rem;
     cursor: pointer;
 
