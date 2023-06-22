@@ -1,5 +1,9 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+}
+
+.home-header {
+    font-size: 1.4rem;
 }

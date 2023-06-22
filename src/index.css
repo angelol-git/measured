@@ -13,4 +13,15 @@
 
   --primary-text-color: black;
   --primary-bkg-color: white;
+
+
+
+}
+
+body {
+  background-color: var(--primary-bkg-color);
+  width: 320px;
+  height: 400px;
+  padding: 0;
+  margin: 0;
 }

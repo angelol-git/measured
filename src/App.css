@@ -1,8 +1,4 @@
-.app {
-    width: 320px;
-    height: 450px;
-    background-color: var(--primary-bkg-color);
-}
+.app {}
 
 h1,
 h2,
@@ -16,4 +12,8 @@ a {
 
 .container {
     padding: 15px;
+}
+
+.tab-header {
+    font-size: 1.3rem;
 }
