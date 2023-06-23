@@ -2,6 +2,10 @@
     position: relative;
     cursor: pointer;
     border: 1px solid var(--primary-text-color);
+    background-color: blue;
+    width: 120px;
+    height: 120px;
+
 }
 
 .title-hover {
@@ -17,7 +21,7 @@
     transition: all 0.2s ease;
 }
 
-.title-hover.hover-show {
+.title-hover.show {
     height: 60%;
     visibility: visible;
 }
@@ -31,4 +35,19 @@
 .darken-image {
     filter: brightness(70%);
     transition: all 0.2s ease;
+}
+
+.active-tag {
+    position: absolute;
+    background-color: var(--main-button-color);
+    color: var(--secondary-text-color);
+    font-size: 0.5rem;
+    top: 5px;
+    left: 5px;
+    visibility: hidden;
+    padding: 2px 5px 2px 5px;
+}
+
+.active-tag.show {
+    visibility: visible;
 }

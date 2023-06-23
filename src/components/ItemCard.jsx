@@ -23,8 +23,11 @@ function ItemCard(props) {
           className={"medium-thumbnail" + (hover ? " darken-image" : "")}
           src={props.imageSrc}
         ></img>
-        <div className={"title-hover" + (hover ? " hover-show" : "")}>
+        <div className={"title-hover" + (hover ? " show" : "")}>
           <p>{props.title}</p>
+        </div>
+        <div className={"active-tag" + (props.active ? " show" : "")}>
+          <p>Active</p>
         </div>
       </div>
       <ItemDetail
