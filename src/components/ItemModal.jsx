@@ -1,6 +1,12 @@
 import React from "react";
 import "./ItemModal.css";
 function ItemModal(props) {
+  const activeButtonElement = props.active ? (
+    <button className="main-button deactivate">Set as not Active</button>
+  ) : (
+    <button className="main-button">Set as Active</button>
+  );
+
   const measurementElements = Object.entries(props.measurements).map(
     ([key, values]) => (
       <div className="detail-row" key={key}>
@@ -18,7 +24,7 @@ function ItemModal(props) {
       </div>
     )
   );
-  console.log(props.clickDetail);
+
   if (props.clickDetail) {
     return (
       <section
@@ -30,9 +36,16 @@ function ItemModal(props) {
             <img className="large-thumbnail" src={props.imageSrc}></img>
             <h3 className="modal-title">{props.title}</h3>
             <div className="grey-line"></div>
-            <p>{props.category}</p>
+            <div className="title-row">
+              <p className="item-category">{props.category}</p>
+              {activeButtonElement}
+            </div>
           </div>
           <div className="item-measurements">{measurementElements}</div>
+          <div className="button-container">
+            <button className="main-button">Edit</button>
+            <button className="main-button">Delete</button>
+          </div>
         </div>
       </section>
     );

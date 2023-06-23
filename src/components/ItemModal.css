@@ -34,6 +34,41 @@
     border-top: 1px solid var(--secondary-bkg-color);
 }
 
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: relative;
+}
+
+.item-category {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+}
+
 .item-measurements {
     padding-top: 15px;
+}
+
+.button-container {
+    display: flex;
+    padding-top: 15px;
+    justify-content: center;
+    gap: 15px;
+}
+
+.main-button {
+    padding: 5px;
+    font-size: 0.7rem;
+    border: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.deactivate {
+    color: black;
+    background-color: var(--secondary-bkg-color);
+    text-align: right;
 }

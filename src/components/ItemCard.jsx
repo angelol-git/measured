@@ -28,8 +28,10 @@ function ItemCard(props) {
         </div>
       </div>
       <ItemDetail
+        key={props.title}
         clickDetail={clickDetail}
         handleClickDetail={handleClickDetail}
+        active={props.active}
         category={props.category}
         title={props.title}
         imageSrc={props.imageSrc}
