@@ -2,9 +2,11 @@ import React from "react";
 import "./ItemModal.css";
 function ItemModal(props) {
   const activeButtonElement = props.active ? (
-    <button className="main-button deactivate">Set as not Active</button>
+    <button className="primary-button  deactivate">Set as not Active</button>
   ) : (
-    <button className="main-button">Set as Active</button>
+    <button className="primary-button primary-button-colors">
+      Set as Active
+    </button>
   );
 
   const measurementElements = Object.entries(props.measurements).map(
@@ -43,8 +45,12 @@ function ItemModal(props) {
           </div>
           <div className="item-measurements">{measurementElements}</div>
           <div className="button-container">
-            <button className="main-button">Edit</button>
-            <button className="main-button">Delete</button>
+            <button className="primary-button primary-button-colors">
+              Edit
+            </button>
+            <button className="primary-button primary-button-colors">
+              Delete
+            </button>
           </div>
         </div>
       </section>

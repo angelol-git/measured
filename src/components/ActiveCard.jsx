@@ -4,7 +4,13 @@ import "./ActiveCard.css";
 
 function ActiveCard(props) {
   const [detailView, setDetailView] = useState(false);
-
+  const activeButtonElement = props.active ? (
+    <button className="primary-button primary-button-colors">
+      Set as not Active
+    </button>
+  ) : (
+    ""
+  );
   const measurementElements = Object.entries(props.measurements).map(
     ([key, values]) => (
       <div className="detail-row" key={key}>
@@ -38,6 +44,7 @@ function ActiveCard(props) {
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>
         {measurementElements}
+        <div className="active-button-row">{activeButtonElement}</div>
       </div>
     </div>
   );

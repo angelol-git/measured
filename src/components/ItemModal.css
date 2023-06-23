@@ -57,20 +57,3 @@
     justify-content: center;
     gap: 15px;
 }
-
-.main-button {
-    padding: 5px;
-    font-size: 0.7rem;
-    border: none;
-    color: white;
-    background-color: black;
-    cursor: pointer;
-}
-
-.deactivate {
-    color: black;
-    background-color: var(--secondary-bkg-color);
-    text-align: right;
-    cursor: pointer;
-    z-index: 3;
-}
