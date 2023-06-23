@@ -5,17 +5,30 @@
 }
 
 .title-hover {
-    height: 80%;
+    height: 0px;
     padding: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    font-weight: bold;
     position: absolute;
     visibility: hidden;
+    overflow: hidden;
     bottom: 0;
     background-color: var(--primary-bkg-color);
+    transition: all 0.2s ease;
 }
 
-.large-thumbnail {
+.title-hover.hover-show {
+    height: 60%;
+    visibility: visible;
+}
+
+.medium-thumbnail {
     object-fit: cover;
     width: 120px;
     height: 120px;
+}
+
+.darken-image {
+    filter: brightness(70%);
+    transition: all 0.2s ease;
 }

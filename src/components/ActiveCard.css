@@ -37,24 +37,3 @@
     overflow: hidden;
     transition: max-height 0.4s ease;
 }
-
-.detail-row {
-    display: flex;
-}
-
-.detail-header {
-    width: 150px;
-}
-
-.detail-measurements {
-    display: flex;
-    width: 55%;
-    gap: 10px;
-}
-
-.detail-container {
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    width: 100%;
-}

@@ -1,0 +1,39 @@
+.item-detail-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 360px;
+    width: 280px;
+    padding: 20px;
+    background-color: var(--primary-bkg-color);
+}
+
+.item-info {
+    font-size: 0.7rem;
+}
+
+.large-thumbnail {
+    object-fit: cover;
+    width: 180px;
+    height: 180px;
+}
+
+.modal-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.7rem;
+}
+
+.grey-line {
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid var(--secondary-bkg-color);
+}
+
+.item-measurements {
+    padding-top: 15px;
+}
