@@ -3,16 +3,22 @@
     align-items: center;
     flex-direction: column;
     position: absolute;
-    z-index: 2;
     top: 0;
     left: 0;
-    height: 360px;
-    width: 280px;
+    z-index: 2;
+
+    width: 310px;
+    height: 410px;
     padding: 20px;
+
     background-color: var(--primary-bkg-color);
 }
 
 .item-info {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
     font-size: 0.7rem;
 }
 
@@ -25,7 +31,7 @@
 .modal-title {
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 }
 
 .grey-line {
@@ -39,6 +45,7 @@
     align-items: center;
     justify-content: end;
     position: relative;
+    padding-bottom: 15px;
 }
 
 .item-category {
@@ -48,12 +55,15 @@
 }
 
 .item-measurements {
-    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .button-container {
+    position: absolute;
+    bottom: 0;
     display: flex;
-    padding-top: 15px;
+
     justify-content: center;
+    width: 100%;
     gap: 15px;
 }

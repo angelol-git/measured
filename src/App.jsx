@@ -6,14 +6,13 @@ import Items from "./pages/Items";
 import "./App.css";
 
 function App() {
-  console.log(data.activeItems.length);
   return (
     <div className="app">
       <Header />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home data={data} />} />
-          <Route path="/items" element={<Items />} />
+          <Route path="/items" element={<Items data={data} />} />
         </Routes>
       </div>
     </div>

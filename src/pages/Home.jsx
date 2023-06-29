@@ -3,22 +3,30 @@ import ActiveCard from "../components/ActiveCard";
 import "./Home.css";
 
 function Home(props) {
-  const activeCardElements = props.data.activeItems.map((item, index) => {
-    return (
+  let activeItemsLength = 0;
+  const activeCardElements = props.data.items.map((item, index) => {
+    if (item.active) {
+      activeItemsLength++;
+    }
+    return item.active ? (
       <ActiveCard
+        key={item.title}
+        active={item.active}
         category={item.category}
         title={item.title}
         imageSrc={item.imageSrc}
         measurements={item.measurements}
       />
+    ) : (
+      ""
     );
   });
 
   return (
     <section className="home-container">
-      <p className="page-header">
-        {props.data.activeItems.length} Active items
-      </p>
+      <div className="page-title-row">
+        <p className="page-header">{activeItemsLength} Active items</p>
+      </div>
       {activeCardElements}
     </section>
   );

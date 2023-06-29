@@ -2,16 +2,18 @@
 
 h1,
 h2,
+h3,
 ul,
 li,
 p,
+img,
 a {
     padding: 0;
     margin: 0;
 }
 
 .container {
-    padding: 15px;
+    padding: 15px 25px 15px 25px;
 }
 
 .page-header {
@@ -19,4 +21,88 @@ a {
     text-align: center;
     font-weight: 500;
     font-size: 0.7rem;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-title-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+
+.detail-row {
+    display: flex;
+}
+
+.detail-header {
+    width: 150px;
+}
+
+.detail-measurements {
+    display: flex;
+    width: 55%;
+    gap: 10px;
+}
+
+.detail-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.primary-button {
+    padding: 5px;
+    font-size: 0.7rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.primary-button:hover {
+    background-color: var(--primary-button-bkg-hover);
+}
+
+.primary-button-colors {
+    color: var(--secondary-text-color);
+    background-color: var(--primary-button-bkg);
+}
+
+.secondary-button-colors {
+    color: var(--primary-text-color);
+    background-color: var(--secondary-button-bkg);
+}
+
+.deactivate {
+    cursor: pointer;
+}
+
+.high-z-index {
+    z-index: 3;
+}
+
+.back-button {
+    font-size: 1rem;
+    border: none;
+    background-color: var(--primary-bkg-color);
+    cursor: pointer;
+    transition: 0.2s;
+
+}
+
+.back-button:hover {
+    background-color: var(--secondary-bkg-color);
 }

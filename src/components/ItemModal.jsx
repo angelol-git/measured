@@ -2,9 +2,11 @@ import React from "react";
 import "./ItemModal.css";
 function ItemModal(props) {
   const activeButtonElement = props.active ? (
-    <button className="primary-button  deactivate">Set as not Active</button>
+    <button className="primary-button  deactivate high-z-index">
+      Set as not Active
+    </button>
   ) : (
-    <button className="primary-button primary-button-colors">
+    <button className="primary-button primary-button-colors high-z-index">
       Set as Active
     </button>
   );
@@ -29,11 +31,11 @@ function ItemModal(props) {
 
   if (props.clickDetail) {
     return (
-      <section
-        className="item-detail-container"
-        onClick={props.handleClickDetail}
-      >
+      <section className="item-detail-container">
         <div className="item-info">
+          <button className="back-button" onClick={props.handleClickDetail}>
+            ←
+          </button>
           <div className="text-center">
             <img className="large-thumbnail" src={props.imageSrc}></img>
             <h3 className="modal-title">{props.title}</h3>
@@ -45,10 +47,10 @@ function ItemModal(props) {
           </div>
           <div className="item-measurements">{measurementElements}</div>
           <div className="button-container">
-            <button className="primary-button primary-button-colors">
+            <button className="primary-button primary-button-colors high-z-index">
               Edit
             </button>
-            <button className="primary-button primary-button-colors">
+            <button className="primary-button primary-button-colors high-z-index">
               Delete
             </button>
           </div>

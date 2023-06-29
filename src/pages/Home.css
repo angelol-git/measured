@@ -1,9 +1,3 @@
-.home-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .home-header {
     font-size: 0.8rem;
 }
