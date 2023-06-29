@@ -1,0 +1,8 @@
+.add-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-title-row {
+    display: flex;
+}

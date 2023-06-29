@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ItemCard from "../components/ItemCard";
 import "./Items.css";
 function Items(props) {
@@ -19,7 +20,10 @@ function Items(props) {
       <div className="page-title-row">
         <p className="page-header">{props.data.items.length} Items</p>
         <button className="primary-button primary-button-colors add-button">
-          + Add
+          <Link to="/add" className="primary-link-color">
+            {" "}
+            + Add
+          </Link>
         </button>
       </div>
       <div className="item-container">{itemCardElements}</div>

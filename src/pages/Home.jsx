@@ -3,6 +3,7 @@ import ActiveCard from "../components/ActiveCard";
 import "./Home.css";
 
 function Home(props) {
+  console.log("hello");
   let activeItemsLength = 0;
   const activeCardElements = props.data.items.map((item, index) => {
     if (item.active) {
