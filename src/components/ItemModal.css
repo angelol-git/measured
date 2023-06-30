@@ -18,52 +18,30 @@
     position: relative;
     height: 100%;
     width: 100%;
-
-    font-size: 0.7rem;
-}
-
-.large-thumbnail {
-    object-fit: cover;
-    width: 180px;
-    height: 180px;
 }
 
 .modal-title {
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 0.8rem;
 }
 
 .grey-line {
     width: 100%;
     padding-top: 10px;
+    padding-bottom: 5px;
     border-top: 1px solid var(--secondary-bkg-color);
 }
 
-.title-row {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    position: relative;
-    padding-bottom: 15px;
-}
-
-.item-category {
-    width: 100%;
-    position: absolute;
-    text-align: center;
-}
-
 .item-measurements {
-    padding-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 .button-container {
+    display: flex;
+    justify-content: center;
     position: absolute;
     bottom: 0;
-    display: flex;
-
-    justify-content: center;
     width: 100%;
     gap: 15px;
 }

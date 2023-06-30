@@ -1,11 +1,8 @@
 import ActiveCard from "../components/ActiveCard";
 
-import "./Home.css";
-
 function Home(props) {
-  console.log("hello");
   let activeItemsLength = 0;
-  const activeCardElements = props.data.items.map((item, index) => {
+  const activeCardElements = props.itemData.items.map((item, index) => {
     if (item.active) {
       activeItemsLength++;
     }
@@ -24,9 +21,11 @@ function Home(props) {
   });
 
   return (
-    <section className="home-container">
-      <div className="page-title-row">
-        <p className="page-header">{activeItemsLength} Active items</p>
+    <section>
+      <div className="sub-row">
+        <p className="item-counter text-normal">
+          {activeItemsLength} Active items
+        </p>
       </div>
       {activeCardElements}
     </section>

@@ -5,23 +5,21 @@ import "./ActiveCard.css";
 function ActiveCard(props) {
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = props.active ? (
-    <button className="primary-button primary-button-colors">
-      Set as not Active
-    </button>
+    <button className="main-button black-button">Set as not Active</button>
   ) : (
     ""
   );
   const measurementElements = Object.entries(props.measurements).map(
     ([key, values]) => (
-      <div className="detail-row" key={key}>
-        <p className="detail-header bold-text">{key}:</p>
-        <div className="detail-measurements">
-          <div className="detail-container">
-            <p className="detail-value">{values[0]}</p>
+      <div className="flex" key={key}>
+        <p className="measurement-header bold-text">{key}:</p>
+        <div className="measurement-value">
+          <div className="measurement-value-container">
+            <p>{values[0]}</p>
             <p>in</p>
           </div>
-          <div className="detail-container">
-            <p className="detail-value">{values[1]}</p>
+          <div className="measurement-value-container">
+            <p>{values[1]}</p>
             <p>cm</p>
           </div>
         </div>
@@ -34,11 +32,11 @@ function ActiveCard(props) {
   }
 
   return (
-    <div className="active-card" onClick={handleClick}>
-      <div className="active-row">
+    <div className="active-card text-normal" onClick={handleClick}>
+      <div className="active-title-row">
         <div className="active-main">
-          <p className="bold-text">{props.category}</p>
-          <p className="title">{props.title}</p>
+          <p className="title bold-text">{props.title}</p>
+          <p>{props.category}</p>
         </div>
         <img className="mini-thumbnail" src={props.imageSrc}></img>
       </div>

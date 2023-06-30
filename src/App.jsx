@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import data from "./assets/data.json";
+import itemData from "./assets/items.json";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
@@ -21,11 +21,11 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <div className="container">
+      <div className="main-container">
         <Routes>
-          <Route path="/" element={<Home data={data} />} />
-          <Route path="/items" element={<Items data={data} />} />
-          <Route path="/add" element={<Add data={data} />} />
+          <Route path="/" element={<Home itemData={itemData} />} />
+          <Route path="/items" element={<Items itemData={itemData} />} />
+          <Route path="/add" element={<Add itemData={itemData} />} />
         </Routes>
       </div>
     </div>

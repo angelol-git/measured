@@ -14,7 +14,7 @@ function ItemCard(props) {
   return (
     <div>
       <div
-        className="item-card"
+        className="item-card black-border"
         onClick={handleClickDetail}
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
@@ -23,10 +23,16 @@ function ItemCard(props) {
           className={"medium-thumbnail" + (hover ? " darken-image" : "")}
           src={props.imageSrc}
         ></img>
-        <div className={"title-hover" + (hover ? " show" : "")}>
+        <div
+          className={
+            "title-hover text-medium bold-text" + (hover ? " show" : "")
+          }
+        >
           <p>{props.title}</p>
         </div>
-        <div className={"active-tag" + (props.active ? " show" : "")}>
+        <div
+          className={"active-tag text-normal" + (props.active ? " show" : "")}
+        >
           <p>Active</p>
         </div>
       </div>

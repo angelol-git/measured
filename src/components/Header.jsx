@@ -3,12 +3,12 @@ import "./header.css";
 
 function Header() {
   return (
-    <header className="header">
+    <header>
       <div className="header-row">
-        <h1 className="header-title">Size Compare</h1>
+        <h1 className="text-large">Size Compare</h1>
       </div>
       <nav className="nav-bar">
-        <ul>
+        <ul className="flex">
           <CustomLink to="/">Home</CustomLink>
           <CustomLink to="/items">Items</CustomLink>
         </ul>
@@ -23,7 +23,11 @@ function CustomLink({ to, children, ...props }) {
 
   return (
     <li className={isActive ? "active" : ""}>
-      <Link to={to} {...props}>
+      <Link
+        to={to}
+        {...props}
+        className="nav-bar-links black-text text-normal "
+      >
         {children}
       </Link>
     </li>

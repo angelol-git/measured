@@ -1,22 +1,17 @@
 .item-card {
     position: relative;
     cursor: pointer;
-    border: 1px solid var(--primary-text-color);
     width: 140px;
     height: 140px;
-
 }
 
 .title-hover {
-    bottom: 0;
     position: absolute;
+    bottom: 0;
     visibility: hidden;
     overflow: hidden;
     height: 0px;
     padding: 10px;
-
-    font-size: 0.7rem;
-    font-weight: bold;
 
     background-color: var(--primary-bkg-color);
     transition: all 0.2s ease;
@@ -27,12 +22,6 @@
     visibility: visible;
 }
 
-.medium-thumbnail {
-    object-fit: cover;
-    width: 140px;
-    height: 140px;
-}
-
 .darken-image {
     filter: brightness(70%);
     transition: all 0.2s ease;
@@ -40,13 +29,14 @@
 
 .active-tag {
     position: absolute;
-    background-color: var(--primary-button-bkg);
-    color: var(--secondary-text-color);
-    font-size: 0.5rem;
     top: 5px;
     left: 5px;
+
     visibility: hidden;
     padding: 2px 5px 2px 5px;
+
+    background-color: var(--primary-button-bkg);
+    color: var(--secondary-text-color);
 }
 
 .active-tag.show {

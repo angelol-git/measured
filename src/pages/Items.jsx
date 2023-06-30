@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ItemCard from "../components/ItemCard";
 import "./Items.css";
 function Items(props) {
-  const itemCardElements = props.data.items.map((item, index) => {
+  const itemCardElements = props.itemData.items.map((item, index) => {
     return (
       <ItemCard
         key={item.title}
@@ -16,11 +16,13 @@ function Items(props) {
     );
   });
   return (
-    <section className="page-container">
-      <div className="page-title-row">
-        <p className="page-header">{props.data.items.length} Items</p>
-        <button className="primary-button primary-button-colors add-button">
-          <Link to="/add" className="primary-link-color">
+    <section>
+      <div className="sub-row">
+        <p className="item-counter text-normal">
+          {props.itemData.items.length} Items
+        </p>
+        <button className="main-button black-button position-right">
+          <Link to="/add" className="white-text text-normal">
             {" "}
             + Add
           </Link>
