@@ -1,8 +1,24 @@
-.add-form {
-    display: flex;
-    flex-direction: column;
+.measurement-container {
+    padding-top: 5px;
 }
 
-.add-title-row {
+.unit-input-row {
     display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+}
+
+.unit-input-row input {
+    height: 20px;
+    width: 45px;
+}
+
+.category {
+    height: 25px;
+}
+
+.submit-button {
+
+    margin-top: 15px;
 }

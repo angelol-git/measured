@@ -5,7 +5,7 @@ function Header() {
   return (
     <header>
       <div className="header-row">
-        <h1 className="text-large">Size Compare</h1>
+        <h1 className="header-medium">Size Compare</h1>
       </div>
       <nav className="nav-bar">
         <ul className="flex">

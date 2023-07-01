@@ -13,8 +13,12 @@
 }
 
 /*Text sizes*/
+.header-medium {
+    font-size: 1.2rem;
+}
+
 .text-large {
-    font-size: 1.3rem;
+    font-size: 0.9rem;
 }
 
 .text-medium {
@@ -47,6 +51,11 @@ a {
     display: flex;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 .text-center {
     text-align: center;
 }
@@ -60,13 +69,19 @@ a {
     position: relative;
 }
 
-.item-counter {
-    color: var(--primary-text-color);
-}
 
 .sub-row .position-right {
     position: absolute;
     right: 0;
+}
+
+.sub-row .position-left {
+    position: absolute;
+    left: 0;
+}
+
+.item-counter {
+    color: var(--primary-text-color);
 }
 
 .measurement-header {
@@ -86,6 +101,25 @@ a {
     width: 100%;
 }
 
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.gap-5 {
+    gap: 5px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
 
 /*Buttons*/
 .main-button {
