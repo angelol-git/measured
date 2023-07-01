@@ -1,85 +1,55 @@
 import React from "react";
 import { useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import "./Add.css";
 function Add() {
   const [inchDisplay, setInchDisplay] = useState(true);
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const measurementCategory = [
+    ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+    ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
+  ];
   const unitDisplay = inchDisplay ? "in" : "cm";
-  const inchButtonClass = inchDisplay ? " black-button" : " white-button";
-  const cmButtonClass = inchDisplay ? " white-button" : " black-button";
+  const inchButtonClass = inchDisplay
+    ? " primary-button"
+    : " secondary-button-color";
+  const cmButtonClass = inchDisplay
+    ? " secondary-button-color"
+    : " primary-button";
 
-  function handleCategoryChange() {
-    if (event.target.value === "Tops") {
+  function handleCategoryChange(event) {
+    const selectedCategory = event.target.value;
+    if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
+      setCurrentCategory(0);
+    } else {
+      setCurrentCategory(1);
     }
   }
 
   function handleUnitClick() {
     setInchDisplay(!inchDisplay);
   }
-  const measurementElements = (
-    <div className="flex-column gap-5 measurement-container text-medium">
-      <div className="unit-input-row">
-        <p>Chest</p>
-        <div className="flex align-center gap-5">
-          <input type="number" id="chest-inch" name="chest-inch" min="0" />
-          <p>{unitDisplay}</p>
-        </div>
-      </div>
-      <div className="unit-input-row">
-        <p>Length</p>
-        <div className="flex align-center gap-5">
-          <input
-            type="number"
-            id="length-inch"
-            name="length-inch"
-            className="unit-input"
-            min="0"
-          />
-          <p>{unitDisplay}</p>
-        </div>
-      </div>
-      <div className="unit-input-row">
-        <p>Shoulders</p>
-        <div className="flex align-center gap-5">
-          <input
-            type="number"
-            id="shoulders-inch"
-            name="shoulders-inch"
-            className="unit-input"
-            min="0"
-          />
-          <p>{unitDisplay}</p>
-        </div>
-      </div>
 
-      <div className="unit-input-row">
-        <p>Sleeve Length</p>
-        <div className="flex align-center gap-5">
-          <input
-            type="number"
-            id="sleeve-inch"
-            name="sleeve-inch"
-            className="unit-input"
-            min="0"
-          />
-          <p>{unitDisplay}</p>
+  const measurementElements = (
+    <div className="flex-column gap-5 measurement-container">
+      {measurementCategory[currentCategory].map((item, index) => (
+        <div className="unit-input-row" key={index}>
+          <label htmlFor={`${item.toLowerCase()}`} className="text-medium">
+            {item}
+          </label>
+          <div>
+            <input
+              type="number"
+              id={`${item.toLowerCase()}`}
+              name={`${item.toLowerCase()}`}
+              className="unit-input"
+              min="0"
+            />
+            {unitDisplay}
+          </div>
         </div>
-      </div>
-      <div className="unit-input-row">
-        <p>Hem</p>
-        <div className="flex align-center gap-5">
-          <input
-            type="number"
-            id="hem-inch"
-            name="hem-inch"
-            className="unit-input"
-            min="0"
-          />
-          <p>{unitDisplay}</p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 
@@ -103,7 +73,7 @@ function Add() {
           id="category"
           form="category-form"
           className="category text-medium"
-          onChange={handleCategoryChange}
+          onChange={(event) => handleCategoryChange(event)}
         >
           <option value="Tops">Tops</option>
           <option value="Bottoms">Bottoms</option>
@@ -119,14 +89,14 @@ function Add() {
             <div>
               <button
                 type="button"
-                className={"main-button black-border" + inchButtonClass}
+                className={"primary-button black-border" + inchButtonClass}
                 onClick={handleUnitClick}
               >
                 Inch
               </button>
               <button
                 type="button"
-                className={"main-button black-border" + cmButtonClass}
+                className={"primary-button black-border" + cmButtonClass}
                 onClick={handleUnitClick}
               >
                 Cm
@@ -139,7 +109,7 @@ function Add() {
         <input
           type="submit"
           value="Save"
-          className="main-button black-button submit-button"
+          className="primary-button submit-button"
         />
       </form>
     </div>

@@ -1,3 +1,9 @@
+.add-container {
+    height: 100%;
+    position: relative;
+
+}
+
 .measurement-container {
     padding-top: 5px;
 }
@@ -12,6 +18,7 @@
 .unit-input-row input {
     height: 20px;
     width: 45px;
+    margin-right: 5px;
 }
 
 form label {
@@ -24,6 +31,8 @@ form label {
 }
 
 .submit-button {
-
-    margin-top: 15px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 10px;
 }

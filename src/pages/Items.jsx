@@ -23,7 +23,7 @@ function Items(props) {
         </p>
         <Link
           to="/add"
-          className="main-button white-text text-normal black-button position-right"
+          className="primary-button white-text text-normal position-right"
         >
           + Add
         </Link>

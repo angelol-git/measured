@@ -2,11 +2,11 @@ import React from "react";
 import "./ItemModal.css";
 function ItemModal(props) {
   const activeButtonElement = props.active ? (
-    <button className="main-button deactivate high-z-index position-right">
+    <button className="primary-button deactivate high-z-index position-right">
       Set as not Active
     </button>
   ) : (
-    <button className="main-button black-button high-z-index position-right">
+    <button className="primary-button high-z-index position-right">
       Set as Active
     </button>
   );
@@ -53,12 +53,8 @@ function ItemModal(props) {
           </div>
           <div className="item-measurements">{measurementElements}</div>
           <div className="button-container">
-            <button className="main-button black-button high-z-index">
-              Edit
-            </button>
-            <button className="main-button black-button high-z-index">
-              Delete
-            </button>
+            <button className="primary-button high-z-index">Edit</button>
+            <button className="primary-button high-z-index">Delete</button>
           </div>
         </div>
       </section>

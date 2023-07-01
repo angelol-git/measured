@@ -5,7 +5,7 @@ import "./ActiveCard.css";
 function ActiveCard(props) {
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = props.active ? (
-    <button className="main-button text-normal">Set as not Active</button>
+    <button className="primary-button text-normal">Set as not Active</button>
   ) : (
     ""
   );
