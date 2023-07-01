@@ -86,14 +86,15 @@ function Add() {
   return (
     <div className="add-container">
       <div className="sub-row">
-        <button className="back-button position-left">
-          <Link to="/items" className="secondary-link-color">
-            ←
-          </Link>
-        </button>
+        <Link
+          to="/items"
+          className="secondary-link-color back-button position-left"
+        >
+          ←
+        </Link>
         <h3 className="bold-text header-medium">Add a new item</h3>
       </div>
-      <form className="flex-column gap-5 text-large">
+      <form className="flex-column gap-5 text-medium">
         <label htmlFor="title">Title</label>
         <input type="text" id="title" name="title" />
         <label htmlFor="category">Category</label>
@@ -101,7 +102,7 @@ function Add() {
           name="category"
           id="category"
           form="category-form"
-          className="category"
+          className="category text-medium"
           onChange={handleCategoryChange}
         >
           <option value="Tops">Tops</option>
@@ -112,9 +113,9 @@ function Add() {
         <label htmlFor="image">Image</label>
         <input type="file" id="image" name="image" accept="image/*" />
 
-        <div className="measurement-container">
+        <div>
           <div className="flex align-center justify-space-between">
-            <p>Measurements</p>
+            <label>Measurements</label>
             <div>
               <button
                 type="button"

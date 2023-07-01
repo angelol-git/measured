@@ -21,12 +21,12 @@ function Items(props) {
         <p className="item-counter text-normal">
           {props.itemData.items.length} Items
         </p>
-        <button className="main-button black-button position-right">
-          <Link to="/add" className="white-text text-normal">
-            {" "}
-            + Add
-          </Link>
-        </button>
+        <Link
+          to="/add"
+          className="main-button white-text text-normal black-button position-right"
+        >
+          + Add
+        </Link>
       </div>
       <div className="item-container">{itemCardElements}</div>
     </section>

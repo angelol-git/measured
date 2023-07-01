@@ -33,11 +33,17 @@ function ItemModal(props) {
     return (
       <section className="item-detail-container">
         <div className="item-info text-normal">
-          <button className="back-button" onClick={props.handleClickDetail}>
+          <button
+            className="back-button secondary-link-color"
+            onClick={props.handleClickDetail}
+          >
             ←
           </button>
           <div className="text-center">
-            <img className="large-thumbnail" src={props.imageSrc}></img>
+            <img
+              className="large-thumbnail"
+              src={"public/data/images/" + props.imageSrc}
+            ></img>
             <h3 className="modal-title bold-text text-medium">{props.title}</h3>
             <div className="grey-line"></div>
             <div className="sub-row">

@@ -5,7 +5,7 @@ import "./ActiveCard.css";
 function ActiveCard(props) {
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = props.active ? (
-    <button className="main-button black-button">Set as not Active</button>
+    <button className="main-button text-normal">Set as not Active</button>
   ) : (
     ""
   );
@@ -38,7 +38,10 @@ function ActiveCard(props) {
           <p className="title bold-text">{props.title}</p>
           <p>{props.category}</p>
         </div>
-        <img className="mini-thumbnail" src={props.imageSrc}></img>
+        <img
+          className="mini-thumbnail"
+          src={"public/data/images/" + props.imageSrc}
+        ></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>
         {measurementElements}

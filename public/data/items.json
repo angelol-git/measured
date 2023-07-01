@@ -4,7 +4,7 @@
       "category": "Tops",
       "subCategory": "T-shirt",
       "title": "Undercover Oversized Dracula T shirt",
-      "imageSrc": "../src/assets/dracula.jpeg",
+      "imageSrc": "dracula.jpeg",
       "active": true,
       "measurements": {
         "Chest": ["22", "55.9"],
@@ -19,7 +19,7 @@
       "sub-category": "Bomber",
       "active": false,
       "title": "MA-1 Anatomicouture Bomber FW13 SZ2 46/4",
-      "imageSrc": "../src/assets/bomber.jpeg",
+      "imageSrc": "bomber.jpeg",
       "measurements": {
         "Chest": ["22", "55.9"],
         "Length": ["30", "76.2"],

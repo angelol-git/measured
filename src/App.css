@@ -127,16 +127,12 @@ a {
     padding: 5px;
     cursor: pointer;
     transition: 0.2s;
+    color: var(--secondary-text-color);
+    background-color: var(--primary-button-bkg);
 }
 
 .main-button:hover {
     background-color: var(--primary-button-bkg-hover);
-}
-
-.black-button {
-    color: var(--secondary-text-color);
-    background-color: var(--primary-button-bkg);
-
 }
 
 .white-button {
@@ -150,11 +146,11 @@ a {
 
 .back-button {
     font-size: 1rem;
+    width: 25px;
     border: none;
     background-color: var(--primary-bkg-color);
     cursor: pointer;
     transition: 0.2s;
-
 }
 
 .back-button:hover {

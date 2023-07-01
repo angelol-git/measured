@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import itemData from "./assets/items.json";
+import itemData from "../public/data/items.json";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
