@@ -21,7 +21,7 @@ function ItemCard(props) {
       >
         <img
           className={"medium-thumbnail" + (hover ? " darken-image" : "")}
-          src={"public/data/images/" + props.imageSrc}
+          src={"data/images/" + props.imageSrc}
         ></img>
         <div
           className={

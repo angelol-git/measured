@@ -40,7 +40,7 @@ function ActiveCard(props) {
         </div>
         <img
           className="mini-thumbnail"
-          src={"public/data/images/" + props.imageSrc}
+          src={"data/images/" + props.imageSrc}
         ></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>

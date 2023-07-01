@@ -42,7 +42,7 @@ function ItemModal(props) {
           <div className="text-center">
             <img
               className="large-thumbnail"
-              src={"public/data/images/" + props.imageSrc}
+              src={"data/images/" + props.imageSrc}
             ></img>
             <h3 className="modal-title bold-text text-medium">{props.title}</h3>
             <div className="grey-line"></div>
