@@ -4,19 +4,18 @@ import { Link } from "react-router-dom";
 
 import "./Add.css";
 function Add() {
-  const [inchDisplay, setInchDisplay] = useState(true);
+  const [currentUnit, setCurrentUnit] = useState("in");
   const [currentCategory, setCurrentCategory] = useState(0);
+  const [currentMeasurements, setCurrentMeasurements] = useState([]);
   const measurementCategory = [
     ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
   ];
-  const unitDisplay = inchDisplay ? "in" : "cm";
-  const inchButtonClass = inchDisplay
-    ? " primary-button"
-    : " secondary-button-color";
-  const cmButtonClass = inchDisplay
-    ? " secondary-button-color"
-    : " primary-button";
+  const currentUnitIndex = currentUnit === "in" ? 0 : 1;
+  const inchButtonClass =
+    currentUnit === "in" ? " primary-button" : " secondary-button-color";
+  const cmButtonClass =
+    currentUnit === "in" ? " secondary-button-color" : " primary-button";
 
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
@@ -28,25 +27,57 @@ function Add() {
   }
 
   function handleUnitClick() {
-    setInchDisplay(!inchDisplay);
+    const newUnit = currentUnit === "in" ? "cm" : "in";
+    setCurrentUnit(newUnit);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(currentMeasurements);
+    // redirect();
+  }
+
+  function handleUnitInput(event) {
+    const { name, value } = event.target;
+    let inchValue = 0;
+    let cmValue = 0;
+
+    console.log(typeof value);
+
+    if (currentUnit === "in") {
+      inchValue = value;
+      cmValue = (inchValue * 2.54).toFixed(2);
+    } else {
+      cmValue = value;
+      inchValue = (cmValue / 2.54).toFixed(2);
+    }
+
+    setCurrentMeasurements((currentMeasurements) => ({
+      ...currentMeasurements,
+      [name]: [[inchValue], [cmValue]],
+    }));
   }
 
   const measurementElements = (
-    <div className="flex-column gap-5 measurement-container">
+    <div className="measurement-container">
       {measurementCategory[currentCategory].map((item, index) => (
         <div className="unit-input-row" key={index}>
-          <label htmlFor={`${item.toLowerCase()}`} className="text-medium">
+          <label htmlFor={`${item}`} className="text-medium">
             {item}
           </label>
           <div>
             <input
               type="number"
-              id={`${item.toLowerCase()}`}
-              name={`${item.toLowerCase()}`}
+              id={`${item}`}
+              name={`${item}`}
               className="unit-input"
+              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
               min="0"
+              max="99.99"
+              step=".01"
+              onChange={handleUnitInput}
             />
-            {unitDisplay}
+            {currentUnit}
           </div>
         </div>
       ))}
@@ -64,9 +95,12 @@ function Add() {
         </Link>
         <h3 className="bold-text header-medium">Add a new item</h3>
       </div>
-      <form className="flex-column gap-5 text-medium">
+      <form
+        className="flex-column gap-5 text-medium"
+        onSubmit={(event) => handleSubmit(event)}
+      >
         <label htmlFor="title">Title</label>
-        <input type="text" id="title" name="title" />
+        <input type="text" id="title" name="title" required />
         <label htmlFor="category">Category</label>
         <select
           name="category"

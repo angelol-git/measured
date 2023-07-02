@@ -1,11 +1,14 @@
 .add-container {
     height: 100%;
     position: relative;
-
 }
 
 .measurement-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     padding-top: 5px;
+
 }
 
 .unit-input-row {
@@ -17,7 +20,7 @@
 
 .unit-input-row input {
     height: 20px;
-    width: 45px;
+    width: 50px;
     margin-right: 5px;
 }
 
