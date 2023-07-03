@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./Add.css";
-function Add() {
+function Add(props) {
   const [currentUnit, setCurrentUnit] = useState("in");
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentMeasurements, setCurrentMeasurements] = useState([]);
+  //0 = Tops, Outerwear, 1 = Bottoms
   const measurementCategory = [
     ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
@@ -33,8 +34,11 @@ function Add() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(currentMeasurements);
+    console.log(event);
     // redirect();
+
+    props.itemData.items = "test";
+    console.log(props.itemData);
   }
 
   function handleUnitInput(event) {
@@ -42,7 +46,11 @@ function Add() {
     let inchValue = 0;
     let cmValue = 0;
 
-    console.log(typeof value);
+    if (value.includes(".")) {
+      if (value.split(".")[1].length > 2) {
+        return;
+      }
+    }
 
     if (currentUnit === "in") {
       inchValue = value;
@@ -72,9 +80,9 @@ function Add() {
               name={`${item}`}
               className="unit-input"
               value={currentMeasurements[item]?.[currentUnitIndex] || ""}
-              min="0"
-              max="99.99"
+              min="0.00"
               step=".01"
+              placeholder="0.00"
               onChange={handleUnitInput}
             />
             {currentUnit}

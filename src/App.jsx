@@ -17,7 +17,6 @@ function App() {
       setIsInitialLoad(false);
     }
   }, [navigate, isInitialLoad]);
-
   return (
     <div className="app">
       {location.pathname !== "/add" ? <Header /> : null}

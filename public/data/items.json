@@ -1,6 +1,6 @@
 {
-  "items": [
-    {
+  "items": {
+    "Undercover Oversized Dracula T shirt": {
       "category": "Tops",
       "subCategory": "T-shirt",
       "title": "Undercover Oversized Dracula T shirt",
@@ -14,9 +14,8 @@
         "Hem": ["22", "80"]
       }
     },
-    {
+    "MA-1 Anatomicouture Bomber FW13 SZ2 46/4": {
       "category": "Outerwear",
-      "sub-category": "Bomber",
       "active": false,
       "title": "MA-1 Anatomicouture Bomber FW13 SZ2 46/4",
       "imageSrc": "bomber.jpeg",
@@ -28,5 +27,5 @@
         "Hem": ["22", "80"]
       }
     }
-  ]
+  }
 }
