@@ -6,6 +6,7 @@
 }
 
 .main-container {
+    overflow: scroll;
     height: 100%;
     padding: 10px 25px 0px 25px;
 }
@@ -128,6 +129,15 @@ a {
 .gap-15 {
     gap: 15px;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+.show {
+    visibility: visible;
+}
+
 
 /*Buttons*/
 .primary-button {

@@ -8,12 +8,12 @@
 .title-hover {
     position: absolute;
     bottom: 0;
-    visibility: hidden;
-    overflow: hidden;
+    width: 120px;
     height: 0px;
     padding: 10px;
-
     background-color: var(--primary-bkg-color);
+    visibility: hidden;
+    overflow: hidden;
     transition: all 0.2s ease;
 }
 

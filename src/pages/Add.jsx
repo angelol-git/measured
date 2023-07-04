@@ -1,4 +1,5 @@
 import React from "react";
+import uuid from "react-uuid";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -34,10 +35,36 @@ function Add(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
-    // redirect();
 
-    props.itemData.items = "test";
+    const newItem = {
+      category: event.target.category.value,
+      title: event.target.title.value,
+      imageSrc: uuid() + event.target.image.files[0].name,
+      active: false,
+
+      measurements: {
+        Chest: [
+          currentMeasurements["Chest"][0],
+          currentMeasurements["Chest"][1],
+        ],
+        Length: [
+          currentMeasurements["Length"][0],
+          currentMeasurements["Length"][1],
+        ],
+        Shoulders: [
+          currentMeasurements["Shoulders"][0],
+          currentMeasurements["Shoulders"][1],
+        ],
+        "Sleeve Length": [
+          currentMeasurements["Sleeve Length"][0],
+          currentMeasurements["Sleeve Length"][1],
+        ],
+        Hem: [currentMeasurements["Hem"][0], currentMeasurements["Hem"][1]],
+      },
+    };
+
+    // redirect();
+    props.itemData.items[`${event.target.title.value}`] = newItem;
     console.log(props.itemData);
   }
 
@@ -64,6 +91,22 @@ function Add(props) {
       ...currentMeasurements,
       [name]: [[inchValue], [cmValue]],
     }));
+  }
+
+  //Imperative
+  function handleImagePreview(event) {
+    let previewElement = document.getElementById("image-preview");
+
+    if (event.target.files.length > 0) {
+      console.log(event);
+      let src = URL.createObjectURL(event.target.files[0]);
+      previewElement.src = src;
+      console.log(src);
+      console.log(previewElement);
+      previewElement.classList.add("show");
+    } else {
+      previewElement.classList.remove("show");
+    }
   }
 
   const measurementElements = (
@@ -113,7 +156,6 @@ function Add(props) {
         <select
           name="category"
           id="category"
-          form="category-form"
           className="category text-medium"
           onChange={(event) => handleCategoryChange(event)}
         >
@@ -122,8 +164,27 @@ function Add(props) {
           <option value="Outerwear">Outerwear</option>
         </select>
 
+        <label htmlFor="size">Size</label>
+        <select name="size" id="size" className="category text-medium">
+          <option value="s">S</option>
+          <option value="m">M</option>
+          <option value="l">L</option>
+        </select>
+
         <label htmlFor="image">Image</label>
-        <input type="file" id="image" name="image" accept="image/*" />
+
+        <div className="image-input-row">
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            className="file-input"
+            onChange={handleImagePreview}
+          />
+
+          <img id="image-preview" className="mini-thumbnail hidden"></img>
+        </div>
 
         <div>
           <div className="flex align-center justify-space-between">

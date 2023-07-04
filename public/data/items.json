@@ -1,17 +1,15 @@
 {
   "items": {
-    "Undercover Oversized Dracula T shirt": {
+    "U AIRISM COTTON CREW NECK OVERSIZED HALF SLEEVE T-SHIRT": {
       "category": "Tops",
-      "subCategory": "T-shirt",
-      "title": "Undercover Oversized Dracula T shirt",
-      "imageSrc": "dracula.jpeg",
+      "title": "U AIRISM COTTON CREW NECK OVERSIZED HALF SLEEVE T-SHIRT",
+      "imageSrc": "uniqlo_airism.jpeg",
       "active": true,
       "measurements": {
-        "Chest": ["22", "55.9"],
-        "Length": ["30", "76.2"],
-        "Shoulders": ["18", "45.7"],
-        "Sleeve Length": ["25", "63.5"],
-        "Hem": ["22", "80"]
+        "Chest": ["23", "58.5"],
+        "Length": ["28.14", "71.5"],
+        "Shoulders": ["21.25", "54"],
+        "Sleeve Length": ["21.67", "55"]
       }
     },
     "MA-1 Anatomicouture Bomber FW13 SZ2 46/4": {
