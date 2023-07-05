@@ -33,15 +33,18 @@ form label {
     height: 25px;
 }
 
-.image-input-row {
+.image-preview-container {
     display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: -10px;
+    width: 100%;
+    justify-content: center;
 }
 
-.file-input {
-    width: 90%;
+.display-none {
+    display: none;
+}
+
+.display-block {
+    display: block;
 }
 
 .submit-button {

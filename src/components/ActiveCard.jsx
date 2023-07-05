@@ -39,10 +39,7 @@ function ActiveCard(props) {
           <p className="title bold-text">{props.title}</p>
           <p>{props.category}</p>
         </div>
-        <img
-          className="mini-thumbnail"
-          src={"data/images/" + props.imageSrc}
-        ></img>
+        <img className="mini-thumbnail" src={props.imageSrc}></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>
         {measurementElements}

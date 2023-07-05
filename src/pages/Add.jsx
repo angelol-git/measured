@@ -1,5 +1,4 @@
 import React from "react";
-import uuid from "react-uuid";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +38,7 @@ function Add(props) {
     const newItem = {
       category: event.target.category.value,
       title: event.target.title.value,
-      imageSrc: uuid() + event.target.image.files[0].name,
+      imageSrc: event.target.image.value,
       active: false,
 
       measurements: {
@@ -96,16 +95,11 @@ function Add(props) {
   //Imperative
   function handleImagePreview(event) {
     let previewElement = document.getElementById("image-preview");
-
-    if (event.target.files.length > 0) {
-      console.log(event);
-      let src = URL.createObjectURL(event.target.files[0]);
-      previewElement.src = src;
-      console.log(src);
-      console.log(previewElement);
-      previewElement.classList.add("show");
+    if (event.target.value.length > 0) {
+      previewElement.src = event.target.value;
+      previewElement.classList.add("display-block");
     } else {
-      previewElement.classList.remove("show");
+      previewElement.classList.remove("display-block");
     }
   }
 
@@ -173,19 +167,30 @@ function Add(props) {
 
         <label htmlFor="image">Image</label>
 
-        <div className="image-input-row">
-          <input
+        {/* <input
             type="file"
             id="image"
             name="image"
             accept="image/*"
             className="file-input"
             onChange={handleImagePreview}
-          />
+          /> */}
 
-          <img id="image-preview" className="mini-thumbnail hidden"></img>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          placeholder="Image URL"
+          className="flex image-input"
+          onChange={handleImagePreview}
+        />
+
+        <div className="image-preview-container">
+          <img
+            id="image-preview"
+            className="medium-thumbnail display-none"
+          ></img>
         </div>
-
         <div>
           <div className="flex align-center justify-space-between">
             <label>Measurements</label>

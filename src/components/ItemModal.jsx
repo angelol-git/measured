@@ -40,10 +40,7 @@ function ItemModal(props) {
             ←
           </button>
           <div className="text-center">
-            <img
-              className="large-thumbnail"
-              src={"data/images/" + props.imageSrc}
-            ></img>
+            <img className="large-thumbnail" src={props.imageSrc}></img>
             <h3 className="modal-title bold-text text-medium">{props.title}</h3>
             <div className="grey-line"></div>
             <div className="sub-row">
