@@ -3,24 +3,21 @@ import { Link } from "react-router-dom";
 import ItemCard from "../components/ItemCard";
 import "./Items.css";
 function Items(props) {
-  console.log(props.itemData.length);
-  const itemsLength = props.itemData.length;
+  const itemsLength = Object.keys(props.itemData).length;
   let itemCardElements;
   if (itemsLength) {
-    itemCardElements = Object.entries(props.itemData.items).map(
-      ([key, value]) => {
-        return (
-          <ItemCard
-            key={key}
-            active={value.active}
-            category={value.category}
-            title={value.title}
-            imageSrc={value.imageSrc}
-            measurements={value.measurements}
-          />
-        );
-      }
-    );
+    itemCardElements = Object.entries(props.itemData).map(([key, value]) => {
+      return (
+        <ItemCard
+          key={key}
+          active={value.active}
+          category={value.category}
+          title={value.title}
+          imageSrc={value.imageSrc}
+          measurements={value.measurements}
+        />
+      );
+    });
   }
   return (
     <section>

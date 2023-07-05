@@ -35,11 +35,14 @@ function Add(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
+    //To do
+    //Check if title already exists
     const newItem = {
       category: event.target.category.value,
       title: event.target.title.value,
+      size: event.target.size.value,
       imageSrc: event.target.image.value,
-      active: false,
+      active: event.target.active.checked,
 
       measurements: {
         Chest: [
@@ -62,9 +65,7 @@ function Add(props) {
       },
     };
 
-    // redirect();
-    props.itemData.items[`${event.target.title.value}`] = newItem;
-    console.log(props.itemData);
+    props.handleAddItem(newItem);
   }
 
   function handleUnitInput(event) {
@@ -166,16 +167,6 @@ function Add(props) {
         </select>
 
         <label htmlFor="image">Image</label>
-
-        {/* <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            className="file-input"
-            onChange={handleImagePreview}
-          /> */}
-
         <input
           type="text"
           id="image"
@@ -184,12 +175,18 @@ function Add(props) {
           className="flex image-input"
           onChange={handleImagePreview}
         />
-
         <div className="image-preview-container">
           <img
             id="image-preview"
             className="medium-thumbnail display-none"
           ></img>
+        </div>
+        <div
+          className="flex align-center
+        "
+        >
+          <label htmlFor="active"> Set as active: </label>
+          <input type="checkbox" id="active" name="active" value="active" />
         </div>
         <div>
           <div className="flex align-center justify-space-between">

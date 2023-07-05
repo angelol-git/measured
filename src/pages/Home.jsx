@@ -1,27 +1,25 @@
 import ActiveCard from "../components/ActiveCard";
 
 function Home(props) {
-  let activeItemsLength = props.itemData.length;
+  let itemsLength = Object.keys(props.itemData).length;
+  let activeItemsLength = 0;
   let activeCardElements;
-
-  if (activeItemsLength) {
-    activeCardElements = Object.entries(props.itemData["items"]).map(
-      ([key, value]) => {
-        if (value.active) {
-          activeItemsLength++;
-        }
-        return value.active ? (
-          <ActiveCard
-            key={key}
-            active={value.active}
-            category={value.category}
-            title={value.title}
-            imageSrc={value.imageSrc}
-            measurements={value.measurements}
-          />
-        ) : null;
+  if (itemsLength) {
+    activeCardElements = Object.entries(props.itemData).map(([key, value]) => {
+      if (value.active) {
+        activeItemsLength++;
       }
-    );
+      return value.active ? (
+        <ActiveCard
+          key={key}
+          active={value.active}
+          category={value.category}
+          title={value.title}
+          imageSrc={value.imageSrc}
+          measurements={value.measurements}
+        />
+      ) : null;
+    });
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import ItemDetail from "./ItemModal";
+import ItemModal from "./ItemModal";
 import "./ItemCard.css";
 
 function ItemCard(props) {
@@ -36,7 +36,7 @@ function ItemCard(props) {
           <p>Active</p>
         </div>
       </div>
-      <ItemDetail
+      {/* <ItemModal
         key={props.title}
         clickDetail={clickDetail}
         handleClickDetail={handleClickDetail}
@@ -45,7 +45,7 @@ function ItemCard(props) {
         title={props.title}
         imageSrc={props.imageSrc}
         measurements={props.measurements}
-      />
+      /> */}
     </div>
   );
 }

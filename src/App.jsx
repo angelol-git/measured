@@ -11,16 +11,20 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    const savedItems = localStorage.getItem("items");
+    return savedItems ? JSON.parse(savedItems) : {};
+  });
+
+  function handleAddItem(newItem) {
+    setItems((prevItems) => {
+      return { ...prevItems, [newItem.title]: newItem };
+    });
+  }
 
   useEffect(() => {
-    if (!localStorage.getItem("items")) {
-      localStorage.setItem("items", JSON.stringify([]));
-    } else {
-      const savedItems = JSON.parse(localStorage.getItem("items"));
-      setItems(savedItems);
-    }
-  }, []);
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -36,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home itemData={items} />} />
           <Route path="/items" element={<Items itemData={items} />} />
-          <Route path="/add" element={<Add itemData={items} />} />
+          <Route path="/add" element={<Add handleAddItem={handleAddItem} />} />
         </Routes>
       </div>
     </div>
