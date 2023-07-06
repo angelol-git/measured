@@ -36,7 +36,7 @@ function ItemCard(props) {
           <p>Active</p>
         </div>
       </div>
-      {/* <ItemModal
+      <ItemModal
         key={props.title}
         clickDetail={clickDetail}
         handleClickDetail={handleClickDetail}
@@ -45,7 +45,8 @@ function ItemCard(props) {
         title={props.title}
         imageSrc={props.imageSrc}
         measurements={props.measurements}
-      /> */}
+        handleActive={props.handleActive}
+      />
     </div>
   );
 }

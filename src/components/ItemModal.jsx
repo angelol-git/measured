@@ -2,11 +2,17 @@ import React from "react";
 import "./ItemModal.css";
 function ItemModal(props) {
   const activeButtonElement = props.active ? (
-    <button className="primary-button deactivate high-z-index position-right">
+    <button
+      className="primary-button high-z-index position-right"
+      onClick={() => props.handleActive(props.title.toUpperCase())}
+    >
       Set as not Active
     </button>
   ) : (
-    <button className="primary-button high-z-index position-right">
+    <button
+      className="primary-button high-z-index position-right"
+      onClick={() => props.handleActive(props.title.toUpperCase())}
+    >
       Set as Active
     </button>
   );

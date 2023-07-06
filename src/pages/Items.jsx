@@ -15,6 +15,7 @@ function Items(props) {
           title={value.title}
           imageSrc={value.imageSrc}
           measurements={value.measurements}
+          handleActive={props.handleActive}
         />
       );
     });

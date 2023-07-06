@@ -3,9 +3,15 @@ import React from "react";
 import "./ActiveCard.css";
 
 function ActiveCard(props) {
+  //console.log(props.itemData);
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = props.active ? (
-    <button className="primary-button text-normal">Set as not Active</button>
+    <button
+      className="primary-button text-normal"
+      onClick={() => props.handleActive(props.title.toUpperCase())}
+    >
+      Set as not Active
+    </button>
   ) : (
     ""
   );

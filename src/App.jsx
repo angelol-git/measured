@@ -18,7 +18,28 @@ function App() {
 
   function handleAddItem(newItem) {
     setItems((prevItems) => {
-      return { ...prevItems, [newItem.title]: newItem };
+      return { ...prevItems, [newItem.title.toUpperCase()]: newItem };
+    });
+  }
+
+  function handleActive(title) {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+      if (updatedItems[title]) {
+        console.log(updatedItems[title]);
+        if (updatedItems[title].active === true) {
+          updatedItems[title] = {
+            ...updatedItems[title],
+            active: false,
+          };
+        } else {
+          updatedItems[title] = {
+            ...updatedItems[title],
+            active: true,
+          };
+        }
+      }
+      return updatedItems;
     });
   }
 
@@ -38,8 +59,14 @@ function App() {
       {location.pathname !== "/add" ? <Header /> : null}
       <div className="main-container">
         <Routes>
-          <Route path="/" element={<Home itemData={items} />} />
-          <Route path="/items" element={<Items itemData={items} />} />
+          <Route
+            path="/"
+            element={<Home itemData={items} handleActive={handleActive} />}
+          />
+          <Route
+            path="/items"
+            element={<Items itemData={items} handleActive={handleActive} />}
+          />
           <Route path="/add" element={<Add handleAddItem={handleAddItem} />} />
         </Routes>
       </div>
