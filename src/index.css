@@ -18,6 +18,8 @@
   --primary-button-bkg-hover: rgb(47, 47, 47);
   --secondary-button-bkg: white;
   --secondary-bkg-color: rgb(232, 232, 232);
+  --error-text: red;
+  --error-border: red;
 
 }
 

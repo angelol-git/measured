@@ -183,6 +183,19 @@ a {
     z-index: 3;
 }
 
+.error-text {
+    color: var(--error-text);
+}
+
+.error-border {
+    border-color: var(--error-border);
+}
+
+.error-border:focus {
+    outline: none !important;
+    border-color: var(--error-border);
+}
+
 /*Images*/
 .mini-thumbnail {
     object-fit: cover;

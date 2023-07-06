@@ -11,6 +11,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [titleError, setTittleError] = useState("");
   const [items, setItems] = useState(() => {
     const savedItems = localStorage.getItem("items");
     return savedItems ? JSON.parse(savedItems) : {};
@@ -51,6 +52,14 @@ function App() {
     });
   }
 
+  function verifyTitle(title) {
+    if (items[title.toUpperCase()]) {
+      setTittleError(true);
+      return;
+    }
+    setTittleError(false);
+  }
+
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
@@ -78,10 +87,20 @@ function App() {
                 itemData={items}
                 handleActive={handleActive}
                 handleDeleteItem={handleDeleteItem}
+                titleError={titleError}
               />
             }
           />
-          <Route path="/add" element={<Add handleAddItem={handleAddItem} />} />
+          <Route
+            path="/add"
+            element={
+              <Add
+                handleAddItem={handleAddItem}
+                verifyTitle={verifyTitle}
+                titleError={titleError}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>

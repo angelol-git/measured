@@ -1,11 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./Add.css";
 function Add(props) {
   const [currentUnit, setCurrentUnit] = useState("in");
   const [currentCategory, setCurrentCategory] = useState(0);
+  const [currentTitle, setCurrentTitle] = useState("");
   const [currentMeasurements, setCurrentMeasurements] = useState([]);
   //0 = Tops, Outerwear, 1 = Bottoms
   const measurementCategory = [
@@ -18,6 +19,16 @@ function Add(props) {
   const cmButtonClass =
     currentUnit === "in" ? " secondary-button-color" : " primary-button";
 
+  const titleErrorElement =
+    props.titleError === true ? (
+      <div className="title-error">
+        <p className="error-text">Error {currentTitle} already exist</p>
+      </div>
+    ) : (
+      ""
+    );
+
+  const tittleClassNames = props.titleError === true ? "error-border" : "";
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
     if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
@@ -31,6 +42,14 @@ function Add(props) {
     const newUnit = currentUnit === "in" ? "cm" : "in";
     setCurrentUnit(newUnit);
   }
+
+  function handleTitle(event) {
+    setCurrentTitle(event.target.value);
+  }
+
+  useEffect(() => {
+    props.verifyTitle(currentTitle);
+  }, [currentTitle]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -65,7 +84,11 @@ function Add(props) {
       },
     };
 
+    if (props.titleError === true) {
+      return;
+    }
     props.handleAddItem(newItem);
+    window.location.replace("/");
   }
 
   function handleUnitInput(event) {
@@ -141,18 +164,23 @@ function Add(props) {
         </Link>
         <h3 className="bold-text header-medium">Add a new item</h3>
       </div>
-      <form
-        className="flex-column gap-5 text-medium"
-        onSubmit={(event) => handleSubmit(event)}
-      >
+      <form className="flex-column gap-5 text-medium" onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
-        <input type="text" id="title" name="title" required />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          onChange={handleTitle}
+          className={tittleClassNames}
+          required
+        />
+        {titleErrorElement}
         <label htmlFor="category">Category</label>
         <select
           name="category"
           id="category"
           className="category text-medium"
-          onChange={(event) => handleCategoryChange(event)}
+          onChange={handleCategoryChange}
         >
           <option value="Tops">Tops</option>
           <option value="Bottoms">Bottoms</option>
