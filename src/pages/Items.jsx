@@ -16,6 +16,7 @@ function Items(props) {
           imageSrc={value.imageSrc}
           measurements={value.measurements}
           handleActive={props.handleActive}
+          handleDeleteItem={props.handleDeleteItem}
         />
       );
     });

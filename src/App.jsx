@@ -22,6 +22,14 @@ function App() {
     });
   }
 
+  function handleDeleteItem(title) {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+      delete updatedItems[title];
+      return updatedItems;
+    });
+  }
+
   function handleActive(title) {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
@@ -65,7 +73,13 @@ function App() {
           />
           <Route
             path="/items"
-            element={<Items itemData={items} handleActive={handleActive} />}
+            element={
+              <Items
+                itemData={items}
+                handleActive={handleActive}
+                handleDeleteItem={handleDeleteItem}
+              />
+            }
           />
           <Route path="/add" element={<Add handleAddItem={handleAddItem} />} />
         </Routes>

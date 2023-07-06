@@ -57,7 +57,12 @@ function ItemModal(props) {
           <div className="item-measurements">{measurementElements}</div>
           <div className="button-container">
             <button className="primary-button high-z-index">Edit</button>
-            <button className="primary-button high-z-index">Delete</button>
+            <button
+              className="primary-button high-z-index"
+              onClick={() => props.handleDeleteItem(props.title.toUpperCase())}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </section>

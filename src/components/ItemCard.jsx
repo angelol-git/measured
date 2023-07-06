@@ -46,6 +46,7 @@ function ItemCard(props) {
         imageSrc={props.imageSrc}
         measurements={props.measurements}
         handleActive={props.handleActive}
+        handleDeleteItem={props.handleDeleteItem}
       />
     </div>
   );
