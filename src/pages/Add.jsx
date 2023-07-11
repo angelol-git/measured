@@ -28,7 +28,7 @@ function Add(props) {
       ""
     );
 
-  const tittleClassNames = props.titleError === true ? "error-border" : "";
+  const tittleClassNames = props.titleError === true ? " error-border" : "";
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
     if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
@@ -129,7 +129,7 @@ function Add(props) {
     <div className="measurement-container">
       {measurementCategory[currentCategory].map((item, index) => (
         <div className="unit-input-row" key={index}>
-          <label htmlFor={`${item}`} className="text-medium">
+          <label htmlFor={`${item}`} className="text-normal">
             {item}
           </label>
           <div>
@@ -137,7 +137,7 @@ function Add(props) {
               type="number"
               id={`${item}`}
               name={`${item}`}
-              className="unit-input"
+              className="unit-input text-normal"
               value={currentMeasurements[item]?.[currentUnitIndex] || ""}
               min="0.00"
               step=".01"
@@ -154,69 +154,73 @@ function Add(props) {
   return (
     <div className="add-container">
       <div className="sub-row">
-        <Link
-          to="/items"
-          className="secondary-link-color back-button position-left"
-        >
-          ←
+        <Link to="/items" className="position-left">
+          <button className="back-button">←</button>
         </Link>
         <h3 className="bold-text header-medium">Add a new item</h3>
       </div>
-      <form
-        id="add-form"
-        className="flex-column gap-5 text-medium"
-        onSubmit={handleSubmit}
-      >
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          onChange={handleTitle}
-          className={tittleClassNames}
-          required
-        />
-        {titleErrorElement}
-        <label htmlFor="category">Category</label>
-        <select
-          name="category"
-          id="category"
-          className="category text-medium"
-          onChange={handleCategoryChange}
-        >
-          <option value="Tops">Tops</option>
-          <option value="Bottoms">Bottoms</option>
-          <option value="Outerwear">Outerwear</option>
-        </select>
+      <form id="add-form" onSubmit={handleSubmit}>
+        <div className="form-input">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            onChange={handleTitle}
+            className={"input-text" + tittleClassNames}
+            required
+          />
 
-        <label htmlFor="size">Size</label>
-        <select name="size" id="size" className="category text-medium">
-          <option value="s">S</option>
-          <option value="m">M</option>
-          <option value="l">L</option>
-        </select>
+          {titleErrorElement}
+        </div>
 
-        <label htmlFor="image">Image</label>
-        <input
-          type="text"
-          id="image"
-          name="image"
-          placeholder="Image URL"
-          className="flex image-input"
-          onChange={handleImagePreview}
-        />
+        <div className="form-input">
+          <label htmlFor="category">Category</label>
+          <select
+            name="category"
+            id="category"
+            className="input-category"
+            onChange={handleCategoryChange}
+          >
+            <option value="Tops">Tops</option>
+            <option value="Bottoms">Bottoms</option>
+            <option value="Outerwear">Outerwear</option>
+          </select>
+        </div>
+
+        <div className="form-input">
+          <label htmlFor="size">Size</label>
+          <select name="size" id="size" className="input-category">
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+          </select>
+        </div>
+
+        <div className="form-input">
+          {" "}
+          <label htmlFor="image">Image</label>
+          <input
+            type="text"
+            id="image"
+            name="image"
+            placeholder="Image URL"
+            className="input-text"
+            onChange={handleImagePreview}
+          />
+        </div>
+
         <div className="image-preview-container">
           <img
             id="image-preview"
             className="medium-thumbnail display-none"
           ></img>
         </div>
-        <div
-          className="flex align-center
-        "
-        >
-          <label htmlFor="active"> Set as active: </label>
-          <input type="checkbox" id="active" name="active" value="active" />
+        <div>
+          <label htmlFor="active">
+            Set as active:
+            <input type="checkbox" id="active" name="active" value="active" />
+          </label>
         </div>
         <div>
           <div className="flex align-center justify-space-between">
