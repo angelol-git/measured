@@ -54,8 +54,6 @@ function Add(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    //To do
-    //Check if title already exists
     const newItem = {
       category: event.target.category.value,
       title: event.target.title.value,
@@ -164,7 +162,11 @@ function Add(props) {
         </Link>
         <h3 className="bold-text header-medium">Add a new item</h3>
       </div>
-      <form className="flex-column gap-5 text-medium" onSubmit={handleSubmit}>
+      <form
+        id="add-form"
+        className="flex-column gap-5 text-medium"
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="title">Title</label>
         <input
           type="text"

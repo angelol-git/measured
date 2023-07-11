@@ -35,7 +35,6 @@ function App() {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
       if (updatedItems[title]) {
-        console.log(updatedItems[title]);
         if (updatedItems[title].active === true) {
           updatedItems[title] = {
             ...updatedItems[title],
@@ -48,6 +47,13 @@ function App() {
           };
         }
       }
+      return updatedItems;
+    });
+  }
+
+  function updateItem(updatedItem) {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
       return updatedItems;
     });
   }

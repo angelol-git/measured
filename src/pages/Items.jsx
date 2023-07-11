@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ItemCard from "../components/ItemCard";
+import ItemCard from "../components/items/ItemCard";
 import "./Items.css";
 function Items(props) {
   const itemsLength = Object.keys(props.itemData).length;

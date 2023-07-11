@@ -1,21 +1,21 @@
-import { useState } from "react";
 import React from "react";
+import { useState } from "react";
 import ItemModal from "./ItemModal";
 import "./ItemCard.css";
 
 function ItemCard(props) {
-  const [clickDetail, setClickDetail] = useState(false);
+  const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
   const toggleHover = () => setHover(!hover);
 
-  function handleClickDetail() {
-    setClickDetail(!clickDetail);
+  function handleClickModal() {
+    setClickModal(!clickModal);
   }
   return (
     <div>
       <div
         className="item-card black-border"
-        onClick={handleClickDetail}
+        onClick={handleClickModal}
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
       >
@@ -38,8 +38,8 @@ function ItemCard(props) {
       </div>
       <ItemModal
         key={props.title}
-        clickDetail={clickDetail}
-        handleClickDetail={handleClickDetail}
+        clickModal={clickModal}
+        handleClickModal={handleClickModal}
         active={props.active}
         category={props.category}
         title={props.title}

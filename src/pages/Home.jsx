@@ -1,4 +1,4 @@
-import ActiveCard from "../components/ActiveCard";
+import ActiveCard from "../components/home/ActiveCard";
 
 function Home(props) {
   let itemsLength = Object.keys(props.itemData).length;
