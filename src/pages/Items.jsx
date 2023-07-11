@@ -23,9 +23,9 @@ function Items(props) {
   }
   return (
     <section>
-      <div className="sub-row">
-        <p className="item-counter">{itemsLength} Items</p>
-        <Link to="/add" className="primary-button position-right">
+      <div className="sub-row item-counter-row">
+        <p className="item-counter text-small">{itemsLength} Items</p>
+        <Link to="/add" className="primary-button  position-right">
           + Add
         </Link>
       </div>

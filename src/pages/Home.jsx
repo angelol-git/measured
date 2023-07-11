@@ -25,10 +25,10 @@ function Home(props) {
 
   return (
     <section>
-      <div className="item-counter sub-row text-small">
+      <div className="item-counter sub-row text-small item-counter-row">
         <p>{activeItemsLength} Active items</p>
       </div>
-      {activeCardElements}
+      <div className="flex-column gap-15">{activeCardElements}</div>
     </section>
   );
 }

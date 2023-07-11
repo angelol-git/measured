@@ -11,11 +11,9 @@
 .form-input {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
-#add-form label {
-    font-weight: bold;
-}
 
 .input-text {
     height: 20px;

@@ -6,10 +6,11 @@
     left: 0;
     z-index: 2;
 
-    width: 360px;
+    width: 335px;
     height: 460px;
     padding: 20px;
 
-    background-color: var(--primary-bkg-color);
 
+    overflow-y: scroll;
+    background-color: var(--primary-bkg-color);
 }

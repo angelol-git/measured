@@ -22,7 +22,7 @@ function EditView(props) {
   const measurementElements = (
     <div className="measurement-container">
       {measurementCategory[currentCategory].map((item, index) => (
-        <div className="edit-input-row" key={index}>
+        <div className="unit-input-row" key={index}>
           <label htmlFor={`${item}`} className="text-normal">
             {item}
           </label>
@@ -31,7 +31,7 @@ function EditView(props) {
               type="number"
               id={`${item}`}
               name={`${item}`}
-              className="form-input text-normal"
+              className="unit-input text-normal"
               value={currentMeasurements[item]?.[currentUnitIndex] || ""}
               min="0.00"
               step=".01"
@@ -44,6 +44,11 @@ function EditView(props) {
       ))}
     </div>
   );
+
+  function handleUnitClick() {
+    const newUnit = currentUnit === "in" ? "cm" : "in";
+    setCurrentUnit(newUnit);
+  }
   function handleUnitInput(event) {
     const { name, value } = event.target;
     let inchValue = 0;
@@ -132,7 +137,11 @@ function EditView(props) {
         </button>
         <h3 className="bold-text header-medium">Edit item</h3>
       </div>
-      <form id="edit-form" className="flex-column gap-5 text-normal">
+      <form
+        id="edit-form"
+        className="flex-column gap-5 text-normal"
+        onSubmit={handleSave}
+      >
         <div className="image-preview-container">
           <img
             id="image-preview"
@@ -141,7 +150,9 @@ function EditView(props) {
           ></img>
         </div>
         <div className="form-row">
-          <label htmlFor="image">Image: </label>
+          <label htmlFor="image" className="bold-text">
+            Image:{" "}
+          </label>
           <input
             type="text"
             id="image"
@@ -153,7 +164,9 @@ function EditView(props) {
           />
         </div>
         <div className="form-row">
-          <label htmlFor="html">Title: </label>
+          <label htmlFor="html" className="bold-text">
+            Title:{" "}
+          </label>
           <input
             type="text"
             id="title"
@@ -164,25 +177,46 @@ function EditView(props) {
           ></input>
         </div>
 
-        <div className="grey-line"></div>
+        <div className="edit-grey-line"></div>
         <div className="form-row justify-center">
-          <label htmlFor="category">Category:</label>
-          <select
-            name="category"
-            id="category"
-            className="category text-normal"
-          >
+          <label htmlFor="category" className="bold-text">
+            Category:
+          </label>
+          <select name="category" id="category" className="category">
             <option value="Tops">Tops</option>
             <option value="Bottoms">Bottoms</option>
             <option value="Outerwear">Outerwear</option>
           </select>
         </div>
-        {measurementElements}
-        <div className="edit-button-container">
+        <div className="edit-measurement-container">
+          <div className="form-row justify-space-between">
+            <label className="bold-text">Measurements</label>
+            <div>
+              <button
+                type="button"
+                className={"primary-button black-border" + inchButtonClass}
+                onClick={handleUnitClick}
+              >
+                Inch
+              </button>
+              <button
+                type="button"
+                className={"primary-button black-border" + cmButtonClass}
+                onClick={handleUnitClick}
+              >
+                Cm
+              </button>
+            </div>
+          </div>
+          {measurementElements}
+        </div>
+
+        <div>
           <input
             type="submit"
             value="Save"
             className="primary-button submit-button"
+            onClick={handleSave}
           />
         </div>
       </form>

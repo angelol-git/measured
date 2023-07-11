@@ -19,6 +19,32 @@ function Add(props) {
   const cmButtonClass =
     currentUnit === "in" ? " secondary-button-color" : " primary-button";
 
+  const measurementElements = (
+    <div className="measurement-container">
+      {measurementCategory[currentCategory].map((item, index) => (
+        <div className="unit-input-row" key={index}>
+          <label htmlFor={`${item}`} className="text-normal">
+            {item}
+          </label>
+          <div>
+            <input
+              type="number"
+              id={`${item}`}
+              name={`${item}`}
+              className="unit-input text-normal"
+              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
+              min="0.00"
+              step=".01"
+              placeholder="0.00"
+              onChange={handleUnitInput}
+            />
+            {currentUnit}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   const titleErrorElement =
     props.titleError === true ? (
       <div className="title-error">
@@ -37,12 +63,6 @@ function Add(props) {
       setCurrentCategory(1);
     }
   }
-
-  function handleUnitClick() {
-    const newUnit = currentUnit === "in" ? "cm" : "in";
-    setCurrentUnit(newUnit);
-  }
-
   function handleTitle(event) {
     setCurrentTitle(event.target.value);
   }
@@ -50,6 +70,36 @@ function Add(props) {
   useEffect(() => {
     props.verifyTitle(currentTitle);
   }, [currentTitle]);
+
+  function handleUnitClick() {
+    const newUnit = currentUnit === "in" ? "cm" : "in";
+    setCurrentUnit(newUnit);
+  }
+
+  function handleUnitInput(event) {
+    const { name, value } = event.target;
+    let inchValue = 0;
+    let cmValue = 0;
+
+    if (value.includes(".")) {
+      if (value.split(".")[1].length > 2) {
+        return;
+      }
+    }
+
+    if (currentUnit === "in") {
+      inchValue = value;
+      cmValue = (inchValue * 2.54).toFixed(2);
+    } else {
+      cmValue = value;
+      inchValue = (cmValue / 2.54).toFixed(2);
+    }
+
+    setCurrentMeasurements((currentMeasurements) => ({
+      ...currentMeasurements,
+      [name]: [[inchValue], [cmValue]],
+    }));
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -89,31 +139,6 @@ function Add(props) {
     window.location.replace("/");
   }
 
-  function handleUnitInput(event) {
-    const { name, value } = event.target;
-    let inchValue = 0;
-    let cmValue = 0;
-
-    if (value.includes(".")) {
-      if (value.split(".")[1].length > 2) {
-        return;
-      }
-    }
-
-    if (currentUnit === "in") {
-      inchValue = value;
-      cmValue = (inchValue * 2.54).toFixed(2);
-    } else {
-      cmValue = value;
-      inchValue = (cmValue / 2.54).toFixed(2);
-    }
-
-    setCurrentMeasurements((currentMeasurements) => ({
-      ...currentMeasurements,
-      [name]: [[inchValue], [cmValue]],
-    }));
-  }
-
   //Imperative
   function handleImagePreview(event) {
     let previewElement = document.getElementById("image-preview");
@@ -125,32 +150,6 @@ function Add(props) {
     }
   }
 
-  const measurementElements = (
-    <div className="measurement-container">
-      {measurementCategory[currentCategory].map((item, index) => (
-        <div className="unit-input-row" key={index}>
-          <label htmlFor={`${item}`} className="text-normal">
-            {item}
-          </label>
-          <div>
-            <input
-              type="number"
-              id={`${item}`}
-              name={`${item}`}
-              className="unit-input text-normal"
-              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
-              min="0.00"
-              step=".01"
-              placeholder="0.00"
-              onChange={handleUnitInput}
-            />
-            {currentUnit}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <div className="add-container">
       <div className="sub-row">
@@ -161,7 +160,9 @@ function Add(props) {
       </div>
       <form id="add-form" onSubmit={handleSubmit}>
         <div className="form-input">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title" className="bold-text">
+            Title
+          </label>
           <input
             type="text"
             id="title"
@@ -175,7 +176,9 @@ function Add(props) {
         </div>
 
         <div className="form-input">
-          <label htmlFor="category">Category</label>
+          <label htmlFor="category" className="bold-text">
+            Category
+          </label>
           <select
             name="category"
             id="category"
@@ -189,7 +192,9 @@ function Add(props) {
         </div>
 
         <div className="form-input">
-          <label htmlFor="size">Size</label>
+          <label htmlFor="size" className="bold-text">
+            Size
+          </label>
           <select name="size" id="size" className="input-category">
             <option value="s">S</option>
             <option value="m">M</option>
@@ -198,8 +203,9 @@ function Add(props) {
         </div>
 
         <div className="form-input">
-          {" "}
-          <label htmlFor="image">Image</label>
+          <label htmlFor="image" className="bold-text">
+            Image
+          </label>
           <input
             type="text"
             id="image"
@@ -224,7 +230,7 @@ function Add(props) {
         </div>
         <div>
           <div className="flex align-center justify-space-between">
-            <label>Measurements</label>
+            <label className="bold-text">Measurements</label>
             <div>
               <button
                 type="button"

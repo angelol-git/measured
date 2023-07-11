@@ -5,7 +5,7 @@ function ItemView(props) {
   const measurementElements = Object.entries(props.measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
-        <p className="measurement-header bold-text">{key}:</p>
+        <p className="measurement-header">{key}:</p>
         <div className="measurement-value">
           <div className="measurement-value-container">
             <p>{values[0]}</p>
