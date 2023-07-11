@@ -1,0 +1,26 @@
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-row input {
+    width: 100%;
+}
+
+.form-input {
+    height: 15px;
+}
+
+.edit-input-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+}
+
+.edit-input-row input {
+    height: 15px;
+    width: 45px;
+    margin-right: 5px;
+}

@@ -6,7 +6,7 @@
 }
 
 .main-container {
-    overflow: scroll;
+    overflow-y: overlay;
     height: 100%;
     padding: 10px 25px 0px 25px;
 }
@@ -22,25 +22,25 @@
 
 /*Text sizes*/
 .header-medium {
-    font-size: 1.2rem;
+    font-size: 24px;
 }
 
 .text-large {
-    font-size: 0.9rem;
+    font-size: 18px;
 }
 
 .text-medium {
-    font-size: 0.8rem;
+    font-size: 16px;
     font-weight: normal;
 }
 
 .text-normal {
-    font-size: 0.7rem;
+    font-size: 14px;
     font-weight: normal;
 }
 
 .text-small {
-    font-size: 0.6rem;
+    font-size: 12px;
 }
 
 .bold-text {
@@ -77,7 +77,6 @@ a {
     padding-bottom: 10px;
     position: relative;
 }
-
 
 .sub-row .position-right {
     position: absolute;
@@ -139,10 +138,13 @@ a {
 }
 
 
+
 /*Buttons*/
 .primary-button {
     border: none;
-    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
     cursor: pointer;
     transition: 0.2s;
     color: var(--secondary-text-color);
@@ -158,15 +160,28 @@ a {
     background-color: var(--secondary-button-bkg);
 }
 
+.inactive-button-color {
+    color: black;
+    background-color: rgb(192, 192, 192);
+}
+
+.inactive-button-color:hover {
+
+    background-color: rgb(208, 208, 208);
+}
+
 .deactivate {
+
     cursor: pointer;
 }
 
 .back-button {
-    font-size: 1rem;
-    width: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
     border: none;
+    font-size: 16px;
     background-color: var(--primary-bkg-color);
+
     cursor: pointer;
     transition: 0.2s;
 }
@@ -205,8 +220,8 @@ a {
 
 .medium-thumbnail {
     object-fit: cover;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
 }
 
 .large-thumbnail {

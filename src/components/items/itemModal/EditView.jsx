@@ -4,6 +4,7 @@ import "./EditView.css";
 
 function EditView(props) {
   const [currentUnit, setCurrentUnit] = useState("in");
+  const [currentCategory, setCurrentCategory] = useState(0);
   const [currentTitle, setCurrentTitle] = useState(props.title);
   const [currentImage, setCurrentImage] = useState(props.imageSrc);
   const [currentMeasurements, setCurrentMeasurements] = useState([]);
@@ -17,6 +18,56 @@ function EditView(props) {
     currentUnit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
     currentUnit === "in" ? " secondary-button-color" : " primary-button";
+
+  const measurementElements = (
+    <div className="measurement-container">
+      {measurementCategory[currentCategory].map((item, index) => (
+        <div className="edit-input-row" key={index}>
+          <label htmlFor={`${item}`} className="text-normal">
+            {item}
+          </label>
+          <div>
+            <input
+              type="number"
+              id={`${item}`}
+              name={`${item}`}
+              className="form-input text-normal"
+              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
+              min="0.00"
+              step=".01"
+              placeholder="0.00"
+              onChange={handleUnitInput}
+            />
+            {currentUnit}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+  function handleUnitInput(event) {
+    const { name, value } = event.target;
+    let inchValue = 0;
+    let cmValue = 0;
+
+    if (value.includes(".")) {
+      if (value.split(".")[1].length > 2) {
+        return;
+      }
+    }
+
+    if (currentUnit === "in") {
+      inchValue = value;
+      cmValue = (inchValue * 2.54).toFixed(2);
+    } else {
+      cmValue = value;
+      inchValue = (cmValue / 2.54).toFixed(2);
+    }
+
+    setCurrentMeasurements((currentMeasurements) => ({
+      ...currentMeasurements,
+      [name]: [[inchValue], [cmValue]],
+    }));
+  }
 
   function handleSave(event) {
     event.preventDefault();
@@ -89,7 +140,7 @@ function EditView(props) {
             src={currentImage}
           ></img>
         </div>
-        <div className="flex align-center gap-5">
+        <div className="form-row">
           <label htmlFor="image">Image: </label>
           <input
             type="text"
@@ -97,24 +148,24 @@ function EditView(props) {
             name="image"
             placeholder="Image URL"
             value={currentImage}
-            className="form-input"
+            className="text-normal form-input"
             onChange={handleImagePreview}
           />
         </div>
-        <div className="flex align-center gap-5">
+        <div className="form-row">
           <label htmlFor="html">Title: </label>
           <input
             type="text"
             id="title"
             name="title"
             value={currentTitle}
-            className="form-input"
+            className="text-normal form-input"
             onChange={handleTitle}
           ></input>
         </div>
 
         <div className="grey-line"></div>
-        <div>
+        <div className="form-row justify-center">
           <label htmlFor="category">Category:</label>
           <select
             name="category"
@@ -126,7 +177,8 @@ function EditView(props) {
             <option value="Outerwear">Outerwear</option>
           </select>
         </div>
-        <div className="button-container">
+        {measurementElements}
+        <div className="edit-button-container">
           <input
             type="submit"
             value="Save"

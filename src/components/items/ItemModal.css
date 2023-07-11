@@ -6,36 +6,10 @@
     left: 0;
     z-index: 2;
 
-    width: 310px;
-    height: 410px;
+    width: 360px;
+    height: 460px;
     padding: 20px;
 
     background-color: var(--primary-bkg-color);
-}
 
-.modal-title {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.grey-line {
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-top: 1px solid var(--secondary-bkg-color);
-}
-
-.item-measurements {
-    padding-top: 5px;
-    padding-bottom: 10px;
-}
-
-.button-container {
-    display: flex;
-    width: 310px;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 20px;
-    gap: 15px;
 }

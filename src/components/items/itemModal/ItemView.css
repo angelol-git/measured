@@ -1,0 +1,26 @@
+.modal-title {
+    padding-top: 10px;
+    padding-bottom: 25px;
+}
+
+.grey-line {
+    width: 100%;
+    padding-bottom: 15px;
+    border-top: 1px solid var(--secondary-bkg-color);
+}
+
+.item-measurements {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.bottom-button-container {
+    display: flex;
+    height: 100%;
+    align-items: end;
+    justify-content: center;
+    gap: 15px;
+}

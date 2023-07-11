@@ -25,10 +25,8 @@ function Home(props) {
 
   return (
     <section>
-      <div className="sub-row">
-        <p className="item-counter text-normal">
-          {activeItemsLength} Active items
-        </p>
+      <div className="item-counter sub-row text-small">
+        <p>{activeItemsLength} Active items</p>
       </div>
       {activeCardElements}
     </section>

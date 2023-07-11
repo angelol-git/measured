@@ -20,7 +20,7 @@
 }
 
 .active-details.show {
-    max-height: 120px;
+    max-height: 140px;
     visibility: visible;
 }
 
