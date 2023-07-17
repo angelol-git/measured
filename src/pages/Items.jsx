@@ -19,6 +19,8 @@ function Items(props) {
           handleActive={props.handleActive}
           handleUpdate={props.handleUpdate}
           handleDeleteItem={props.handleDeleteItem}
+          verifyTitle={props.verifyTitle}
+          titleError={props.titleError}
         />
       );
     });

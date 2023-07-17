@@ -52,20 +52,32 @@ function App() {
   }
 
   function handleUpdate(updatedItem, prevTitle) {
+    const updatedTitle = updatedItem.title.toUpperCase();
+
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (updatedItems[prevTitle]) {
+      if (prevTitle === updatedItem.title.toUpperCase()) {
+        // Replace the value for the existing key
         updatedItems[prevTitle] = updatedItem;
+      } else {
+        updatedItems[updatedTitle] = updatedItems[prevTitle];
+        delete updatedItems[prevTitle];
+        updatedItems[updatedTitle] = updatedItem;
       }
       return updatedItems;
     });
   }
 
-  function verifyTitle(title) {
+  function verifyTitle(title, prevTitle = "") {
+    if (title === prevTitle) {
+      setTittleError(false);
+      return;
+    }
     if (items[title.toUpperCase()]) {
       setTittleError(true);
       return;
     }
+
     setTittleError(false);
   }
 
@@ -97,6 +109,7 @@ function App() {
                 handleActive={handleActive}
                 handleUpdate={handleUpdate}
                 handleDeleteItem={handleDeleteItem}
+                verifyTitle={verifyTitle}
                 titleError={titleError}
               />
             }

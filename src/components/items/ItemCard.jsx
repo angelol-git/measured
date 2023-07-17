@@ -49,6 +49,8 @@ function ItemCard(props) {
         handleActive={props.handleActive}
         handleDeleteItem={props.handleDeleteItem}
         handleUpdate={props.handleUpdate}
+        verifyTitle={props.verifyTitle}
+        titleError={props.titleError}
       />
     </div>
   );

@@ -36,6 +36,8 @@ function ItemModal(props) {
           size={props.size}
           measurements={props.measurements}
           handleUpdate={props.handleUpdate}
+          verifyTitle={props.verifyTitle}
+          titleError={props.titleError}
         />
       );
     } else {

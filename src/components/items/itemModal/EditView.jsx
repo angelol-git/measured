@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./EditView.css";
 
 function EditView(props) {
@@ -107,6 +107,10 @@ function EditView(props) {
         Hem: [currentMeasurements["Hem"][0], currentMeasurements["Hem"][1]],
       },
     };
+
+    if (props.titleError === true) {
+      return;
+    }
     props.handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }
@@ -126,10 +130,22 @@ function EditView(props) {
     setCurrentTitle(event.target.value);
   }
 
+  useEffect(() => {
+    props.verifyTitle(currentTitle, prevTitle);
+  }, [currentTitle]);
+
   function handleSize(event) {
     setCurrentSize(event.target.value);
   }
-  //Handle category,save
+
+  const titleErrorElement =
+    props.titleError === true ? (
+      <div className="title-error">
+        <p className="error-text">Error {currentTitle} already exists.</p>
+      </div>
+    ) : (
+      ""
+    );
 
   return (
     <section className="item-modal-container">
@@ -184,7 +200,7 @@ function EditView(props) {
             onChange={handleTitle}
           ></input>
         </div>
-
+        {titleErrorElement}
         <div className="edit-grey-line"></div>
         <div className="form-row gap-15">
           <div className="flex align-center gap-5">
