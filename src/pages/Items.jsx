@@ -13,9 +13,11 @@ function Items(props) {
           active={value.active}
           category={value.category}
           title={value.title}
+          size={value.size}
           imageSrc={value.imageSrc}
           measurements={value.measurements}
           handleActive={props.handleActive}
+          handleUpdate={props.handleUpdate}
           handleDeleteItem={props.handleDeleteItem}
         />
       );

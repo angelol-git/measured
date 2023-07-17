@@ -48,19 +48,21 @@ function ItemView(props) {
         <img className="large-thumbnail" src={props.imageSrc}></img>
         <h3 className="modal-title bold-text">{props.title}</h3>
         <div className="grey-line"></div>
-        <div className="sub-row">
+        <div className="sub-row gap-15">
           <p>{props.category}</p>
-          {activeButtonElement}
+          <p>{props.size.toUpperCase()}</p>
         </div>
       </div>
       <div className="item-measurements">{measurementElements}</div>
       <div className="bottom-button-container">
+        {activeButtonElement}
         <button
           className="primary-button high-z-index"
           onClick={props.handleEdit}
         >
           Edit
         </button>
+
         <button
           className="primary-button high-z-index"
           onClick={() => props.handleDeleteItem(props.title.toUpperCase())}

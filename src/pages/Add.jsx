@@ -196,9 +196,9 @@ function Add(props) {
             Size
           </label>
           <select name="size" id="size" className="input-category">
-            <option value="s">S</option>
-            <option value="m">M</option>
-            <option value="l">L</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
           </select>
         </div>
 

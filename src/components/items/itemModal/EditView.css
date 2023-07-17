@@ -1,5 +1,6 @@
 .form-row {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 5px;
 }
@@ -7,11 +8,6 @@
 .form-row input {
     width: 100%;
 }
-
-label {
-    font-weight: bold;
-}
-
 
 .form .edit-input-row {
     display: flex;

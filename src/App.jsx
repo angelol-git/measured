@@ -51,9 +51,12 @@ function App() {
     });
   }
 
-  function updateItem(updatedItem) {
+  function handleUpdate(updatedItem, prevTitle) {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
+      if (updatedItems[prevTitle]) {
+        updatedItems[prevTitle] = updatedItem;
+      }
       return updatedItems;
     });
   }
@@ -92,6 +95,7 @@ function App() {
               <Items
                 itemData={items}
                 handleActive={handleActive}
+                handleUpdate={handleUpdate}
                 handleDeleteItem={handleDeleteItem}
                 titleError={titleError}
               />

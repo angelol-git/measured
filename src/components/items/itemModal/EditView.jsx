@@ -4,10 +4,15 @@ import "./EditView.css";
 
 function EditView(props) {
   const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState(props.category);
   const [currentTitle, setCurrentTitle] = useState(props.title);
   const [currentImage, setCurrentImage] = useState(props.imageSrc);
-  const [currentMeasurements, setCurrentMeasurements] = useState([]);
+  const [currentSize, setCurrentSize] = useState(props.size);
+  const [currentMeasurements, setCurrentMeasurements] = useState(
+    props.measurements
+  );
+  const [prevTitle, setPrevTitle] = useState(props.title);
+
   //0 = Tops, Outerwear, 1 = Bottoms
   const measurementCategory = [
     ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
@@ -21,7 +26,7 @@ function EditView(props) {
 
   const measurementElements = (
     <div className="measurement-container">
-      {measurementCategory[currentCategory].map((item, index) => (
+      {measurementCategory[0].map((item, index) => (
         <div className="unit-input-row" key={index}>
           <label htmlFor={`${item}`} className="text-normal">
             {item}
@@ -77,11 +82,10 @@ function EditView(props) {
   function handleSave(event) {
     event.preventDefault();
     const newItem = {
-      category: event.target.category.value,
-      title: event.target.title.value,
-      size: event.target.size.value,
-      imageSrc: event.target.image.value,
-      active: event.target.active.checked,
+      category: currentCategory,
+      title: currentTitle,
+      size: currentSize,
+      imageSrc: currentImage,
 
       measurements: {
         Chest: [
@@ -103,15 +107,10 @@ function EditView(props) {
         Hem: [currentMeasurements["Hem"][0], currentMeasurements["Hem"][1]],
       },
     };
-    setEditMode(false);
-  }
-  function handleTitle(event) {
-    setCurrentTitle(event.target.value);
+    props.handleUpdate(newItem, prevTitle.toUpperCase());
+    props.handleEditBack();
   }
 
-  function handleImage(event) {
-    setCurrentTitle(event.target.value);
-  }
   function handleImagePreview(event) {
     setCurrentImage(event.target.value);
     let previewElement = document.getElementById("image-preview");
@@ -122,6 +121,15 @@ function EditView(props) {
       previewElement.classList.remove("display-block");
     }
   }
+
+  function handleTitle(event) {
+    setCurrentTitle(event.target.value);
+  }
+
+  function handleSize(event) {
+    setCurrentSize(event.target.value);
+  }
+  //Handle category,save
 
   return (
     <section className="item-modal-container">
@@ -178,15 +186,38 @@ function EditView(props) {
         </div>
 
         <div className="edit-grey-line"></div>
-        <div className="form-row justify-center">
-          <label htmlFor="category" className="bold-text">
-            Category:
-          </label>
-          <select name="category" id="category" className="category">
-            <option value="Tops">Tops</option>
-            <option value="Bottoms">Bottoms</option>
-            <option value="Outerwear">Outerwear</option>
-          </select>
+        <div className="form-row gap-15">
+          <div className="flex align-center gap-5">
+            <label htmlFor="category" className="bold-text">
+              Category:
+            </label>
+            <select
+              name="category"
+              id="category"
+              className="category"
+              defaultValue={currentCategory}
+            >
+              <option value="Tops">Tops</option>
+              <option value="Bottoms">Bottoms</option>
+              <option value="Outerwear">Outerwear</option>
+            </select>
+          </div>
+          <div className="flex align-center gap-5">
+            <label htmlFor="size" className="bold-text">
+              Size:
+            </label>
+            <select
+              name="size"
+              id="size"
+              className="size"
+              defaultValue={currentSize}
+              onChange={handleSize}
+            >
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+            </select>
+          </div>
         </div>
         <div className="edit-measurement-container">
           <div className="form-row justify-space-between">

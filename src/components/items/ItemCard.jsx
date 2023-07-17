@@ -43,10 +43,12 @@ function ItemCard(props) {
         active={props.active}
         category={props.category}
         title={props.title}
+        size={props.size}
         imageSrc={props.imageSrc}
         measurements={props.measurements}
         handleActive={props.handleActive}
         handleDeleteItem={props.handleDeleteItem}
+        handleUpdate={props.handleUpdate}
       />
     </div>
   );

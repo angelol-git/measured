@@ -15,22 +15,27 @@ function ItemModal(props) {
     setEditMode(false);
   }
 
+  const convertedCategory = () => {
+    if (props.category === "Tops" || props.category === "Outerwear") {
+      return 0;
+    } else {
+      return 1;
+    }
+  };
+
   if (props.clickModal) {
     if (editMode) {
       return (
         <EditView
           key={props.title}
-          clickModal={props.clickModal}
-          handleClickModal={props.handleClickModal}
-          handleEdit={handleEdit}
           handleEditBack={handleEditBack}
-          handleActive={props.handleActive}
-          handleDeleteItem={props.handleDeleteItem}
-          active={props.active}
+          convertedCategory={convertedCategory}
           category={props.category}
           title={props.title}
           imageSrc={props.imageSrc}
+          size={props.size}
           measurements={props.measurements}
+          handleUpdate={props.handleUpdate}
         />
       );
     } else {
@@ -46,6 +51,7 @@ function ItemModal(props) {
           category={props.category}
           title={props.title}
           imageSrc={props.imageSrc}
+          size={props.size}
           measurements={props.measurements}
         />
       );
