@@ -4,15 +4,20 @@ function checkTable() {
     const requestButton = document.querySelector(".RequestAction_button__mAClZ");
 
     if (measurementTable) {
-        chrome.runtime.sendMessage({ action: 'getItem', key: 'items' }, (response) => {
-            const items = response.value;
-            // Use the retrieved value here
-            console.log(items);
-        });
         console.log("Found table!");
         const category = getCategory();
-        compareMeasurements(measurementTable, category);
-        clearInterval(intervalTable);
+        //Retrieve items
+        chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
+            const item = response.items;
+            if (Object.keys(item).length === 0) {
+                console.log("No active items or does not match item category");
+                clearInterval(intervalTable);
+                return;
+            }
+            compareMeasurements(measurementTable, item);
+            clearInterval(intervalTable);
+        });
+
     }
     else if (requestButton) {
         console.log("No measurements provided");
@@ -26,7 +31,7 @@ function getCategory() {
     return classList[2].innerText.split(" ")[1];
 }
 
-function compareMeasurements(measurementTable, category) {
+function compareMeasurements(measurementTable) {
     const staticMeasurements = [
         ["Chest", "15", "30"],
         ["Length", "30", "76.2"],

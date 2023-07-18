@@ -137,6 +137,11 @@ function Add(props) {
       return;
     }
     props.handleAddItem(newItem);
+    props.handleActive(
+      event.target.title.value.toUpperCase(),
+      event.target.category.value,
+      true
+    );
     navigate("/items");
   }
 

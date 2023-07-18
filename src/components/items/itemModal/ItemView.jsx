@@ -22,14 +22,18 @@ function ItemView(props) {
   const activeButtonElement = props.active ? (
     <button
       className="primary-button inactive-button-color high-z-index position-right"
-      onClick={() => props.handleActive(props.title.toUpperCase())}
+      onClick={() =>
+        props.handleActive(props.title.toUpperCase(), props.category)
+      }
     >
       Set as Inactive
     </button>
   ) : (
     <button
       className="primary-button high-z-index position-right"
-      onClick={() => props.handleActive(props.title.toUpperCase())}
+      onClick={() =>
+        props.handleActive(props.title.toUpperCase(), props.category)
+      }
     >
       Set as Active
     </button>

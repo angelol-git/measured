@@ -31,22 +31,20 @@ function App() {
     });
   }
 
-  function handleActive(title) {
+  function handleActive(title, category, newItem = false) {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (updatedItems[title]) {
-        if (updatedItems[title].active === true) {
-          updatedItems[title] = {
-            ...updatedItems[title],
-            active: false,
-          };
-        } else {
-          updatedItems[title] = {
-            ...updatedItems[title],
-            active: true,
-          };
-        }
+
+      if (updatedItems[title] && newItem === false) {
+        updatedItems[title].active = !updatedItems[title].active;
       }
+
+      Object.entries(updatedItems).forEach(([key, value]) => {
+        if (key !== title && value.category === category) {
+          updatedItems[key].active = false;
+        }
+      });
+
       return updatedItems;
     });
   }
@@ -129,6 +127,7 @@ function App() {
                 handleAddItem={handleAddItem}
                 verifyTitle={verifyTitle}
                 titleError={titleError}
+                handleActive={handleActive}
               />
             }
           />
