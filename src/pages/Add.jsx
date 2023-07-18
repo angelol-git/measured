@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Add.css";
 function Add(props) {
+  const navigate = useNavigate();
   const [currentUnit, setCurrentUnit] = useState("in");
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("");
@@ -136,7 +137,7 @@ function Add(props) {
       return;
     }
     props.handleAddItem(newItem);
-    window.location.replace("/");
+    navigate("/items");
   }
 
   //Imperative

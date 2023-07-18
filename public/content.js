@@ -4,8 +4,14 @@ function checkTable() {
     const requestButton = document.querySelector(".RequestAction_button__mAClZ");
 
     if (measurementTable) {
+        chrome.runtime.sendMessage({ action: 'getItem', key: 'items' }, (response) => {
+            const items = response.value;
+            // Use the retrieved value here
+            console.log(items);
+        });
         console.log("Found table!");
-        compareMeasurements(measurementTable);
+        const category = getCategory();
+        compareMeasurements(measurementTable, category);
         clearInterval(intervalTable);
     }
     else if (requestButton) {
@@ -13,12 +19,16 @@ function checkTable() {
         clearInterval(intervalTable);
         return;
     }
-    // RequestAction_button__mAClZ
 }
 
-function compareMeasurements(measurementTable) {
+function getCategory() {
+    const classList = document.querySelectorAll(".Breadcrumbs_link__q_nNg");
+    return classList[2].innerText.split(" ")[1];
+}
+
+function compareMeasurements(measurementTable, category) {
     const staticMeasurements = [
-        ["Chest", "22", "55.9"],
+        ["Chest", "15", "30"],
         ["Length", "30", "76.2"],
         ["Shoulders", "18", "45.7"],
         ["Sleeve Length", "25", "63.5"],
@@ -43,6 +53,17 @@ function compareMeasurements(measurementTable) {
 
 }
 
+function parseMeasurements(measurementTable) {
+    //Chest,Length,Shoulders,Sleeve Length,Hem
+    const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
+    const measurements = parsedData.map(innerArray => {
+        return innerArray.map(item => {
+            return item.replace(/(in|cm)/g, '').trim();
+        });
+    });
+    return measurements;
+}
+
 function addDifference(measurementTable, position, inchDifference, cmDifference) {
     const inchCell = measurementTable.children[position].children[1];
     const cmCell = measurementTable.children[position].children[2];
@@ -63,17 +84,6 @@ function addDifference(measurementTable, position, inchDifference, cmDifference)
     }
     inchCell.innerHTML += ` ${formattedInch}`;
     cmCell.innerHTML += ` ${formattedCm}`;
-}
-
-function parseMeasurements(measurementTable) {
-    //Chest,Length,Shoulders,Sleeve Length,Hem
-    const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
-    const measurements = parsedData.map(innerArray => {
-        return innerArray.map(item => {
-            return item.replace(/(in|cm)/g, '').trim();
-        });
-    });
-    return measurements;
 }
 
 const intervalTable = setInterval(checkTable, 500);

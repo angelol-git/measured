@@ -12,5 +12,8 @@
       "matches": ["https://www.grailed.com/listings/*"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }

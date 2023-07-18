@@ -1,6 +1,5 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-//import itemData from "../public/data/items.json";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
@@ -12,10 +11,11 @@ function App() {
   const navigate = useNavigate();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [titleError, setTittleError] = useState("");
-  const [items, setItems] = useState(() => {
-    const savedItems = localStorage.getItem("items");
-    return savedItems ? JSON.parse(savedItems) : {};
-  });
+  const [items, setItems] = useState({});
+  // const [items, setItems] = useState(() => {
+  //   const savedItems = localStorage.getItem("items");
+  //   return savedItems ? JSON.parse(savedItems) : {};
+  // });
 
   function handleAddItem(newItem) {
     setItems((prevItems) => {
@@ -82,7 +82,15 @@ function App() {
   }
 
   useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
+    chrome.storage.local.get("items", (result) => {
+      const savedItems = result.items;
+      setItems(savedItems || {});
+    });
+  }, []);
+
+  useEffect(() => {
+    //localStorage.setItem("items", JSON.stringify(items));
+    chrome.storage.local.set({ items }, () => {});
   }, [items]);
 
   useEffect(() => {
