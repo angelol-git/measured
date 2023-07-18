@@ -49,7 +49,11 @@ function ItemView(props) {
         </button>
       </div>
       <div className="text-center">
-        <img className="large-thumbnail" src={props.imageSrc}></img>
+        <img
+          className="large-thumbnail"
+          src={props.imageSrc}
+          alt={props.title}
+        ></img>
         <h3 className="modal-title bold-text">{props.title}</h3>
         <div className="grey-line"></div>
         <div className="sub-row gap-15">

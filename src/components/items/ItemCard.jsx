@@ -22,6 +22,7 @@ function ItemCard(props) {
         <img
           className={"medium-thumbnail" + (hover ? " darken-image" : "")}
           src={props.imageSrc}
+          alt={props.title}
         ></img>
         <div
           className={
@@ -38,14 +39,14 @@ function ItemCard(props) {
       </div>
       <ItemModal
         key={props.title}
-        clickModal={clickModal}
-        handleClickModal={handleClickModal}
-        active={props.active}
-        category={props.category}
         title={props.title}
+        category={props.category}
+        active={props.active}
         size={props.size}
         imageSrc={props.imageSrc}
         measurements={props.measurements}
+        clickModal={clickModal}
+        handleClickModal={handleClickModal}
         handleActive={props.handleActive}
         handleDeleteItem={props.handleDeleteItem}
         handleUpdate={props.handleUpdate}

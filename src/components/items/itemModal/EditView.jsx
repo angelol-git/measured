@@ -171,6 +171,7 @@ function EditView(props) {
             id="image-preview"
             className="medium-thumbnail"
             src={currentImage}
+            alt={currentTitle}
           ></img>
         </div>
         <div className="form-row">

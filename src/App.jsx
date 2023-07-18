@@ -18,8 +18,9 @@ function App() {
   // });
 
   function handleAddItem(newItem) {
+    const checkedItem = checkEmptyImage(newItem);
     setItems((prevItems) => {
-      return { ...prevItems, [newItem.title.toUpperCase()]: newItem };
+      return { ...prevItems, [checkedItem.title.toUpperCase()]: checkedItem };
     });
   }
 
@@ -50,17 +51,18 @@ function App() {
   }
 
   function handleUpdate(updatedItem, prevTitle) {
-    const updatedTitle = updatedItem.title.toUpperCase();
+    const checkedItem = checkEmptyImage(updatedItem);
+    const updatedTitle = checkedItem.title.toUpperCase();
 
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (prevTitle === updatedItem.title.toUpperCase()) {
+      if (prevTitle === checkedItem.title.toUpperCase()) {
         // Replace the value for the existing key
-        updatedItems[prevTitle] = updatedItem;
+        updatedItems[prevTitle] = checkedItem;
       } else {
         updatedItems[updatedTitle] = updatedItems[prevTitle];
         delete updatedItems[prevTitle];
-        updatedItems[updatedTitle] = updatedItem;
+        updatedItems[updatedTitle] = checkedItem;
       }
       return updatedItems;
     });
@@ -77,6 +79,22 @@ function App() {
     }
 
     setTittleError(false);
+  }
+
+  function checkEmptyImage(newItem) {
+    console.log("here");
+    if (newItem.imageSrc === "") {
+      console.log("here2");
+
+      if (newItem.category === "Tops") {
+        console.log("here3");
+
+        newItem.imageSrc =
+          "https://timvandevall.com/wp-content/uploads/2014/06/blank-tshirt-template.jpg";
+      }
+    }
+    console.log(newItem);
+    return newItem;
   }
 
   useEffect(() => {

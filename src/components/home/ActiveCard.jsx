@@ -8,7 +8,9 @@ function ActiveCard(props) {
   const activeButtonElement = props.active ? (
     <button
       className="primary-button inactive-button-color"
-      onClick={() => props.handleActive(props.title.toUpperCase())}
+      onClick={() =>
+        props.handleActive(props.title.toUpperCase(), props.category)
+      }
     >
       Set as Inactive
     </button>
@@ -44,7 +46,11 @@ function ActiveCard(props) {
           <p className="title bold-text">{props.title}</p>
           <p>{props.category}</p>
         </div>
-        <img className="mini-thumbnail" src={props.imageSrc}></img>
+        <img
+          className="mini-thumbnail"
+          src={props.imageSrc}
+          alt={props.title}
+        ></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>
         {measurementElements}
