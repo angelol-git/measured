@@ -98,7 +98,7 @@ function Add(props) {
 
     setCurrentMeasurements((currentMeasurements) => ({
       ...currentMeasurements,
-      [name]: [[inchValue], [cmValue]],
+      [name]: [inchValue, cmValue],
     }));
   }
 
@@ -112,26 +112,17 @@ function Add(props) {
       imageSrc: event.target.image.value,
       active: event.target.active.checked,
 
-      measurements: {
-        Chest: [
-          currentMeasurements["Chest"][0],
-          currentMeasurements["Chest"][1],
-        ],
-        Length: [
-          currentMeasurements["Length"][0],
-          currentMeasurements["Length"][1],
-        ],
-        Shoulders: [
-          currentMeasurements["Shoulders"][0],
-          currentMeasurements["Shoulders"][1],
-        ],
-        "Sleeve Length": [
-          currentMeasurements["Sleeve Length"][0],
-          currentMeasurements["Sleeve Length"][1],
-        ],
-        Hem: [currentMeasurements["Hem"][0], currentMeasurements["Hem"][1]],
-      },
+      measurements: {},
     };
+
+    for (let i = 0; i < measurementCategory[currentCategory].length; i++) {
+      const categoryKey = measurementCategory[currentCategory][i];
+      const categoryValue = [
+        currentMeasurements[categoryKey][0],
+        currentMeasurements[categoryKey][1],
+      ];
+      newItem.measurements[categoryKey] = categoryValue;
+    }
 
     if (props.titleError === true) {
       return;
@@ -142,6 +133,7 @@ function Add(props) {
       event.target.category.value,
       true
     );
+
     navigate("/items");
   }
 

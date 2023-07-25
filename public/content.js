@@ -1,5 +1,4 @@
 function checkTable() {
-    console.log("Checking table");
     const measurementTable = document.querySelector(".Table_table__conFW");
     const requestButton = document.querySelector(".RequestAction_button__mAClZ");
 
@@ -10,11 +9,11 @@ function checkTable() {
         chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
             const item = response.items;
             if (Object.keys(item).length === 0) {
-                console.log("No active items or does not match item category");
+                console.log("No active items.");
                 clearInterval(intervalTable);
                 return;
             }
-            compareMeasurements(measurementTable, item);
+            compareMeasurements(measurementTable, Object.values(item)[0]);
             clearInterval(intervalTable);
         });
 
@@ -31,7 +30,7 @@ function getCategory() {
     return classList[2].innerText.split(" ")[1];
 }
 
-function compareMeasurements(measurementTable) {
+function compareMeasurements(measurementTable, item) {
     const staticMeasurements = [
         ["Chest", "15", "30"],
         ["Length", "30", "76.2"],
@@ -40,32 +39,40 @@ function compareMeasurements(measurementTable) {
         ["Hem", "22", "80"]
     ]
 
+    console.log(item.measurements);
     const measurementArray = parseMeasurements(measurementTable);
+    // for (let i = 0; i < measurementArray.length; i++) {
+    //     if (measurementArray[i][0] === staticMeasurements[i][0]) {
+    //         //console.log(measurementArray[i][0]);
 
-    for (let i = 0; i < measurementArray.length; i++) {
-        if (measurementArray[i][0] === staticMeasurements[i][0]) {
-            //console.log(measurementArray[i][0]);
+    //         const inchDifference = (measurementArray[i][1] - staticMeasurements[i][1]).toFixed(2);
+    //         const cmDifference = (measurementArray[i][2] - staticMeasurements[i][2]).toFixed(2);
 
-            const inchDifference = (measurementArray[i][1] - staticMeasurements[i][1]).toFixed(2);
-            const cmDifference = (measurementArray[i][2] - staticMeasurements[i][2]).toFixed(2);
+    //         //console.log(`in: ${measurementArray[i][1]} - ${staticMeasurements[i][1]} = `, inchDifference);
+    //         //console.log(`cm: ${measurementArray[i][2]} - ${staticMeasurements[i][2]} = `, cmDifference);
 
-            //console.log(`in: ${measurementArray[i][1]} - ${staticMeasurements[i][1]} = `, inchDifference);
-            //console.log(`cm: ${measurementArray[i][2]} - ${staticMeasurements[i][2]} = `, cmDifference);
-
-            addDifference(measurementTable, i, inchDifference, cmDifference);
-        }
-    }
+    //         addDifference(measurementTable, i, inchDifference, cmDifference);
+    //     }
+    // }
 
 }
 
 function parseMeasurements(measurementTable) {
     //Chest,Length,Shoulders,Sleeve Length,Hem
     const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
+
     const measurements = parsedData.map(innerArray => {
-        return innerArray.map(item => {
-            return item.replace(/(in|cm)/g, '').trim();
-        });
+        const newMeasurement = {
+            [innerArray[0]]: [
+                (innerArray[1].split(" "))[0],
+                (innerArray[2].split(" "))[0]
+            ]
+        };
+        return newMeasurement;
     });
+
+    console.log(measurements);
+
     return measurements;
 }
 
