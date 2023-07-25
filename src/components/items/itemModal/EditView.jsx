@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import "./EditView.css";
 
 function EditView(props) {
+  const prevTitle = props.title;
+  const prevCategory = props.category;
   const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState(props.category);
+  const [currentCategory, setCurrentCategory] = useState(
+    prevCategory === "Bottoms" ? 1 : 0
+  );
   const [currentTitle, setCurrentTitle] = useState(props.title);
   const [currentImage, setCurrentImage] = useState(props.imageSrc);
   const [currentSize, setCurrentSize] = useState(props.size);
   const [currentMeasurements, setCurrentMeasurements] = useState(
     props.measurements
   );
-  const [prevTitle, setPrevTitle] = useState(props.title);
 
   //0 = Tops, Outerwear, 1 = Bottoms
   const measurementCategory = [
@@ -87,26 +90,17 @@ function EditView(props) {
       size: currentSize,
       imageSrc: currentImage,
 
-      measurements: {
-        Chest: [
-          currentMeasurements["Chest"][0],
-          currentMeasurements["Chest"][1],
-        ],
-        Length: [
-          currentMeasurements["Length"][0],
-          currentMeasurements["Length"][1],
-        ],
-        Shoulders: [
-          currentMeasurements["Shoulders"][0],
-          currentMeasurements["Shoulders"][1],
-        ],
-        "Sleeve Length": [
-          currentMeasurements["Sleeve Length"][0],
-          currentMeasurements["Sleeve Length"][1],
-        ],
-        Hem: [currentMeasurements["Hem"][0], currentMeasurements["Hem"][1]],
-      },
+      measurements: {},
     };
+
+    for (let i = 0; i < measurementCategory[currentCategory].length; i++) {
+      const categoryKey = measurementCategory[currentCategory][i];
+      const categoryValue = [
+        currentMeasurements[categoryKey][0],
+        currentMeasurements[categoryKey][1],
+      ];
+      newItem.measurements[categoryKey] = categoryValue;
+    }
 
     if (props.titleError === true) {
       return;
@@ -114,7 +108,14 @@ function EditView(props) {
     props.handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }
-
+  function handleCategoryChange(event) {
+    const selectedCategory = event.target.value;
+    if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
+      setCurrentCategory(0);
+    } else {
+      setCurrentCategory(1);
+    }
+  }
   function handleImagePreview(event) {
     setCurrentImage(event.target.value);
     let previewElement = document.getElementById("image-preview");
@@ -213,6 +214,7 @@ function EditView(props) {
               id="category"
               className="category"
               defaultValue={currentCategory}
+              onChange={handleCategoryChange}
             >
               <option value="Tops">Tops</option>
               <option value="Bottoms">Bottoms</option>

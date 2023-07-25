@@ -82,18 +82,12 @@ function App() {
   }
 
   function checkEmptyImage(newItem) {
-    console.log("here");
     if (newItem.imageSrc === "") {
-      console.log("here2");
-
       if (newItem.category === "Tops") {
-        console.log("here3");
-
         newItem.imageSrc =
           "https://timvandevall.com/wp-content/uploads/2014/06/blank-tshirt-template.jpg";
       }
     }
-    console.log(newItem);
     return newItem;
   }
 

@@ -6,14 +6,15 @@ import "./Add.css";
 function Add(props) {
   const navigate = useNavigate();
   const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState("Tops");
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentMeasurements, setCurrentMeasurements] = useState([]);
   //0 = Tops, Outerwear, 1 = Bottoms
-  const measurementCategory = [
-    ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
-    ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
-  ];
+  const measurementCategory = {
+    Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+    Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
+    Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+  };
   const currentUnitIndex = currentUnit === "in" ? 0 : 1;
   const inchButtonClass =
     currentUnit === "in" ? " primary-button" : " secondary-button-color";
@@ -56,14 +57,12 @@ function Add(props) {
     );
 
   const tittleClassNames = props.titleError === true ? " error-border" : "";
+
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
-    if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
-      setCurrentCategory(0);
-    } else {
-      setCurrentCategory(1);
-    }
+    setCurrentCategory(measurementCategory[selectedCategory]);
   }
+
   function handleTitle(event) {
     setCurrentTitle(event.target.value);
   }
@@ -127,6 +126,7 @@ function Add(props) {
     if (props.titleError === true) {
       return;
     }
+
     props.handleAddItem(newItem);
     props.handleActive(
       event.target.title.value.toUpperCase(),

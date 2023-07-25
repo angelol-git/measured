@@ -8,7 +8,7 @@
 .main-container {
     overflow-y: overlay;
     height: 100%;
-    padding: 10px 25px 0px 25px;
+    padding: 0px 25px 0px 25px;
 }
 
 .measurement-container {
@@ -100,6 +100,7 @@ a {
 }
 
 .item-counter-row {
+    padding-top: 20px;
     padding-bottom: 20px;
 }
 
