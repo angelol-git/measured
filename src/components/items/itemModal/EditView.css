@@ -1,3 +1,9 @@
+#edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .form-row {
     display: flex;
     justify-content: center;
@@ -18,8 +24,8 @@
 
 .edit-grey-line {
     width: 100%;
-    margin-top: 10px;
-    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border-top: 1px solid var(--secondary-bkg-color);
 }
 
@@ -30,6 +36,5 @@
 }
 
 .edit-measurement-container {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
 }

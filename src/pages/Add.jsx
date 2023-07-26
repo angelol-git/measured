@@ -5,25 +5,27 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Add.css";
 function Add(props) {
   const navigate = useNavigate();
-  const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState("Tops");
-  const [currentTitle, setCurrentTitle] = useState("");
-  const [currentMeasurements, setCurrentMeasurements] = useState([]);
+  const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [unit, setUnit] = useState("in");
+  const [category, setCategory] = useState("Tops");
+  const [title, setTitle] = useState("");
+  const [measurements, setMeasurements] = useState([]);
   //0 = Tops, Outerwear, 1 = Bottoms
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
-  const currentUnitIndex = currentUnit === "in" ? 0 : 1;
+  const unitIndex = unit === "in" ? 0 : 1;
   const inchButtonClass =
-    currentUnit === "in" ? " primary-button" : " secondary-button-color";
+    unit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
-    currentUnit === "in" ? " secondary-button-color" : " primary-button";
+    unit === "in" ? " secondary-button-color" : " primary-button";
 
   const measurementElements = (
     <div className="measurement-container">
-      {measurementCategory[currentCategory].map((item, index) => (
+      {measurementCategory[category].map((item, index) => (
         <div className="unit-input-row" key={index}>
           <label htmlFor={`${item}`} className="text-normal">
             {item}
@@ -34,46 +36,26 @@ function Add(props) {
               id={`${item}`}
               name={`${item}`}
               className="unit-input text-normal"
-              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
+              value={measurements[item]?.[unitIndex] || ""}
               min="0.00"
               step=".01"
               placeholder="0.00"
               onChange={handleUnitInput}
             />
-            {currentUnit}
+            {unit}
           </div>
         </div>
       ))}
     </div>
   );
 
-  const titleErrorElement =
-    props.titleError === true ? (
-      <div className="title-error">
-        <p className="error-text">Error {currentTitle} already exist</p>
-      </div>
-    ) : (
-      ""
-    );
-
-  const tittleClassNames = props.titleError === true ? " error-border" : "";
-
-  function handleCategoryChange(event) {
-    const selectedCategory = event.target.value;
-    setCurrentCategory(measurementCategory[selectedCategory]);
-  }
-
-  function handleTitle(event) {
-    setCurrentTitle(event.target.value);
-  }
-
   useEffect(() => {
-    props.verifyTitle(currentTitle);
-  }, [currentTitle]);
+    props.verifyTitle(title);
+  }, [title]);
 
   function handleUnitClick() {
-    const newUnit = currentUnit === "in" ? "cm" : "in";
-    setCurrentUnit(newUnit);
+    const newUnit = unit === "in" ? "cm" : "in";
+    setUnit(newUnit);
   }
 
   function handleUnitInput(event) {
@@ -87,7 +69,7 @@ function Add(props) {
       }
     }
 
-    if (currentUnit === "in") {
+    if (unit === "in") {
       inchValue = value;
       cmValue = (inchValue * 2.54).toFixed(2);
     } else {
@@ -95,8 +77,8 @@ function Add(props) {
       inchValue = (cmValue / 2.54).toFixed(2);
     }
 
-    setCurrentMeasurements((currentMeasurements) => ({
-      ...currentMeasurements,
+    setMeasurements((measurements) => ({
+      ...measurements,
       [name]: [inchValue, cmValue],
     }));
   }
@@ -105,25 +87,25 @@ function Add(props) {
     event.preventDefault();
 
     const newItem = {
-      category: event.target.category.value,
-      title: event.target.title.value,
+      category: category,
+      title: title,
       size: event.target.size.value,
-      imageSrc: event.target.image.value,
+      imageSrc: imageUrl,
       active: event.target.active.checked,
 
       measurements: {},
     };
 
-    for (let i = 0; i < measurementCategory[currentCategory].length; i++) {
-      const categoryKey = measurementCategory[currentCategory][i];
+    for (let i = 0; i < measurementCategory[category].length; i++) {
+      const categoryKey = measurementCategory[category][i];
       const categoryValue = [
-        currentMeasurements[categoryKey][0],
-        currentMeasurements[categoryKey][1],
+        measurements[categoryKey][0],
+        measurements[categoryKey][1],
       ];
       newItem.measurements[categoryKey] = categoryValue;
     }
 
-    if (props.titleError === true) {
+    if (props.titleError || imageError) {
       return;
     }
 
@@ -137,15 +119,13 @@ function Add(props) {
     navigate("/items");
   }
 
-  //Imperative
-  function handleImagePreview(event) {
-    let previewElement = document.getElementById("image-preview");
-    if (event.target.value.length > 0) {
-      previewElement.src = event.target.value;
-      previewElement.classList.add("display-block");
-    } else {
-      previewElement.classList.remove("display-block");
-    }
+  function handleImageError() {
+    setImageError(true);
+  }
+
+  function handleImageChange(event) {
+    setImageError(false);
+    setImageUrl(event.target.value);
   }
 
   return (
@@ -165,12 +145,15 @@ function Add(props) {
             type="text"
             id="title"
             name="title"
-            onChange={handleTitle}
-            className={"input-text" + tittleClassNames}
+            onChange={(e) => setTitle(e.target.value)}
+            className={`input-text ${props.titleError ? "error-border" : ""}`}
             required
           />
-
-          {titleErrorElement}
+          {props.titleError ? (
+            <p className="error-text">Error {title} already exist</p>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="form-input">
@@ -181,7 +164,8 @@ function Add(props) {
             name="category"
             id="category"
             className="input-category"
-            onChange={handleCategoryChange}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <option value="Tops">Tops</option>
             <option value="Bottoms">Bottoms</option>
@@ -209,17 +193,32 @@ function Add(props) {
             id="image"
             name="image"
             placeholder="Image URL"
-            className="input-text"
-            onChange={handleImagePreview}
+            className={`input-text ${imageError ? "error-border" : ""}`}
+            value={imageUrl}
+            onChange={handleImageChange}
           />
+          {imageError ? (
+            <p className="error-text">Image cannot be found </p>
+          ) : (
+            ""
+          )}
         </div>
 
-        <div className="image-preview-container">
-          <img
-            id="image-preview"
-            className="medium-thumbnail display-none"
-          ></img>
-        </div>
+        {imageUrl.length !== 0 && !imageError ? (
+          <div className="image-preview-container">
+            <div className="image-container">
+              <img
+                id="image"
+                src={imageUrl}
+                className="medium-thumbnail"
+                onError={handleImageError}
+              ></img>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div>
           <label htmlFor="active">
             Set as active:

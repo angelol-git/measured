@@ -6,21 +6,18 @@ function EditView(props) {
   const prevTitle = props.title;
   const prevCategory = props.category;
   const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState(
-    prevCategory === "Bottoms" ? 1 : 0
-  );
+  const [currentCategory, setCurrentCategory] = useState(prevCategory);
   const [currentTitle, setCurrentTitle] = useState(props.title);
   const [currentImage, setCurrentImage] = useState(props.imageSrc);
   const [currentSize, setCurrentSize] = useState(props.size);
   const [currentMeasurements, setCurrentMeasurements] = useState(
     props.measurements
   );
-
-  //0 = Tops, Outerwear, 1 = Bottoms
-  const measurementCategory = [
-    ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
-    ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
-  ];
+  const measurementCategory = {
+    Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+    Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
+    Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+  };
   const currentUnitIndex = currentUnit === "in" ? 0 : 1;
   const inchButtonClass =
     currentUnit === "in" ? " primary-button" : " secondary-button-color";
@@ -29,7 +26,7 @@ function EditView(props) {
 
   const measurementElements = (
     <div className="measurement-container">
-      {measurementCategory[0].map((item, index) => (
+      {measurementCategory[currentCategory].map((item, index) => (
         <div className="unit-input-row" key={index}>
           <label htmlFor={`${item}`} className="text-normal">
             {item}
@@ -108,14 +105,12 @@ function EditView(props) {
     props.handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }
+
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
-    if (selectedCategory === "Tops" || selectedCategory == "Outerwear") {
-      setCurrentCategory(0);
-    } else {
-      setCurrentCategory(1);
-    }
+    setCurrentCategory(selectedCategory);
   }
+
   function handleImagePreview(event) {
     setCurrentImage(event.target.value);
     let previewElement = document.getElementById("image-preview");
@@ -162,11 +157,7 @@ function EditView(props) {
         </button>
         <h3 className="bold-text header-medium">Edit item</h3>
       </div>
-      <form
-        id="edit-form"
-        className="flex-column gap-5 text-normal"
-        onSubmit={handleSave}
-      >
+      <form id="edit-form" className="text-normal" onSubmit={handleSave}>
         <div className="image-preview-container">
           <img
             id="image-preview"
