@@ -31,58 +31,58 @@ function getCategory() {
 }
 
 function compareMeasurements(measurementTable, item) {
-    const staticMeasurements = [
-        ["Chest", "15", "30"],
-        ["Length", "30", "76.2"],
-        ["Shoulders", "18", "45.7"],
-        ["Sleeve Length", "25", "63.5"],
-        ["Hem", "22", "80"]
-    ]
+    let position = 0;
+    const parsedData = parseMeasurements(measurementTable);
 
-    console.log(item.measurements);
-    const measurementArray = parseMeasurements(measurementTable);
-    // for (let i = 0; i < measurementArray.length; i++) {
-    //     if (measurementArray[i][0] === staticMeasurements[i][0]) {
-    //         //console.log(measurementArray[i][0]);
+    const activeKeys = Object.keys(item.measurements);
+    const parsedKeys = Object.keys(parsedData);
+    const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
 
-    //         const inchDifference = (measurementArray[i][1] - staticMeasurements[i][1]).toFixed(2);
-    //         const cmDifference = (measurementArray[i][2] - staticMeasurements[i][2]).toFixed(2);
+    displayCompareItem(measurementTable, item);
+    for (const key of commonKeys) {
+        const activeValue = (item.measurements[key])
+        const parsedValue = (parsedData[key])
 
-    //         //console.log(`in: ${measurementArray[i][1]} - ${staticMeasurements[i][1]} = `, inchDifference);
-    //         //console.log(`cm: ${measurementArray[i][2]} - ${staticMeasurements[i][2]} = `, cmDifference);
+        const inchDifference = (parsedValue[0] - activeValue[0]).toFixed(2);
+        const cmDifference = (parsedValue[1] - activeValue[1]).toFixed(2);
 
-    //         addDifference(measurementTable, i, inchDifference, cmDifference);
-    //     }
-    // }
-
+        displayDifference(measurementTable, position, inchDifference, cmDifference);
+        position++;
+    }
 }
 
 function parseMeasurements(measurementTable) {
     //Chest,Length,Shoulders,Sleeve Length,Hem
     const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
+    const measurements = {};
 
-    const measurements = parsedData.map(innerArray => {
-        const newMeasurement = {
-            [innerArray[0]]: [
-                (innerArray[1].split(" "))[0],
-                (innerArray[2].split(" "))[0]
-            ]
-        };
-        return newMeasurement;
+    parsedData.forEach((innerArray) => {
+        const key = innerArray[0];
+        const value = [
+            (innerArray[1].split(" "))[0],
+            (innerArray[2].split(" "))[0]
+        ];
+
+        measurements[key] = value;
     });
-
-    console.log(measurements);
 
     return measurements;
 }
 
-function addDifference(measurementTable, position, inchDifference, cmDifference) {
+function displayCompareItem(measurementTable, item) {
+    console.log(item);
+    const parentDiv = measurementTable.parentNode;
+    const titleCard = document.createElement("div");
+    titleCard.innerHTML += `<p style="font-size:1.4rem;text-align:right">Comparing to ${item.title}</p>`;
+    parentDiv.insertBefore(titleCard, measurementTable);
+}
+function displayDifference(measurementTable, position, inchDifference, cmDifference) {
     const inchCell = measurementTable.children[position].children[1];
     const cmCell = measurementTable.children[position].children[2];
-    //const inchDiv = document.createElement("div");
-    //inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
-    //inchDiv.innerText = `${inchDifference} in`;
-    //console.log("html", inchDiv.innerHTML);
+
+    const inchDiv = document.createElement("div");
+    inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
+    inchDiv.innerText = `${inchDifference} in`;
 
     let formattedInch = "";
     let formattedCm = "";

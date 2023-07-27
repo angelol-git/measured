@@ -31,6 +31,7 @@ function ItemModal(props) {
           handleEditBack={handleEditBack}
           convertedCategory={convertedCategory}
           category={props.category}
+          active={props.active}
           title={props.title}
           imageSrc={props.imageSrc}
           size={props.size}

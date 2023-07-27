@@ -85,7 +85,7 @@ function EditView(props) {
       title: title,
       size: size,
       imageSrc: imageUrl,
-
+      active: props.active,
       measurements: {},
     };
 
