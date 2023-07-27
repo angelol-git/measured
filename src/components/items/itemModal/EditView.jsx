@@ -5,28 +5,27 @@ import "./EditView.css";
 function EditView(props) {
   const prevTitle = props.title;
   const prevCategory = props.category;
-  const [currentUnit, setCurrentUnit] = useState("in");
-  const [currentCategory, setCurrentCategory] = useState(prevCategory);
-  const [currentTitle, setCurrentTitle] = useState(props.title);
-  const [currentImage, setCurrentImage] = useState(props.imageSrc);
-  const [currentSize, setCurrentSize] = useState(props.size);
-  const [currentMeasurements, setCurrentMeasurements] = useState(
-    props.measurements
-  );
+  const [imageStatus, setImageStatus] = useState("");
+  const [unit, setUnit] = useState("in");
+  const [category, setCategory] = useState(prevCategory);
+  const [title, setTitle] = useState(props.title);
+  const [imageUrl, setImageUrl] = useState(props.imageSrc);
+  const [size, setSize] = useState(props.size);
+  const [measurements, setMeasurements] = useState(props.measurements);
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
-  const currentUnitIndex = currentUnit === "in" ? 0 : 1;
+  const unitIndex = unit === "in" ? 0 : 1;
   const inchButtonClass =
-    currentUnit === "in" ? " primary-button" : " secondary-button-color";
+    unit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
-    currentUnit === "in" ? " secondary-button-color" : " primary-button";
+    unit === "in" ? " secondary-button-color" : " primary-button";
 
   const measurementElements = (
     <div className="measurement-container">
-      {measurementCategory[currentCategory].map((item, index) => (
+      {measurementCategory[category].map((item, index) => (
         <div className="unit-input-row" key={index}>
           <label htmlFor={`${item}`} className="text-normal">
             {item}
@@ -37,13 +36,13 @@ function EditView(props) {
               id={`${item}`}
               name={`${item}`}
               className="unit-input text-normal"
-              value={currentMeasurements[item]?.[currentUnitIndex] || ""}
+              value={measurements[item]?.[unitIndex] || ""}
               min="0.00"
               step=".01"
               placeholder="0.00"
               onChange={handleUnitInput}
             />
-            {currentUnit}
+            {unit}
           </div>
         </div>
       ))}
@@ -51,8 +50,8 @@ function EditView(props) {
   );
 
   function handleUnitClick() {
-    const newUnit = currentUnit === "in" ? "cm" : "in";
-    setCurrentUnit(newUnit);
+    const newUnit = unit === "in" ? "cm" : "in";
+    setUnit(newUnit);
   }
   function handleUnitInput(event) {
     const { name, value } = event.target;
@@ -65,7 +64,7 @@ function EditView(props) {
       }
     }
 
-    if (currentUnit === "in") {
+    if (unit === "in") {
       inchValue = value;
       cmValue = (inchValue * 2.54).toFixed(2);
     } else {
@@ -73,8 +72,8 @@ function EditView(props) {
       inchValue = (cmValue / 2.54).toFixed(2);
     }
 
-    setCurrentMeasurements((currentMeasurements) => ({
-      ...currentMeasurements,
+    setMeasurements((measurements) => ({
+      ...measurements,
       [name]: [[inchValue], [cmValue]],
     }));
   }
@@ -82,19 +81,19 @@ function EditView(props) {
   function handleSave(event) {
     event.preventDefault();
     const newItem = {
-      category: currentCategory,
-      title: currentTitle,
-      size: currentSize,
-      imageSrc: currentImage,
+      category: category,
+      title: title,
+      size: size,
+      imageSrc: imageUrl,
 
       measurements: {},
     };
 
-    for (let i = 0; i < measurementCategory[currentCategory].length; i++) {
-      const categoryKey = measurementCategory[currentCategory][i];
+    for (let i = 0; i < measurementCategory[category].length; i++) {
+      const categoryKey = measurementCategory[category][i];
       const categoryValue = [
-        currentMeasurements[categoryKey][0],
-        currentMeasurements[categoryKey][1],
+        measurements[categoryKey][0],
+        measurements[categoryKey][1],
       ];
       newItem.measurements[categoryKey] = categoryValue;
     }
@@ -108,36 +107,37 @@ function EditView(props) {
 
   function handleCategoryChange(event) {
     const selectedCategory = event.target.value;
-    setCurrentCategory(selectedCategory);
+    setCategory(selectedCategory);
   }
 
-  function handleImagePreview(event) {
-    setCurrentImage(event.target.value);
-    let previewElement = document.getElementById("image-preview");
-    if (event.target.value.length > 0) {
-      previewElement.src = event.target.value;
-      previewElement.classList.add("display-block");
-    } else {
-      previewElement.classList.remove("display-block");
-    }
+  function handleImageLoad() {
+    setImageStatus("success");
+  }
+  function handleImageError() {
+    setImageStatus("error");
+  }
+
+  function handleImageChange(event) {
+    setImageStatus("loading");
+    setImageUrl(event.target.value);
   }
 
   function handleTitle(event) {
-    setCurrentTitle(event.target.value);
+    setTitle(event.target.value);
   }
 
   useEffect(() => {
-    props.verifyTitle(currentTitle, prevTitle);
-  }, [currentTitle]);
+    props.verifyTitle(title, prevTitle);
+  }, [title]);
 
   function handleSize(event) {
-    setCurrentSize(event.target.value);
+    setSize(event.target.value);
   }
 
   const titleErrorElement =
     props.titleError === true ? (
       <div className="title-error">
-        <p className="error-text">Error {currentTitle} already exists.</p>
+        <p className="error-text">Error {title} already exists.</p>
       </div>
     ) : (
       ""
@@ -159,27 +159,51 @@ function EditView(props) {
       </div>
       <form id="edit-form" className="text-normal" onSubmit={handleSave}>
         <div className="image-preview-container">
-          <img
-            id="image-preview"
-            className="medium-thumbnail"
-            src={currentImage}
-            alt={currentTitle}
-          ></img>
+          {imageUrl.length !== 0 ? (
+            <div className="image-preview-container">
+              {imageStatus !== "error" && (
+                <div className="image-container">
+                  <img
+                    id="image"
+                    src={
+                      imageStatus === "success"
+                        ? imageUrl
+                        : "./data/images/loading.gif"
+                    }
+                    className="medium-thumbnail"
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-        <div className="form-row">
-          <label htmlFor="image" className="bold-text">
-            Image:{" "}
-          </label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            placeholder="Image URL"
-            value={currentImage}
-            className="text-normal form-input"
-            onChange={handleImagePreview}
-          />
+        <div>
+          <div className="form-row">
+            <label htmlFor="image" className="bold-text">
+              Image:{" "}
+            </label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              placeholder="Image URL"
+              value={imageUrl}
+              className="text-normal form-input"
+              onChange={handleImageChange}
+            />
+          </div>
+
+          {imageStatus === "error" ? (
+            <p className="error-text">Image cannot be found </p>
+          ) : (
+            ""
+          )}
         </div>
+
         <div className="form-row">
           <label htmlFor="html" className="bold-text">
             Title:{" "}
@@ -188,7 +212,7 @@ function EditView(props) {
             type="text"
             id="title"
             name="title"
-            value={currentTitle}
+            value={title}
             className="text-normal form-input"
             onChange={handleTitle}
           ></input>
@@ -204,7 +228,7 @@ function EditView(props) {
               name="category"
               id="category"
               className="category"
-              defaultValue={currentCategory}
+              defaultValue={category}
               onChange={handleCategoryChange}
             >
               <option value="Tops">Tops</option>
@@ -220,7 +244,7 @@ function EditView(props) {
               name="size"
               id="size"
               className="size"
-              defaultValue={currentSize}
+              defaultValue={size}
               onChange={handleSize}
             >
               <option value="S">S</option>

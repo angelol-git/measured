@@ -1,7 +1,9 @@
+import { useState } from "react";
 import React from "react";
 import "./ItemView.css";
 
 function ItemView(props) {
+  const [imageStatus, setImageStatus] = useState("");
   const measurementElements = Object.entries(props.measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
@@ -38,6 +40,10 @@ function ItemView(props) {
       Set as Active
     </button>
   );
+
+  function handleImageLoad() {
+    setImageStatus("success");
+  }
   return (
     <section className="item-modal-container text-medium">
       <div className="sub-row">
@@ -51,8 +57,13 @@ function ItemView(props) {
       <div className="text-center">
         <img
           className="large-thumbnail"
-          src={props.imageSrc}
+          src={
+            imageStatus === "success"
+              ? props.imageSrc
+              : "./data/images/loading.gif"
+          }
           alt={props.title}
+          onLoad={handleImageLoad}
         ></img>
         <h3 className="modal-title bold-text">{props.title}</h3>
         <div className="grey-line"></div>

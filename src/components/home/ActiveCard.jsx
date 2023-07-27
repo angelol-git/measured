@@ -4,6 +4,8 @@ import "./ActiveCard.css";
 
 function ActiveCard(props) {
   //console.log(props.itemData);
+  const [imageStatus, setImageStatus] = useState("");
+
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = props.active ? (
     <button
@@ -35,6 +37,10 @@ function ActiveCard(props) {
     )
   );
 
+  function handleImageLoad() {
+    setImageStatus("success");
+  }
+
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
@@ -48,7 +54,12 @@ function ActiveCard(props) {
         </div>
         <img
           className="mini-thumbnail"
-          src={props.imageSrc}
+          src={
+            imageStatus === "success"
+              ? props.imageSrc
+              : "./data/images/loading.gif"
+          }
+          onLoad={handleImageLoad}
           alt={props.title}
         ></img>
       </div>

@@ -6,10 +6,14 @@ import "./ItemCard.css";
 function ItemCard(props) {
   const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
+  const [imageStatus, setImageStatus] = useState("");
   const toggleHover = () => setHover(!hover);
 
   function handleClickModal() {
     setClickModal(!clickModal);
+  }
+  function handleImageLoad() {
+    setImageStatus("success");
   }
   return (
     <div>
@@ -20,8 +24,14 @@ function ItemCard(props) {
         onMouseLeave={toggleHover}
       >
         <img
+          id="image"
           className={"medium-thumbnail" + (hover ? " darken-image" : "")}
-          src={props.imageSrc}
+          src={
+            imageStatus === "success"
+              ? props.imageSrc
+              : "./data/images/loading.gif"
+          }
+          onLoad={handleImageLoad}
           alt={props.title}
         ></img>
         <div

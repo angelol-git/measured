@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Add.css";
 function Add(props) {
   const navigate = useNavigate();
-  const [imageError, setImageError] = useState(false);
+  const [imageStatus, setImageStatus] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [unit, setUnit] = useState("in");
   const [category, setCategory] = useState("Tops");
@@ -23,6 +23,8 @@ function Add(props) {
   const cmButtonClass =
     unit === "in" ? " secondary-button-color" : " primary-button";
 
+  console.log(imageUrl);
+  console.log(imageStatus);
   const measurementElements = (
     <div className="measurement-container">
       {measurementCategory[category].map((item, index) => (
@@ -105,7 +107,7 @@ function Add(props) {
       newItem.measurements[categoryKey] = categoryValue;
     }
 
-    if (props.titleError || imageError) {
+    if (props.titleError || imageStatus === "error") {
       return;
     }
 
@@ -119,12 +121,20 @@ function Add(props) {
     navigate("/items");
   }
 
+  useEffect(() => {
+    // Reset the imageStatus whenever the imageUrl changes
+    setImageStatus("");
+  }, [imageUrl]);
+
+  function handleImageLoad() {
+    setImageStatus("success");
+  }
   function handleImageError() {
-    setImageError(true);
+    setImageStatus("error");
   }
 
   function handleImageChange(event) {
-    setImageError(false);
+    setImageStatus("loading");
     setImageUrl(event.target.value);
   }
 
@@ -193,27 +203,36 @@ function Add(props) {
             id="image"
             name="image"
             placeholder="Image URL"
-            className={`input-text ${imageError ? "error-border" : ""}`}
+            className={`input-text ${
+              imageStatus === "error" ? "error-border" : ""
+            }`}
             value={imageUrl}
             onChange={handleImageChange}
           />
-          {imageError ? (
+          {imageStatus === "error" ? (
             <p className="error-text">Image cannot be found </p>
           ) : (
             ""
           )}
         </div>
 
-        {imageUrl.length !== 0 && !imageError ? (
+        {imageUrl.length !== 0 ? (
           <div className="image-preview-container">
-            <div className="image-container">
-              <img
-                id="image"
-                src={imageUrl}
-                className="medium-thumbnail"
-                onError={handleImageError}
-              ></img>
-            </div>
+            {imageStatus !== "error" && (
+              <div className="image-container">
+                <img
+                  id="image"
+                  src={
+                    imageStatus === "success"
+                      ? imageUrl
+                      : "./data/images/loading.gif"
+                  }
+                  className="medium-thumbnail"
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                />
+              </div>
+            )}
           </div>
         ) : (
           ""

@@ -1,5 +1,6 @@
 .add-container {
-    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #add-form {
@@ -45,7 +46,6 @@
 }
 
 .image-container {
-    border: 1px solid black;
     height: 150px;
     width: 150px;
 }

@@ -150,7 +150,9 @@ a {
     visibility: visible;
 }
 
-
+.pre {
+    white-space: pre;
+}
 
 /*Buttons*/
 .primary-button {
