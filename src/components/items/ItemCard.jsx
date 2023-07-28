@@ -4,16 +4,37 @@ import ItemModal from "./ItemModal";
 import "./ItemCard.css";
 
 function ItemCard(props) {
+  const { active, title, imageSrc } = props.values;
   const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
   const [imageStatus, setImageStatus] = useState("");
   const toggleHover = () => setHover(!hover);
+  let imageElement;
 
   function handleClickModal() {
     setClickModal(!clickModal);
   }
   function handleImageLoad() {
     setImageStatus("success");
+  }
+
+  if (imageSrc.length === 0) {
+    const firstTitleLetter = title.split("")[0];
+    imageElement = (
+      <div className="image-replacement">
+        <p>{firstTitleLetter}</p>
+      </div>
+    );
+  } else {
+    imageElement = (
+      <img
+        id="image"
+        className={"medium-thumbnail" + (hover ? " darken-image" : "")}
+        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
+        onLoad={handleImageLoad}
+        alt={title}
+      ></img>
+    );
   }
   return (
     <div>
@@ -23,45 +44,24 @@ function ItemCard(props) {
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
       >
-        <img
-          id="image"
-          className={"medium-thumbnail" + (hover ? " darken-image" : "")}
-          src={
-            imageStatus === "success"
-              ? props.imageSrc
-              : "./data/images/loading.gif"
-          }
-          onLoad={handleImageLoad}
-          alt={props.title}
-        ></img>
+        {imageElement}
         <div
           className={
             "title-hover text-medium bold-text" + (hover ? " show" : "")
           }
         >
-          <p>{props.title}</p>
+          <p>{title}</p>
         </div>
-        <div
-          className={"active-tag text-normal" + (props.active ? " show" : "")}
-        >
+        <div className={"active-tag text-normal" + (active ? " show" : "")}>
           <p>Active</p>
         </div>
       </div>
       <ItemModal
-        key={props.title}
-        title={props.title}
-        category={props.category}
-        active={props.active}
-        size={props.size}
-        imageSrc={props.imageSrc}
-        measurements={props.measurements}
+        key={title}
+        values={props.values}
         clickModal={clickModal}
         handleClickModal={handleClickModal}
-        handleActive={props.handleActive}
-        handleDeleteItem={props.handleDeleteItem}
-        handleUpdate={props.handleUpdate}
-        verifyTitle={props.verifyTitle}
-        titleError={props.titleError}
+        handleFunctions={props.handleFunctions}
       />
     </div>
   );

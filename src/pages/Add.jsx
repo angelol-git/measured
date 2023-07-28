@@ -52,7 +52,7 @@ function Add(props) {
   );
 
   useEffect(() => {
-    props.verifyTitle(title);
+    props.handleTitle(title);
   }, [title]);
 
   function handleUnitClick() {

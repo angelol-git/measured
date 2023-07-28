@@ -77,6 +77,16 @@ a {
     text-align: center;
 }
 
+.image-replacement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-bkg-color);
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+}
+
 .sub-row {
     display: flex;
     justify-content: center;

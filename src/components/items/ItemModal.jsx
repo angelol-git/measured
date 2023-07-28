@@ -28,34 +28,20 @@ function ItemModal(props) {
       return (
         <EditView
           key={props.title}
+          values={props.values}
+          handleFunctions={props.handleFunctions}
           handleEditBack={handleEditBack}
           convertedCategory={convertedCategory}
-          category={props.category}
-          active={props.active}
-          title={props.title}
-          imageSrc={props.imageSrc}
-          size={props.size}
-          measurements={props.measurements}
-          handleUpdate={props.handleUpdate}
-          verifyTitle={props.verifyTitle}
-          titleError={props.titleError}
         />
       );
     } else {
       return (
         <ItemView
           key={props.title}
-          clickModal={props.clickModal}
+          values={props.values}
+          handleFunctions={props.handleFunctions}
           handleClickModal={props.handleClickModal}
           handleEdit={handleEdit}
-          handleActive={props.handleActive}
-          handleDeleteItem={props.handleDeleteItem}
-          active={props.active}
-          category={props.category}
-          title={props.title}
-          imageSrc={props.imageSrc}
-          size={props.size}
-          measurements={props.measurements}
         />
       );
     }

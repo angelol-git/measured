@@ -12,11 +12,7 @@ function Home(props) {
       return value.active ? (
         <ActiveCard
           key={key}
-          active={value.active}
-          category={value.category}
-          title={value.title}
-          imageSrc={value.imageSrc}
-          measurements={value.measurements}
+          values={value}
           handleActive={props.handleActive}
         />
       ) : null;
@@ -24,7 +20,7 @@ function Home(props) {
   }
 
   return (
-    <section>
+    <section style={{ paddingBottom: "20px" }}>
       <div className="item-counter sub-row text-small item-counter-row">
         <p>{activeItemsLength} Active items</p>
       </div>

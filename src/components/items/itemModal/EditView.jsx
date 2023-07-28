@@ -3,20 +3,25 @@ import { useState, useEffect } from "react";
 import "./EditView.css";
 
 function EditView(props) {
-  const prevTitle = props.title;
-  const prevCategory = props.category;
+  const { active, category, title, size, imageSrc, measurements } =
+    props.values;
+  const { handleTitle, titleError, handleUpdate } = props.handleFunctions;
+  const prevTitle = title;
+  const prevCategory = category;
+  const [currActive, setActive] = useState(active);
+  const [currCategory, setCategory] = useState(prevCategory);
+  const [currTitle, setTitle] = useState(title);
+  const [currImageSrc, setImageUrl] = useState(imageSrc);
+  const [currSize, setSize] = useState(size);
+  const [currMeasurements, setMeasurements] = useState(measurements);
   const [imageStatus, setImageStatus] = useState("");
-  const [unit, setUnit] = useState("in");
-  const [category, setCategory] = useState(prevCategory);
-  const [title, setTitle] = useState(props.title);
-  const [imageUrl, setImageUrl] = useState(props.imageSrc);
-  const [size, setSize] = useState(props.size);
-  const [measurements, setMeasurements] = useState(props.measurements);
+
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
+  const [unit, setUnit] = useState("in");
   const unitIndex = unit === "in" ? 0 : 1;
   const inchButtonClass =
     unit === "in" ? " primary-button" : " secondary-button-color";
@@ -36,7 +41,7 @@ function EditView(props) {
               id={`${item}`}
               name={`${item}`}
               className="unit-input text-normal"
-              value={measurements[item]?.[unitIndex] || ""}
+              value={currMeasurements[item]?.[unitIndex] || ""}
               min="0.00"
               step=".01"
               placeholder="0.00"
@@ -81,33 +86,28 @@ function EditView(props) {
   function handleSave(event) {
     event.preventDefault();
     const newItem = {
-      category: category,
-      title: title,
-      size: size,
-      imageSrc: imageUrl,
-      active: props.active,
+      category: currCategory,
+      title: currTitle,
+      size: currSize,
+      imageSrc: currImageSrc,
+      active: currActive,
       measurements: {},
     };
 
     for (let i = 0; i < measurementCategory[category].length; i++) {
       const categoryKey = measurementCategory[category][i];
       const categoryValue = [
-        measurements[categoryKey][0],
-        measurements[categoryKey][1],
+        currMeasurements[categoryKey][0],
+        currMeasurements[categoryKey][1],
       ];
       newItem.measurements[categoryKey] = categoryValue;
     }
 
-    if (props.titleError === true) {
+    if (titleError === true) {
       return;
     }
-    props.handleUpdate(newItem, prevTitle.toUpperCase());
+    handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
-  }
-
-  function handleCategoryChange(event) {
-    const selectedCategory = event.target.value;
-    setCategory(selectedCategory);
   }
 
   function handleImageLoad() {
@@ -122,22 +122,14 @@ function EditView(props) {
     setImageUrl(event.target.value);
   }
 
-  function handleTitle(event) {
-    setTitle(event.target.value);
-  }
-
   useEffect(() => {
-    props.verifyTitle(title, prevTitle);
-  }, [title]);
-
-  function handleSize(event) {
-    setSize(event.target.value);
-  }
+    handleTitle(currTitle, prevTitle);
+  }, [currTitle]);
 
   const titleErrorElement =
-    props.titleError === true ? (
+    titleError === true ? (
       <div className="title-error">
-        <p className="error-text">Error {title} already exists.</p>
+        <p className="error-text">Error {currTitle} already exists.</p>
       </div>
     ) : (
       ""
@@ -159,7 +151,7 @@ function EditView(props) {
       </div>
       <form id="edit-form" className="text-normal" onSubmit={handleSave}>
         <div className="image-preview-container">
-          {imageUrl.length !== 0 ? (
+          {currImageSrc.length !== 0 ? (
             <div className="image-preview-container">
               {imageStatus !== "error" && (
                 <div className="image-container">
@@ -167,7 +159,7 @@ function EditView(props) {
                     id="image"
                     src={
                       imageStatus === "success"
-                        ? imageUrl
+                        ? currImageSrc
                         : "./data/images/loading.gif"
                     }
                     className="medium-thumbnail"
@@ -191,7 +183,7 @@ function EditView(props) {
               id="image"
               name="image"
               placeholder="Image URL"
-              value={imageUrl}
+              value={currImageSrc}
               className="text-normal form-input"
               onChange={handleImageChange}
             />
@@ -212,9 +204,9 @@ function EditView(props) {
             type="text"
             id="title"
             name="title"
-            value={title}
+            value={currTitle}
             className="text-normal form-input"
-            onChange={handleTitle}
+            onChange={(e) => setTitle(e.target.value)}
           ></input>
         </div>
         {titleErrorElement}
@@ -228,8 +220,8 @@ function EditView(props) {
               name="category"
               id="category"
               className="category"
-              defaultValue={category}
-              onChange={handleCategoryChange}
+              defaultValue={currCategory}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="Tops">Tops</option>
               <option value="Bottoms">Bottoms</option>
@@ -244,8 +236,8 @@ function EditView(props) {
               name="size"
               id="size"
               className="size"
-              defaultValue={size}
-              onChange={handleSize}
+              defaultValue={currSize}
+              onChange={(e) => setSize(e.target.value)}
             >
               <option value="S">S</option>
               <option value="M">M</option>

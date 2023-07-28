@@ -3,23 +3,21 @@ import React from "react";
 import "./ActiveCard.css";
 
 function ActiveCard(props) {
-  //console.log(props.itemData);
+  const { active, category, title, imageSrc, measurements } = props.values;
   const [imageStatus, setImageStatus] = useState("");
 
   const [detailView, setDetailView] = useState(false);
-  const activeButtonElement = props.active ? (
+  const activeButtonElement = active ? (
     <button
       className="primary-button inactive-button-color"
-      onClick={() =>
-        props.handleActive(props.title.toUpperCase(), props.category)
-      }
+      onClick={() => props.handleActive(title.toUpperCase(), category)}
     >
       Set as Inactive
     </button>
   ) : (
     ""
   );
-  const measurementElements = Object.entries(props.measurements).map(
+  const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
         <p className="measurement-header bold-text">{key}:</p>
@@ -49,18 +47,16 @@ function ActiveCard(props) {
     <div className="active-card text-normal" onClick={handleClick}>
       <div className="active-title-row">
         <div className="active-main">
-          <p className="title bold-text">{props.title}</p>
-          <p>{props.category}</p>
+          <p className="title bold-text">{title}</p>
+          <p>{category}</p>
         </div>
         <img
           className="mini-thumbnail"
           src={
-            imageStatus === "success"
-              ? props.imageSrc
-              : "./data/images/loading.gif"
+            imageStatus === "success" ? imageSrc : "./data/images/loading.gif"
           }
           onLoad={handleImageLoad}
-          alt={props.title}
+          alt={title}
         ></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>

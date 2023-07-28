@@ -10,21 +10,20 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [titleError, setTittleError] = useState("");
+  const [titleError, setTittleError] = useState(false);
   const [items, setItems] = useState({});
   // const [items, setItems] = useState(() => {
   //   const savedItems = localStorage.getItem("items");
   //   return savedItems ? JSON.parse(savedItems) : {};
   // });
 
-  function handleAddItem(newItem) {
-    const checkedItem = checkEmptyImage(newItem);
+  function handleAdd(newItem) {
     setItems((prevItems) => {
-      return { ...prevItems, [checkedItem.title.toUpperCase()]: checkedItem };
+      return { ...prevItems, [newItem.title.toUpperCase()]: newItem };
     });
   }
 
-  function handleDeleteItem(title) {
+  function handleDelete(title) {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
       delete updatedItems[title];
@@ -51,24 +50,23 @@ function App() {
   }
 
   function handleUpdate(updatedItem, prevTitle) {
-    const checkedItem = checkEmptyImage(updatedItem);
-    const updatedTitle = checkedItem.title.toUpperCase();
+    const updatedTitle = updatedItem.title.toUpperCase();
 
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (prevTitle === checkedItem.title.toUpperCase()) {
+      if (prevTitle === updatedTitle.toUpperCase()) {
         // Replace the value for the existing key
-        updatedItems[prevTitle] = checkedItem;
+        updatedItems[prevTitle] = updatedItem;
       } else {
         updatedItems[updatedTitle] = updatedItems[prevTitle];
         delete updatedItems[prevTitle];
-        updatedItems[updatedTitle] = checkedItem;
+        updatedItems[updatedTitle] = updatedItem;
       }
       return updatedItems;
     });
   }
 
-  function verifyTitle(title, prevTitle = "") {
+  function handleTitle(title, prevTitle = "") {
     if (title === prevTitle) {
       setTittleError(false);
       return;
@@ -79,16 +77,6 @@ function App() {
     }
 
     setTittleError(false);
-  }
-
-  function checkEmptyImage(newItem) {
-    if (newItem.imageSrc === "") {
-      if (newItem.category === "Tops") {
-        newItem.imageSrc =
-          "https://timvandevall.com/wp-content/uploads/2014/06/blank-tshirt-template.jpg";
-      }
-    }
-    return newItem;
   }
 
   useEffect(() => {
@@ -110,6 +98,13 @@ function App() {
     }
   }, [navigate, isInitialLoad]);
 
+  const handleFunctions = {
+    handleActive: handleActive,
+    handleUpdate: handleUpdate,
+    handleDelete: handleDelete,
+    handleTitle: handleTitle,
+    titleError: titleError,
+  };
   return (
     <div className="app">
       {location.pathname !== "/add" ? <Header /> : null}
@@ -122,24 +117,17 @@ function App() {
           <Route
             path="/items"
             element={
-              <Items
-                itemData={items}
-                handleActive={handleActive}
-                handleUpdate={handleUpdate}
-                handleDeleteItem={handleDeleteItem}
-                verifyTitle={verifyTitle}
-                titleError={titleError}
-              />
+              <Items itemData={items} handleFunctions={handleFunctions} />
             }
           />
           <Route
             path="/add"
             element={
               <Add
-                handleAddItem={handleAddItem}
-                verifyTitle={verifyTitle}
-                titleError={titleError}
                 handleActive={handleActive}
+                handleAddItem={handleAdd}
+                handleTitle={handleTitle}
+                titleError={titleError}
               />
             }
           />

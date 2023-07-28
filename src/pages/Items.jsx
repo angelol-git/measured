@@ -10,23 +10,14 @@ function Items(props) {
       return (
         <ItemCard
           key={key}
-          active={value.active}
-          category={value.category}
-          title={value.title}
-          size={value.size}
-          imageSrc={value.imageSrc}
-          measurements={value.measurements}
-          handleActive={props.handleActive}
-          handleUpdate={props.handleUpdate}
-          handleDeleteItem={props.handleDeleteItem}
-          verifyTitle={props.verifyTitle}
-          titleError={props.titleError}
+          values={value}
+          handleFunctions={props.handleFunctions}
         />
       );
     });
   }
   return (
-    <section>
+    <section style={{ paddingBottom: "20px" }}>
       <div className="sub-row item-counter-row">
         <p className="item-counter text-small">{itemsLength} Items</p>
         <Link to="/add" className="primary-button  position-right">
