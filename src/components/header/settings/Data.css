@@ -1,20 +1,16 @@
 .data-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-
+    width: 100%;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 15px;
-}
+
 
 .button-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
+
 }

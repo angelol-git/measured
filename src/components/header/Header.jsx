@@ -32,6 +32,7 @@ function Header(props) {
       {displayMenu ? (
         <Settings
           handleClickSettings={handleClickSettings}
+          handleImport={props.handleImport}
           itemData={props.itemData}
         />
       ) : (

@@ -79,6 +79,10 @@ function App() {
     setTittleError(false);
   }
 
+  function handleImport(importedItems) {
+    setItems(importedItems);
+  }
+
   useEffect(() => {
     chrome.storage.local.get("items", (result) => {
       const savedItems = result.items;
@@ -107,7 +111,9 @@ function App() {
   };
   return (
     <div className="app">
-      {location.pathname !== "/add" ? <Header itemData={items} /> : null}
+      {location.pathname !== "/add" ? (
+        <Header itemData={items} handleImport={handleImport} />
+      ) : null}
 
       <Routes>
         <Route

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Data from "./Data";
-
 import "./Settings.css";
 
 function Settings(props) {
@@ -69,7 +68,11 @@ function Settings(props) {
         ) : (
           ""
         )}
-        {settingsMode === "data" ? <Data itemData={props.itemData} /> : ""}
+        {settingsMode === "data" ? (
+          <Data handleImport={props.handleImport} itemData={props.itemData} />
+        ) : (
+          ""
+        )}
       </div>
     </section>
   );
