@@ -12,5 +12,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+}
 
+.import-error {
+    margin-top: -10px;
 }
