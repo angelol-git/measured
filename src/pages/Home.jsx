@@ -20,12 +20,14 @@ function Home(props) {
   }
 
   return (
-    <section style={{ paddingBottom: "20px" }}>
-      <div className="item-counter sub-row text-small item-counter-row">
-        <p>{activeItemsLength} Active items</p>
-      </div>
-      <div className="flex-column gap-15">{activeCardElements}</div>
-    </section>
+    <div className="main-container">
+      <section style={{ paddingBottom: "20px" }}>
+        <div className="item-counter sub-row text-small item-counter-row">
+          <p>{activeItemsLength} Active items</p>
+        </div>
+        <div className="flex-column gap-15">{activeCardElements}</div>
+      </section>
+    </div>
   );
 }
 export default Home;

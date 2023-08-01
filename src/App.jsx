@@ -108,31 +108,29 @@ function App() {
   return (
     <div className="app">
       {location.pathname !== "/add" ? <Header /> : null}
-      <div className="main-container">
-        <Routes>
-          <Route
-            path="/"
-            element={<Home itemData={items} handleActive={handleActive} />}
-          />
-          <Route
-            path="/items"
-            element={
-              <Items itemData={items} handleFunctions={handleFunctions} />
-            }
-          />
-          <Route
-            path="/add"
-            element={
-              <Add
-                handleActive={handleActive}
-                handleAddItem={handleAdd}
-                handleTitle={handleTitle}
-                titleError={titleError}
-              />
-            }
-          />
-        </Routes>
-      </div>
+
+      <Routes>
+        <Route
+          path="/"
+          element={<Home itemData={items} handleActive={handleActive} />}
+        />
+        <Route
+          path="/items"
+          element={<Items itemData={items} handleFunctions={handleFunctions} />}
+        />
+
+        <Route
+          path="/add"
+          element={
+            <Add
+              handleActive={handleActive}
+              handleAddItem={handleAdd}
+              handleTitle={handleTitle}
+              titleError={titleError}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }

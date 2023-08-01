@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
     position: relative;
-    text-align: center;
+    padding: 10px;
 }
 
 .nav-bar li {

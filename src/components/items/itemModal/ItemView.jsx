@@ -64,40 +64,43 @@ function ItemView(props) {
     );
   }
   return (
-    <section className="item-modal-container text-medium">
-      <div className="sub-row">
-        <button
-          className="back-button position-left"
-          onClick={props.handleClickModal}
-        >
-          ←
-        </button>
-      </div>
-      <div className="text-center">
-        <div className="flex justify-center">{imageElement}</div>
-        <h3 className="modal-title bold-text">{title}</h3>
-        <div className="grey-line"></div>
-        <div className="sub-row gap-15">
-          <p>{category}</p>
-          <p>{size.toUpperCase()}</p>
+    <section className="item-modal-container">
+      <div class="inner-container">
+        <div className="sub-row">
+          <button
+            className="back-button position-left"
+            onClick={props.handleClickModal}
+          >
+            ←
+          </button>
+          <h3 className="bold-text header-medium hidden">View Item</h3>
         </div>
-      </div>
-      <div className="item-measurements">{measurementElements}</div>
-      <div className="bottom-button-container">
-        {activeButtonElement}
-        <button
-          className="primary-button high-z-index"
-          onClick={props.handleEdit}
-        >
-          Edit
-        </button>
+        <div className="text-center">
+          <div className="flex justify-center">{imageElement}</div>
+          <h3 className="modal-title bold-text">{title}</h3>
+          <div className="grey-line"></div>
+          <div className="sub-row gap-15">
+            <p>{category}</p>
+            <p>{size.toUpperCase()}</p>
+          </div>
+        </div>
+        <div className="item-measurements">{measurementElements}</div>
+        <div className="bottom-button-container">
+          {activeButtonElement}
+          <button
+            className="primary-button high-z-index"
+            onClick={props.handleEdit}
+          >
+            Edit
+          </button>
 
-        <button
-          className="primary-buttons high-z-index"
-          onClick={() => handleDeleteItem(title.toUpperCase())}
-        >
-          Delete
-        </button>
+          <button
+            className="primary-button high-z-index"
+            onClick={() => handleDeleteItem(title.toUpperCase())}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </section>
   );

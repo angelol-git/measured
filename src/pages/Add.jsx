@@ -139,140 +139,142 @@ function Add(props) {
   }
 
   return (
-    <div className="add-container">
-      <div className="sub-row">
-        <Link to="/items" className="position-left">
-          <button className="back-button">←</button>
-        </Link>
-        <h3 className="bold-text header-medium">Add a new item</h3>
-      </div>
-      <form id="add-form" onSubmit={handleSubmit}>
-        <div className="form-input">
-          <label htmlFor="title" className="bold-text">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            onChange={(e) => setTitle(e.target.value)}
-            className={`input-text ${props.titleError ? "error-border" : ""}`}
-            required
-          />
-          {props.titleError ? (
-            <p className="error-text">Error {title} already exist</p>
-          ) : (
-            ""
-          )}
+    <div className="outer-container">
+      <div className="inner-container">
+        <div className="sub-row">
+          <Link to="/items" className="position-left">
+            <button className="back-button">←</button>
+          </Link>
+          <h3 className="bold-text header-medium">Add a new item</h3>
         </div>
-
-        <div className="form-input">
-          <label htmlFor="category" className="bold-text">
-            Category
-          </label>
-          <select
-            name="category"
-            id="category"
-            className="input-category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="Tops">Tops</option>
-            <option value="Bottoms">Bottoms</option>
-            <option value="Outerwear">Outerwear</option>
-          </select>
-        </div>
-
-        <div className="form-input">
-          <label htmlFor="size" className="bold-text">
-            Size
-          </label>
-          <select name="size" id="size" className="input-category">
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-          </select>
-        </div>
-
-        <div className="form-input">
-          <label htmlFor="image" className="bold-text">
-            Image
-          </label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            placeholder="Image URL"
-            className={`input-text ${
-              imageStatus === "error" ? "error-border" : ""
-            }`}
-            value={imageUrl}
-            onChange={handleImageChange}
-          />
-          {imageStatus === "error" ? (
-            <p className="error-text">Image cannot be found </p>
-          ) : (
-            ""
-          )}
-        </div>
-
-        {imageUrl.length !== 0 ? (
-          <div className="image-preview-container">
-            {imageStatus !== "error" && (
-              <div className="image-container">
-                <img
-                  id="image"
-                  src={
-                    imageStatus === "success"
-                      ? imageUrl
-                      : "./data/images/loading.gif"
-                  }
-                  className="medium-thumbnail"
-                  onLoad={handleImageLoad}
-                  onError={handleImageError}
-                />
-              </div>
+        <form id="add-form" onSubmit={handleSubmit}>
+          <div className="form-input">
+            <label htmlFor="title" className="bold-text">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              onChange={(e) => setTitle(e.target.value)}
+              className={`input-text ${props.titleError ? "error-border" : ""}`}
+              required
+            />
+            {props.titleError ? (
+              <p className="error-text">Error {title} already exist</p>
+            ) : (
+              ""
             )}
           </div>
-        ) : (
-          ""
-        )}
 
-        <div>
-          <label htmlFor="active">
-            Set as active:
-            <input type="checkbox" id="active" name="active" value="active" />
-          </label>
-        </div>
-        <div>
-          <div className="flex align-center justify-space-between">
-            <label className="bold-text">Measurements</label>
-            <div>
-              <button
-                type="button"
-                className={"primary-button black-border" + inchButtonClass}
-                onClick={handleUnitClick}
-              >
-                Inch
-              </button>
-              <button
-                type="button"
-                className={"primary-button black-border" + cmButtonClass}
-                onClick={handleUnitClick}
-              >
-                Cm
-              </button>
-            </div>
+          <div className="form-input">
+            <label htmlFor="category" className="bold-text">
+              Category
+            </label>
+            <select
+              name="category"
+              id="category"
+              className="input-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Tops">Tops</option>
+              <option value="Bottoms">Bottoms</option>
+              <option value="Outerwear">Outerwear</option>
+            </select>
           </div>
-          {measurementElements}
-        </div>
 
-        <input
-          type="submit"
-          value="Save"
-          className="primary-button submit-button"
-        />
-      </form>
+          <div className="form-input">
+            <label htmlFor="size" className="bold-text">
+              Size
+            </label>
+            <select name="size" id="size" className="input-category">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+            </select>
+          </div>
+
+          <div className="form-input">
+            <label htmlFor="image" className="bold-text">
+              Image
+            </label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              placeholder="Image URL"
+              className={`input-text ${
+                imageStatus === "error" ? "error-border" : ""
+              }`}
+              value={imageUrl}
+              onChange={handleImageChange}
+            />
+            {imageStatus === "error" ? (
+              <p className="error-text">Image cannot be found </p>
+            ) : (
+              ""
+            )}
+          </div>
+
+          {imageUrl.length !== 0 ? (
+            <div className="image-preview-container">
+              {imageStatus !== "error" && (
+                <div className="image-container">
+                  <img
+                    id="image"
+                    src={
+                      imageStatus === "success"
+                        ? imageUrl
+                        : "./data/images/loading.gif"
+                    }
+                    className="medium-thumbnail"
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div>
+            <label htmlFor="active">
+              Set as active:
+              <input type="checkbox" id="active" name="active" value="active" />
+            </label>
+          </div>
+          <div>
+            <div className="flex align-center justify-space-between">
+              <label className="bold-text">Measurements</label>
+              <div>
+                <button
+                  type="button"
+                  className={"primary-button black-border" + inchButtonClass}
+                  onClick={handleUnitClick}
+                >
+                  Inch
+                </button>
+                <button
+                  type="button"
+                  className={"primary-button black-border" + cmButtonClass}
+                  onClick={handleUnitClick}
+                >
+                  Cm
+                </button>
+              </div>
+            </div>
+            {measurementElements}
+          </div>
+
+          <input
+            type="submit"
+            value="Save"
+            className="primary-button submit-button"
+          />
+        </form>
+      </div>
     </div>
   );
 }

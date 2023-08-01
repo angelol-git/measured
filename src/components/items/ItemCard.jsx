@@ -21,7 +21,7 @@ function ItemCard(props) {
   if (imageSrc.length === 0) {
     const firstTitleLetter = title.split("")[0];
     imageElement = (
-      <div className="image-replacement">
+      <div className={"image-replacement" + (hover ? " darken-image" : "")}>
         <p>{firstTitleLetter}</p>
       </div>
     );

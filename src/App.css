@@ -19,6 +19,17 @@
     padding-bottom: 15px;
 }
 
+.outer-container {
+    overflow-y: overlay;
+    height: 100%;
+    width: 100%;
+}
+
+.inner-container {
+    position: relative;
+    padding: 10px 15px 10px 15px;
+}
+
 /*Colors*/
 .black-text {
     color: var(--primary-text-color);
@@ -100,6 +111,7 @@ a {
     position: absolute;
     right: 0;
 }
+
 
 .sub-row .position-left {
     position: absolute;
@@ -203,6 +215,10 @@ a {
 }
 
 .back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     padding-left: 5px;
     padding-right: 5px;
     border: none;

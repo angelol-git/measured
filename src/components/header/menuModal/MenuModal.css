@@ -6,6 +6,7 @@
     width: 100%;
 }
 
+
 .slide-in {
     left: -100%;
     animation: slide-in 0.2s forwards;

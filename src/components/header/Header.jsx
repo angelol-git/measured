@@ -35,7 +35,7 @@ function Header() {
           <div className="menu-icon text-normal" onClick={handleClickMenu}>
             <img
               className="small-icon"
-              src="./data/images/hamburger-menu.png"
+              src="./data/images/gear.png"
               alt="menu"
             ></img>
           </div>

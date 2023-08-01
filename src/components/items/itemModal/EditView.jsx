@@ -137,146 +137,148 @@ function EditView(props) {
 
   return (
     <section className="item-modal-container">
-      <div className="sub-row">
-        <button
-          className="back-button secondary-link-color position-left"
-          onClick={() => {
-            props.handleClickModal;
-            props.handleEditBack();
-          }}
-        >
-          ←
-        </button>
-        <h3 className="bold-text header-medium">Edit item</h3>
-      </div>
-      <form id="edit-form" className="text-normal" onSubmit={handleSave}>
-        <div className="image-preview-container">
-          {currImageSrc.length !== 0 ? (
-            <div className="image-preview-container">
-              {imageStatus !== "error" && (
-                <div className="image-container">
-                  <img
-                    id="image"
-                    src={
-                      imageStatus === "success"
-                        ? currImageSrc
-                        : "./data/images/loading.gif"
-                    }
-                    className="medium-thumbnail"
-                    onLoad={handleImageLoad}
-                    onError={handleImageError}
-                  />
-                </div>
-              )}
-            </div>
-          ) : (
-            ""
-          )}
+      <div className="inner-container">
+        <div className="sub-row">
+          <button
+            className="back-button secondary-link-color position-left"
+            onClick={() => {
+              props.handleClickModal;
+              props.handleEditBack();
+            }}
+          >
+            ←
+          </button>
+          <h3 className="bold-text header-medium">Edit item</h3>
         </div>
-        <div>
+        <form id="edit-form" className="text-normal" onSubmit={handleSave}>
+          <div className="image-preview-container">
+            {currImageSrc.length !== 0 ? (
+              <div className="image-preview-container">
+                {imageStatus !== "error" && (
+                  <div className="image-container">
+                    <img
+                      id="image"
+                      src={
+                        imageStatus === "success"
+                          ? currImageSrc
+                          : "./data/images/loading.gif"
+                      }
+                      className="medium-thumbnail"
+                      onLoad={handleImageLoad}
+                      onError={handleImageError}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            <div className="form-row">
+              <label htmlFor="image" className="bold-text">
+                Image:{" "}
+              </label>
+              <input
+                type="text"
+                id="image"
+                name="image"
+                placeholder="Image URL"
+                value={currImageSrc}
+                className="text-normal form-input"
+                onChange={handleImageChange}
+              />
+            </div>
+
+            {imageStatus === "error" ? (
+              <p className="error-text">Image cannot be found </p>
+            ) : (
+              ""
+            )}
+          </div>
+
           <div className="form-row">
-            <label htmlFor="image" className="bold-text">
-              Image:{" "}
+            <label htmlFor="html" className="bold-text">
+              Title:{" "}
             </label>
             <input
               type="text"
-              id="image"
-              name="image"
-              placeholder="Image URL"
-              value={currImageSrc}
+              id="title"
+              name="title"
+              value={currTitle}
               className="text-normal form-input"
-              onChange={handleImageChange}
-            />
+              onChange={(e) => setTitle(e.target.value)}
+            ></input>
           </div>
-
-          {imageStatus === "error" ? (
-            <p className="error-text">Image cannot be found </p>
-          ) : (
-            ""
-          )}
-        </div>
-
-        <div className="form-row">
-          <label htmlFor="html" className="bold-text">
-            Title:{" "}
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={currTitle}
-            className="text-normal form-input"
-            onChange={(e) => setTitle(e.target.value)}
-          ></input>
-        </div>
-        {titleErrorElement}
-        <div className="edit-grey-line"></div>
-        <div className="form-row gap-15">
-          <div className="flex align-center gap-5">
-            <label htmlFor="category" className="bold-text">
-              Category:
-            </label>
-            <select
-              name="category"
-              id="category"
-              className="category"
-              defaultValue={currCategory}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Tops">Tops</option>
-              <option value="Bottoms">Bottoms</option>
-              <option value="Outerwear">Outerwear</option>
-            </select>
-          </div>
-          <div className="flex align-center gap-5">
-            <label htmlFor="size" className="bold-text">
-              Size:
-            </label>
-            <select
-              name="size"
-              id="size"
-              className="size"
-              defaultValue={currSize}
-              onChange={(e) => setSize(e.target.value)}
-            >
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-            </select>
-          </div>
-        </div>
-        <div className="edit-measurement-container">
-          <div className="form-row justify-space-between">
-            <label className="bold-text">Measurements</label>
-            <div>
-              <button
-                type="button"
-                className={"primary-button black-border" + inchButtonClass}
-                onClick={handleUnitClick}
+          {titleErrorElement}
+          <div className="edit-grey-line"></div>
+          <div className="form-row gap-15">
+            <div className="flex align-center gap-5">
+              <label htmlFor="category" className="bold-text">
+                Category:
+              </label>
+              <select
+                name="category"
+                id="category"
+                className="category"
+                defaultValue={currCategory}
+                onChange={(e) => setCategory(e.target.value)}
               >
-                Inch
-              </button>
-              <button
-                type="button"
-                className={"primary-button black-border" + cmButtonClass}
-                onClick={handleUnitClick}
+                <option value="Tops">Tops</option>
+                <option value="Bottoms">Bottoms</option>
+                <option value="Outerwear">Outerwear</option>
+              </select>
+            </div>
+            <div className="flex align-center gap-5">
+              <label htmlFor="size" className="bold-text">
+                Size:
+              </label>
+              <select
+                name="size"
+                id="size"
+                className="size"
+                defaultValue={currSize}
+                onChange={(e) => setSize(e.target.value)}
               >
-                Cm
-              </button>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+              </select>
             </div>
           </div>
-          {measurementElements}
-        </div>
+          <div className="edit-measurement-container">
+            <div className="form-row justify-space-between">
+              <label className="bold-text">Measurements</label>
+              <div>
+                <button
+                  type="button"
+                  className={"primary-button black-border" + inchButtonClass}
+                  onClick={handleUnitClick}
+                >
+                  Inch
+                </button>
+                <button
+                  type="button"
+                  className={"primary-button black-border" + cmButtonClass}
+                  onClick={handleUnitClick}
+                >
+                  Cm
+                </button>
+              </div>
+            </div>
+            {measurementElements}
+          </div>
 
-        <div>
-          <input
-            type="submit"
-            value="Save"
-            className="primary-button submit-button"
-            onClick={handleSave}
-          />
-        </div>
-      </form>
+          <div>
+            <input
+              type="submit"
+              value="Save"
+              className="primary-button submit-button"
+              onClick={handleSave}
+            />
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

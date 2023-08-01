@@ -17,15 +17,17 @@ function Items(props) {
     });
   }
   return (
-    <section style={{ paddingBottom: "20px" }}>
-      <div className="sub-row item-counter-row">
-        <p className="item-counter text-small">{itemsLength} Items</p>
-        <Link to="/add" className="primary-button  position-right">
-          + Add
-        </Link>
-      </div>
-      <div className="item-container">{itemCardElements}</div>
-    </section>
+    <div className="main-container">
+      <section style={{ paddingBottom: "20px" }}>
+        <div className="sub-row item-counter-row">
+          <p className="item-counter text-small">{itemsLength} Items</p>
+          <Link to="/add" className="primary-button  position-right">
+            + Add
+          </Link>
+        </div>
+        <div className="item-container">{itemCardElements}</div>
+      </section>
+    </div>
   );
 }
 export default Items;
