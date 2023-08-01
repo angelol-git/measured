@@ -107,7 +107,7 @@ function App() {
   };
   return (
     <div className="app">
-      {location.pathname !== "/add" ? <Header /> : null}
+      {location.pathname !== "/add" ? <Header itemData={items} /> : null}
 
       <Routes>
         <Route

@@ -136,7 +136,7 @@ function EditView(props) {
     );
 
   return (
-    <section className="item-modal-container">
+    <section className="modal-container">
       <div className="inner-container">
         <div className="sub-row">
           <button

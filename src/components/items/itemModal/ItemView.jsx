@@ -64,7 +64,7 @@ function ItemView(props) {
     );
   }
   return (
-    <section className="item-modal-container">
+    <section className="modal-container">
       <div class="inner-container">
         <div className="sub-row">
           <button

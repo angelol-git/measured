@@ -1,0 +1,20 @@
+.data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 15px;
+}
+
+.button-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

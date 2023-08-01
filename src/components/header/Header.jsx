@@ -1,12 +1,12 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { useState } from "react";
-import MenuModal from "./menuModal/MenuModal";
+import Settings from "./settings/Settings";
 import "./header.css";
 
-function Header() {
+function Header(props) {
   const [displayMenu, setDisplayMenu] = useState(false);
 
-  function handleClickMenu() {
+  function handleClickSettings() {
     setDisplayMenu(!displayMenu);
   }
 
@@ -29,10 +29,17 @@ function Header() {
 
   return (
     <div>
-      {displayMenu ? <MenuModal handleClickMenu={handleClickMenu} /> : ""}
+      {displayMenu ? (
+        <Settings
+          handleClickSettings={handleClickSettings}
+          itemData={props.itemData}
+        />
+      ) : (
+        ""
+      )}
       <header>
         <div className="header-row">
-          <div className="menu-icon text-normal" onClick={handleClickMenu}>
+          <div className="menu-icon text-normal" onClick={handleClickSettings}>
             <img
               className="small-icon"
               src="./data/images/gear.png"
