@@ -7,6 +7,7 @@ function ItemView(props) {
     props.values;
   const { handleActive, handleDeleteItem } = props.handleFunctions;
   const [imageStatus, setImageStatus] = useState("");
+  let imageElement;
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
@@ -43,6 +44,25 @@ function ItemView(props) {
   function handleImageLoad() {
     setImageStatus("success");
   }
+
+  if (imageSrc.length === 0) {
+    const firstTitleLetter = title.split("")[0];
+    imageElement = (
+      <div className="image-replacement medium-thumbnail">
+        <p>{firstTitleLetter}</p>
+      </div>
+    );
+  } else {
+    imageElement = (
+      <img
+        id="image"
+        className={"medium-thumbnail"}
+        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
+        onLoad={handleImageLoad}
+        alt={title}
+      ></img>
+    );
+  }
   return (
     <section className="item-modal-container text-medium">
       <div className="sub-row">
@@ -54,14 +74,7 @@ function ItemView(props) {
         </button>
       </div>
       <div className="text-center">
-        <img
-          className="large-thumbnail"
-          src={
-            imageStatus === "success" ? imageSrc : "./data/images/loading.gif"
-          }
-          alt={title}
-          onLoad={handleImageLoad}
-        ></img>
+        <div className="flex justify-center">{imageElement}</div>
         <h3 className="modal-title bold-text">{title}</h3>
         <div className="grey-line"></div>
         <div className="sub-row gap-15">
@@ -80,7 +93,7 @@ function ItemView(props) {
         </button>
 
         <button
-          className="primary-button high-z-index"
+          className="primary-buttons high-z-index"
           onClick={() => handleDeleteItem(title.toUpperCase())}
         >
           Delete

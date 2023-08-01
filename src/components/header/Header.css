@@ -1,5 +1,9 @@
 .header-row {
-    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
     text-align: center;
 }
 
@@ -26,6 +30,26 @@
     text-decoration: none;
 }
 
-.nav-bar li:hover {
+.menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    text-decoration: none;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.small-icon {
+    height: 20px;
+    width: 20px;
+    padding: 5px;
+}
+
+.menu-icon:hover,
+.nav-bar-links:hover {
     background-color: var(--secondary-bkg-color);
 }

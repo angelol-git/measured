@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Add from "./pages/Add";
