@@ -58,8 +58,18 @@ function EditView(props) {
     const newUnit = unit === "in" ? "cm" : "in";
     setUnit(newUnit);
   }
+
   function handleUnitInput(event) {
     const { name, value } = event.target;
+
+    if (value === "") {
+      setMeasurements((prevMeasurements) => ({
+        ...prevMeasurements,
+        [name]: ["", ""],
+      }));
+      return;
+    }
+
     let inchValue = 0;
     let cmValue = 0;
 
@@ -76,6 +86,8 @@ function EditView(props) {
       cmValue = value;
       inchValue = (cmValue / 2.54).toFixed(2);
     }
+    console.log(inchValue);
+    console.log(cmValue);
 
     setMeasurements((prevMeasurements) => ({
       ...prevMeasurements,
@@ -96,8 +108,11 @@ function EditView(props) {
 
     for (let i = 0; i < measurementCategory[category].length; i++) {
       const categoryKey = measurementCategory[category][i];
-      console.log(measurements);
       if (currMeasurements[categoryKey] === undefined) {
+        continue;
+      }
+      if (currMeasurements[categoryKey][0].length === 0) {
+        delete currMeasurements[categoryKey];
         continue;
       }
       const categoryValue = [
@@ -111,6 +126,7 @@ function EditView(props) {
       return;
     }
 
+    console.log(newItem);
     handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }
