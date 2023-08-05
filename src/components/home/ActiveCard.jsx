@@ -60,7 +60,10 @@ function ActiveCard(props) {
         ></img>
       </div>
       <div className={"active-details" + (detailView ? " show" : "")}>
-        {measurementElements}
+        <div className="active-measurement-container">
+          {" "}
+          {measurementElements}
+        </div>
         <div className="active-button-row">{activeButtonElement}</div>
       </div>
     </div>
