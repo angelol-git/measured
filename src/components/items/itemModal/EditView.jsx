@@ -77,9 +77,9 @@ function EditView(props) {
       inchValue = (cmValue / 2.54).toFixed(2);
     }
 
-    setMeasurements((measurements) => ({
-      ...measurements,
-      [name]: [[inchValue], [cmValue]],
+    setMeasurements((prevMeasurements) => ({
+      ...prevMeasurements,
+      [name]: [inchValue, cmValue],
     }));
   }
 
@@ -96,6 +96,10 @@ function EditView(props) {
 
     for (let i = 0; i < measurementCategory[category].length; i++) {
       const categoryKey = measurementCategory[category][i];
+      console.log(measurements);
+      if (currMeasurements[categoryKey] === undefined) {
+        continue;
+      }
       const categoryValue = [
         currMeasurements[categoryKey][0],
         currMeasurements[categoryKey][1],
@@ -106,6 +110,7 @@ function EditView(props) {
     if (titleError === true) {
       return;
     }
+
     handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }

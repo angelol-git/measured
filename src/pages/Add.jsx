@@ -23,8 +23,6 @@ function Add(props) {
   const cmButtonClass =
     unit === "in" ? " secondary-button-color" : " primary-button";
 
-  console.log(imageUrl);
-  console.log(imageStatus);
   const measurementElements = (
     <div className="measurement-container">
       {measurementCategory[category].map((item, index) => (
@@ -39,8 +37,6 @@ function Add(props) {
               name={`${item}`}
               className="unit-input text-normal"
               value={measurements[item]?.[unitIndex] || ""}
-              min="0.00"
-              step=".01"
               placeholder="0.00"
               onChange={handleUnitInput}
             />
@@ -100,10 +96,14 @@ function Add(props) {
 
     for (let i = 0; i < measurementCategory[category].length; i++) {
       const categoryKey = measurementCategory[category][i];
+      if (measurements[categoryKey] === undefined) {
+        continue;
+      }
       const categoryValue = [
         measurements[categoryKey][0],
         measurements[categoryKey][1],
       ];
+
       newItem.measurements[categoryKey] = categoryValue;
     }
 
