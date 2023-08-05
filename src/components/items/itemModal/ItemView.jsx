@@ -5,7 +5,7 @@ import "./ItemView.css";
 function ItemView(props) {
   const { active, category, title, size, imageSrc, measurements } =
     props.values;
-  const { handleActive, handleDeleteItem } = props.handleFunctions;
+  const { handleActive, handleDelete } = props.handleFunctions;
   const [imageStatus, setImageStatus] = useState("");
   let imageElement;
   const measurementElements = Object.entries(measurements).map(
@@ -96,7 +96,7 @@ function ItemView(props) {
 
           <button
             className="primary-button high-z-index"
-            onClick={() => handleDeleteItem(title.toUpperCase())}
+            onClick={() => handleDelete(title.toUpperCase())}
           >
             Delete
           </button>

@@ -214,6 +214,18 @@ a {
     background-color: rgb(196, 196, 196);
 }
 
+.button-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-icon {
+    width: 12px;
+    height: 12px;
+}
+
 .deactivate {
     cursor: pointer;
 }

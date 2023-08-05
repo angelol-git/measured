@@ -27,7 +27,8 @@ function checkTable() {
 
 function getCategory() {
     const classList = document.querySelectorAll(".Breadcrumbs_link__q_nNg");
-    return classList[2].innerText.split(" ")[1];
+    const lastElement = classList[2].innerText.split(" ").length;
+    return classList[2].innerText.split(" ")[lastElement - 1];
 }
 
 function compareMeasurements(measurementTable, item) {
