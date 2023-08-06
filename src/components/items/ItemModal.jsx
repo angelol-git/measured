@@ -32,6 +32,7 @@ function ItemModal(props) {
           handleFunctions={props.handleFunctions}
           handleEditBack={handleEditBack}
           convertedCategory={convertedCategory}
+          settingsData={props.settingsData}
         />
       );
     } else {

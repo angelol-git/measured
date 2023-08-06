@@ -14,9 +14,9 @@ function App() {
   const [items, setItems] = useState({});
   const [settings, setSettings] = useState({
     sizes: {
-      Tops: ["S", "M", "L"],
+      Tops: ["S/44-46", "M/48-50", "L/52-54"],
       Bottoms: ["30", "32", "34"],
-      Outerwear: ["S", "M", "L"],
+      Outerwear: ["S/44-46", "M/48-50", "L/52-54"],
     },
   });
 
@@ -169,7 +169,13 @@ function App() {
         />
         <Route
           path="/items"
-          element={<Items itemData={items} handleFunctions={handleFunctions} />}
+          element={
+            <Items
+              itemData={items}
+              settingsData={settings}
+              handleFunctions={handleFunctions}
+            />
+          }
         />
 
         <Route
@@ -180,6 +186,7 @@ function App() {
               handleAddItem={handleAdd}
               handleTitle={handleTitle}
               titleError={titleError}
+              settingsData={settings}
             />
           }
         />

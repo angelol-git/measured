@@ -12,7 +12,8 @@ function Items(props) {
   function handleClickClose() {
     // setSlideDown(!slideDown);
     setDisplayFilters(!displayFilters);
-  }  if (itemsLength) {
+  }
+  if (itemsLength) {
     itemCardElements = Object.entries(props.itemData)
       .sort(([, itemA], [, itemB]) => {
         if (itemA.active !== itemB.active) {
@@ -26,6 +27,7 @@ function Items(props) {
           <ItemCard
             key={key}
             values={value}
+            settingsData={props.settingsData}
             handleFunctions={props.handleFunctions}
           />
         );

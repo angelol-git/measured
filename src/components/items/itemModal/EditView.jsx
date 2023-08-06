@@ -54,6 +54,20 @@ function EditView(props) {
     </div>
   );
 
+  const sizeElements = (
+    <select
+      name="size"
+      id="size"
+      className="input-category"
+      defaultValue={currSize}
+      onChange={(e) => setSize(e.target.value)}
+    >
+      {props.settingsData.sizes[currCategory].map((item) => {
+        return <option value={item}>{item}</option>;
+      })}
+    </select>
+  );
+
   function handleUnitClick() {
     const newUnit = unit === "in" ? "cm" : "in";
     setUnit(newUnit);
@@ -254,17 +268,8 @@ function EditView(props) {
               <label htmlFor="size" className="bold-text">
                 Size:
               </label>
-              <select
-                name="size"
-                id="size"
-                className="size"
-                defaultValue={currSize}
-                onChange={(e) => setSize(e.target.value)}
-              >
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-              </select>
+
+              {sizeElements}
             </div>
           </div>
           <div className="edit-measurement-container">

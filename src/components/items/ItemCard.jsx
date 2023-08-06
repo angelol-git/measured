@@ -62,6 +62,7 @@ function ItemCard(props) {
         clickModal={clickModal}
         handleClickModal={handleClickModal}
         handleFunctions={props.handleFunctions}
+        settingsData={props.settingsData}
       />
     </div>
   );

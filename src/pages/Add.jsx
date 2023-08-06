@@ -47,6 +47,14 @@ function Add(props) {
     </div>
   );
 
+  const sizeElements = (
+    <select name="size" id="size" className="input-category">
+      {props.settingsData.sizes[category].map((item) => {
+        return <option value={item}>{item}</option>;
+      })}
+    </select>
+  );
+
   useEffect(() => {
     props.handleTitle(title);
   }, [title]);
@@ -117,7 +125,7 @@ function Add(props) {
       event.target.category.value,
       true
     );
-
+    console.log(newItem);
     navigate("/items");
   }
 
@@ -188,11 +196,7 @@ function Add(props) {
             <label htmlFor="size" className="bold-text">
               Size
             </label>
-            <select name="size" id="size" className="input-category">
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-            </select>
+            {sizeElements}
           </div>
 
           <div className="form-input">
