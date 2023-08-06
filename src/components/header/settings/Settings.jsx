@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Data from "./Data";
+import FilterSizes from "./FilterSizes";
 import "./Settings.css";
 
 function Settings(props) {
@@ -35,6 +36,19 @@ function Settings(props) {
           ) : (
             ""
           )}
+          {settingsMode === "filterSizes" ? (
+            <div>
+              <button
+                className="back-button secondary-link-color position-left"
+                onClick={() => setSettingsMode("menu")}
+              >
+                ←
+              </button>
+              <h3 className="bold-text header-medium">Filter Sizes</h3>
+            </div>
+          ) : (
+            ""
+          )}
           {settingsMode === "data" ? (
             <div>
               <button
@@ -52,9 +66,20 @@ function Settings(props) {
 
         {settingsMode === "menu" ? (
           <ul className="settings-list">
-            <a href="#" className="settings-list-link">
+            <a
+              href="#"
+              className="settings-list-link"
+              onClick={() => setSettingsMode("filterSizes")}
+            >
               <li className="settings-list-item">Filter Sizes</li>
-              <div>&gt;</div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
+              </svg>
             </a>
             <a
               href="#"
@@ -62,12 +87,20 @@ function Settings(props) {
               onClick={() => setSettingsMode("data")}
             >
               <li className="settings-list-item">Data</li>
-              <div>&gt;</div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
+              </svg>
             </a>
           </ul>
         ) : (
           ""
         )}
+        {settingsMode === "filterSizes" ? <FilterSizes /> : ""}
         {settingsMode === "data" ? (
           <Data handleImport={props.handleImport} itemData={props.itemData} />
         ) : (

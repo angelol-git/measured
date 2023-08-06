@@ -1,0 +1,41 @@
+.filterSizes-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.allSizes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding-bottom: 10px;
+
+    max-height: 0px;
+    visibility: hidden;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.checkbox-container.show {
+    padding-top: 10px;
+    max-height: 160px;
+    visibility: visible;
+}
+
+.category-grey-line {
+    border-bottom: 1px solid rgb(194, 194, 194);
+}

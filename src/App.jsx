@@ -12,6 +12,16 @@ function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [titleError, setTittleError] = useState(false);
   const [items, setItems] = useState({});
+  const sizeOptions = {
+    Tops: ["XXS", "S", "M", "L", "XL", "XXL"],
+    Bottoms: ["28", "30", "32", "34", "36"],
+    Outerwear: ["XXS", "S", "M", "L", "XL", "XXL"],
+  };
+  const measurementCategory = {
+    Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+    Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
+    Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
+  };
   // const [items, setItems] = useState(() => {
   //   const savedItems = localStorage.getItem("items");
   //   return savedItems ? JSON.parse(savedItems) : {};

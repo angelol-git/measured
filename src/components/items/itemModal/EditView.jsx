@@ -18,7 +18,7 @@ function EditView(props) {
 
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
-    Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
+    Bottoms: ["Front Rise", "Inseam", "Leg Opening", "Thigh", "Knee", "Waist"],
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
   const [unit, setUnit] = useState("in");
