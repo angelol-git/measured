@@ -100,7 +100,14 @@ function Settings(props) {
         ) : (
           ""
         )}
-        {settingsMode === "filterSizes" ? <FilterSizes /> : ""}
+        {settingsMode === "filterSizes" ? (
+          <FilterSizes
+            settingsData={props.settingsData}
+            handleSizeUpdate={props.handleSizeUpdate}
+          />
+        ) : (
+          ""
+        )}
         {settingsMode === "data" ? (
           <Data handleImport={props.handleImport} itemData={props.itemData} />
         ) : (

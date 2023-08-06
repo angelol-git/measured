@@ -34,6 +34,8 @@ function Header(props) {
           handleClickSettings={handleClickSettings}
           handleImport={props.handleImport}
           itemData={props.itemData}
+          settingsData={props.settingsData}
+          handleSizeUpdate={props.handleSizeUpdate}
         />
       ) : (
         ""

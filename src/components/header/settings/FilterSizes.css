@@ -27,15 +27,20 @@
     max-height: 0px;
     visibility: hidden;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.5s ease;
 }
 
 .checkbox-container.show {
     padding-top: 10px;
-    max-height: 160px;
+    max-height: 500px;
     visibility: visible;
 }
 
 .category-grey-line {
     border-bottom: 1px solid rgb(194, 194, 194);
+}
+
+.checkbox-medium {
+    width: 20px;
+    height: 20px;
 }

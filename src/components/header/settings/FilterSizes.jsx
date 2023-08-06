@@ -3,9 +3,38 @@ import "./FilterSizes.css";
 
 function FilterSizes(props) {
   const [allSizes, setAllSizes] = useState({
-    Tops: ["XXS", "S", "M", "L", "XL", "XXL"],
-    Bottoms: ["28", "30", "32", "34", "36"],
-    Outerwear: ["XXS", "S", "M", "L", "XL", "XXL"],
+    Tops: [
+      "XXS/40",
+      "XS/42",
+      "S/44-46",
+      "M/48-50",
+      "L/52-54",
+      "XL/56",
+      "XXL/58",
+    ],
+    Bottoms: [
+      "26",
+      "27",
+      "28",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+    ],
+    Outerwear: [
+      "XXS/40",
+      "XS/42",
+      "S/44-46",
+      "M/48-50",
+      "L/52-54",
+      "XL/56",
+      "XXL/58",
+    ],
   });
 
   const [allSizesShow, setAllSizesShow] = useState({
@@ -15,7 +44,7 @@ function FilterSizes(props) {
   });
 
   function handleSizeClick(event, category) {
-    console.log(event.target.value);
+    props.handleSizeUpdate(event.target.value, category);
   }
 
   function handleCategoryClick(category) {
@@ -61,14 +90,21 @@ function FilterSizes(props) {
           }
         >
           {allSizes[category].map((item, index) => (
-            <div>
+            <div className="flex align-center gap-5">
               <input
                 type="checkbox"
                 id={`${category}-${item}`}
                 name={`${category}-${item}`}
                 value={item}
-                onClick={handleSizeClick}
+                onClick={(event) => {
+                  handleSizeClick(event, category);
+                }}
+                checked={Object.values(
+                  props.settingsData.sizes[category]
+                ).includes(`${item}`)}
+                className="checkbox-medium"
               />
+
               <label for={`${category}-${item}`}>{item}</label>
             </div>
           ))}

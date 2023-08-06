@@ -12,16 +12,14 @@ function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [titleError, setTittleError] = useState(false);
   const [items, setItems] = useState({});
-  const sizeOptions = {
-    Tops: ["XXS", "S", "M", "L", "XL", "XXL"],
-    Bottoms: ["28", "30", "32", "34", "36"],
-    Outerwear: ["XXS", "S", "M", "L", "XL", "XXL"],
-  };
-  const measurementCategory = {
-    Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
-    Bottoms: ["Waist", "Inseam", "Leg Opening", "Front Rise", "Thigh", "Knee"],
-    Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
-  };
+  const [settings, setSettings] = useState({
+    sizes: {
+      Tops: ["S", "M", "L"],
+      Bottoms: ["30", "32", "34"],
+      Outerwear: ["S", "M", "L"],
+    },
+  });
+
   // const [items, setItems] = useState(() => {
   //   const savedItems = localStorage.getItem("items");
   //   return savedItems ? JSON.parse(savedItems) : {};
@@ -101,9 +99,43 @@ function App() {
   }, []);
 
   useEffect(() => {
-    //localStorage.setItem("items", JSON.stringify(items));
     chrome.storage.local.set({ items }, () => {});
   }, [items]);
+
+  useEffect(() => {
+    chrome.storage.local.get("settings", (result) => {
+      if (result.settings) {
+        setSettings(result.settings);
+      } else {
+        chrome.storage.local.set({ settings });
+      }
+    });
+  }, []);
+
+  function handleSizeUpdate(value, category) {
+    setSettings((prevSettings) => {
+      const updatedSettings = { ...prevSettings };
+      console.log();
+
+      if (Object.values(updatedSettings.sizes[category]).includes(value)) {
+        const result = Object.values(updatedSettings.sizes[category]).filter(
+          (size) => {
+            return size != value;
+          }
+        );
+        updatedSettings.sizes[category] = result;
+      } else {
+        updatedSettings.sizes[category] = [
+          ...updatedSettings.sizes[category],
+          value,
+        ];
+      }
+      return updatedSettings;
+    });
+  }
+  useEffect(() => {
+    chrome.storage.local.set({ settings }, () => {});
+  }, [settings]);
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -122,7 +154,12 @@ function App() {
   return (
     <div className="app">
       {location.pathname !== "/add" ? (
-        <Header itemData={items} handleImport={handleImport} />
+        <Header
+          itemData={items}
+          settingsData={settings}
+          handleImport={handleImport}
+          handleSizeUpdate={handleSizeUpdate}
+        />
       ) : null}
 
       <Routes>
