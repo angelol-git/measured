@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./FilterSizes.css";
 
 function FilterSizes(props) {
+  console.log(props);
   const [allSizes, setAllSizes] = useState({
     Tops: [
       "XXS/40",
@@ -63,7 +64,16 @@ function FilterSizes(props) {
             handleCategoryClick(category);
           }}
         >
-          <h2 className="bold-text text-large">{category}</h2>
+          <div className="category-row-left">
+            <h2 className="bold-text text-large">{category}</h2>
+            <div className="size-item text-small">
+              {!allSizesShow[category]
+                ? props.settingsData.sizes[category].map((item) => {
+                    return <p>{item}</p>;
+                  })
+                : ""}
+            </div>
+          </div>
           {allSizesShow[category] ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"

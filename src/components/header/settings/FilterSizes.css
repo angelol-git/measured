@@ -17,6 +17,20 @@
     padding-top: 15px;
 }
 
+.size-item {
+    display: flex;
+    gap: 5px;
+    color: blue;
+    flex-wrap: wrap;
+}
+
+.category-row-left {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: baseline;
+}
+
 .checkbox-container {
     display: flex;
     flex-direction: column;
