@@ -6,6 +6,10 @@ import Items from "./pages/Items";
 import Add from "./pages/Add";
 import "./App.css";
 
+//To do
+//- change name to measured ?
+//- sort sizes
+//- add support to ssense
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -112,25 +116,9 @@ function App() {
     });
   }, []);
 
-  function handleSizeUpdate(value, category) {
+  function handleSizeUpdate(newSizes) {
     setSettings((prevSettings) => {
-      const updatedSettings = { ...prevSettings };
-      console.log();
-
-      if (Object.values(updatedSettings.sizes[category]).includes(value)) {
-        const result = Object.values(updatedSettings.sizes[category]).filter(
-          (size) => {
-            return size != value;
-          }
-        );
-        updatedSettings.sizes[category] = result;
-      } else {
-        updatedSettings.sizes[category] = [
-          ...updatedSettings.sizes[category],
-          value,
-        ];
-      }
-      return updatedSettings;
+      return { ...prevSettings, sizes: newSizes };
     });
   }
   useEffect(() => {

@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./FilterSizes.css";
 
 function FilterSizes(props) {
-  console.log(props);
+  const { sizes } = props.settingsData;
+  const isInitialRender = useRef(true);
   const [allSizes, setAllSizes] = useState({
+    Outerwear: [
+      "XXS/40",
+      "XS/42",
+      "S/44-46",
+      "M/48-50",
+      "L/52-54",
+      "XL/56",
+      "XXL/58",
+    ].map((size) => ({
+      value: size,
+      checked: sizes["Outerwear"].includes(size),
+    })),
     Tops: [
       "XXS/40",
       "XS/42",
@@ -12,11 +25,15 @@ function FilterSizes(props) {
       "L/52-54",
       "XL/56",
       "XXL/58",
-    ],
+    ].map((size) => ({
+      value: size,
+      checked: sizes["Tops"].includes(size),
+    })),
     Bottoms: [
       "26",
       "27",
       "28",
+      "29",
       "30",
       "31",
       "32",
@@ -26,16 +43,10 @@ function FilterSizes(props) {
       "36",
       "37",
       "38",
-    ],
-    Outerwear: [
-      "XXS/40",
-      "XS/42",
-      "S/44-46",
-      "M/48-50",
-      "L/52-54",
-      "XL/56",
-      "XXL/58",
-    ],
+    ].map((size) => ({
+      value: size,
+      checked: sizes["Bottoms"].includes(size),
+    })),
   });
 
   const [allSizesShow, setAllSizesShow] = useState({
@@ -44,9 +55,31 @@ function FilterSizes(props) {
     Outerwear: false,
   });
 
-  function handleSizeClick(event, category) {
-    props.handleSizeUpdate(event.target.value, category);
+  function handleSizeClick(value, category) {
+    setAllSizes((prevSizes) => ({
+      ...prevSizes,
+      [category]: prevSizes[category].map((item) => {
+        return item.value === value
+          ? { ...item, checked: !item.checked }
+          : item;
+      }),
+    }));
   }
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+    } else {
+      const checkedData = {};
+      Object.keys(allSizes).forEach((category) => {
+        checkedData[category] = allSizes[category]
+          .filter((item) => item.checked)
+          .map((item) => item.value);
+      });
+
+      props.handleSizeUpdate(checkedData);
+    }
+  }, [allSizes]);
 
   function handleCategoryClick(category) {
     setAllSizesShow((prevSizes) => ({
@@ -67,11 +100,11 @@ function FilterSizes(props) {
           <div className="category-row-left">
             <h2 className="bold-text text-large">{category}</h2>
             <div className="size-item text-small">
-              {!allSizesShow[category]
+              {/* {!allSizesShow[category]
                 ? props.settingsData.sizes[category].map((item) => {
                     return <p>{item}</p>;
                   })
-                : ""}
+                : ""} */}
             </div>
           </div>
           {allSizesShow[category] ? (
@@ -103,19 +136,17 @@ function FilterSizes(props) {
             <div className="flex align-center gap-5">
               <input
                 type="checkbox"
-                id={`${category}-${item}`}
-                name={`${category}-${item}`}
-                value={item}
+                id={`${category}-${item.value}`}
+                name={`${category}-${item.value}`}
+                value={item.value}
                 onClick={(event) => {
-                  handleSizeClick(event, category);
+                  handleSizeClick(event.target.value, category);
                 }}
-                checked={Object.values(
-                  props.settingsData.sizes[category]
-                ).includes(`${item}`)}
+                checked={item.checked}
                 className="checkbox-medium"
               />
 
-              <label for={`${category}-${item}`}>{item}</label>
+              <label for={`${category}-${item.value}`}>{item.value}</label>
             </div>
           ))}
         </div>
