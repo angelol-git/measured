@@ -7,9 +7,11 @@ import Add from "./pages/Add";
 import "./App.css";
 
 //To do
-//- change name to measured ?
-//- sort sizes
+//scrollbar gutter
 //- add support to ssense
+//Figure out what content_grailed is doing again ...
+//pop out
+//Remember last screen
 function App() {
   const location = useLocation();
   const navigate = useNavigate();

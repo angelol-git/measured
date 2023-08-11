@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Size Compare",
+  "name": "Measured",
   "version": "1.0",
   "description": "Compare clothing measurements to your own items.",
   "action": {
@@ -10,7 +10,11 @@
   "content_scripts": [
     {
       "matches": ["https://www.grailed.com/listings/*"],
-      "js": ["content.js"]
+      "js": ["content_grailed.js"]
+    },
+    {
+      "matches": ["https://www.ssense.com/*/*/product/*"],
+      "js": ["content_ssense.js"]
     }
   ],
   "background": {

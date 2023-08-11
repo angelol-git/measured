@@ -100,11 +100,11 @@ function FilterSizes(props) {
           <div className="category-row-left">
             <h2 className="bold-text text-large">{category}</h2>
             <div className="size-item text-small">
-              {/* {!allSizesShow[category]
-                ? props.settingsData.sizes[category].map((item) => {
+              {!allSizesShow[category]
+                ? sizes[category].map((item) => {
                     return <p>{item}</p>;
                   })
-                : ""} */}
+                : ""}
             </div>
           </div>
           {allSizesShow[category] ? (

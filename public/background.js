@@ -1,8 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'getItem') {
         chrome.storage.local.get("items", (result) => {
-
-
             const items = result;
             const validItems = returnValidItems(items, request.category);
 
