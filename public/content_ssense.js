@@ -1,19 +1,23 @@
-const intervalChecker = setInterval(() => {
-    const measurementModal = checkSSenseModal();
-    if (measurementModal) {
-        console.log("Measured: Measurements found.");
-        init(measurementModal);
-        clearInterval(intervalChecker);
-    }
-}, 2000);
+function sizeGuideMutationObserver() {
+    const observer = new MutationObserver((mutationsList, observer) => {
+        const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[0];
 
-function checkSSenseModal() {
-    console.log("Measured: Looking for modal...");
-    const measurementModal = document.querySelector(".modal-container-outer");
-    return measurementModal;
+        if (sizeGuideButton) {
+            console.log("Measured: Found button.");
+            sizeGuideButton.addEventListener('click', () => {
+                init();
+            });
+            observer.disconnect();
+        }
+    });
+    // Desktop or mobile ?
+    const containerToObserve = document.querySelector('.pdp-desktop');
+    observer.observe(containerToObserve, { childList: true, subtree: true });
 }
 
-async function init(measurementModal) {
+
+async function init() {
+    const measurementModal = document.querySelector('.modal-container-outer');
     const resultMeasurements = validSSenseMeasurements(measurementModal);
     if (resultMeasurements === -1) {
         console.log("Measured: Error - No measurements provided.");
@@ -32,6 +36,8 @@ async function init(measurementModal) {
         console.log("Measured: Error - parsing data.")
         return;
     }
+
+
     const resultCompare = compareSSenseMeasurements(resultParsedData, resultActiveItem);
     const measurementValueElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
 
@@ -40,6 +46,7 @@ async function init(measurementModal) {
     }
     // displayGrailedCompareItem(measurementTable, item);
 
+    //Toggle Between unit systems 
     const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
     const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
     inchButton.addEventListener('click', () => {
@@ -49,6 +56,7 @@ async function init(measurementModal) {
     })
     cmButton.addEventListener('click', () => {
         for (let i = 0; i < resultCompare.length; i++) {
+            console.log(measurementValueElement.children[i]);
             displaySSenseDifference(measurementValueElement.children[i], "cm", resultCompare[i][1], false);
         }
     })
@@ -101,6 +109,7 @@ async function checkActiveItems(category) {
     });
 }
 function parseSSenseMeasurements(measurementModal) {
+
     const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
     if (!measurementValuesElement) {
         return -1;
@@ -149,7 +158,6 @@ function displaySSenseDifference(measurementElement, system, difference, initial
     if (!initial) {
         if (system === "inch") {
             measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " &quot";
-            console.log(measurementElement.innerText.trim().split(" "));
         }
         else if (system === "cm") {
             measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " cm";
@@ -167,3 +175,4 @@ function displaySSenseDifference(measurementElement, system, difference, initial
     }
 }
 
+sizeGuideMutationObserver();
