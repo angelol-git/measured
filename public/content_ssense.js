@@ -1,23 +1,35 @@
 function sizeGuideMutationObserver() {
     const observer = new MutationObserver((mutationsList, observer) => {
-        const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[0];
-
+        const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[1];
         if (sizeGuideButton) {
             console.log("Measured: Found button.");
             sizeGuideButton.addEventListener('click', () => {
-                init();
+                modalMutationObserver();
             });
             observer.disconnect();
         }
     });
-    // Desktop or mobile ?
-    const containerToObserve = document.querySelector('.pdp-desktop');
+    const containerToObserve = document.querySelector('.pdp-header__right');
     observer.observe(containerToObserve, { childList: true, subtree: true });
 }
 
+function modalMutationObserver() {
+    const observer = new MutationObserver((mutationsList, observer) => {
+        const measurementModal = document.querySelector('.modal-container-outer');
+        const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
+        const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
+        if (measurementModalHeader && measurementValuesElement) {
+            console.log("Measured: Multiple elements loaded.");
+            compareMeasurements(measurementModal);
+            observer.disconnect();
+        }
+    });
+    const containerToObserve = document.querySelector('.modal-container-outer');
+    observer.observe(containerToObserve, { childList: true, subtree: true });
+}
 
-async function init() {
-    const measurementModal = document.querySelector('.modal-container-outer');
+async function compareMeasurements(measurementModal) {
+
     const resultMeasurements = validSSenseMeasurements(measurementModal);
     if (resultMeasurements === -1) {
         console.log("Measured: Error - No measurements provided.");
@@ -31,14 +43,13 @@ async function init() {
         return;
     }
 
-    const resultParsedData = parseSSenseMeasurements(measurementModal)
-    if (resultParsedData === -1) {
+    const resultOriginalMeasurements = parseSSenseMeasurements(measurementModal)
+    if (resultOriginalMeasurements === -1) {
         console.log("Measured: Error - parsing data.")
         return;
     }
 
-
-    const resultCompare = compareSSenseMeasurements(resultParsedData, resultActiveItem);
+    const resultCompare = compareSSenseMeasurements(resultOriginalMeasurements, resultActiveItem);
     const measurementValueElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
 
     for (let i = 0; i < resultCompare.length; i++) {
@@ -46,20 +57,7 @@ async function init() {
     }
     // displayGrailedCompareItem(measurementTable, item);
 
-    //Toggle Between unit systems 
-    const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
-    const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
-    inchButton.addEventListener('click', () => {
-        for (let i = 0; i < resultCompare.length; i++) {
-            displaySSenseDifference(measurementValueElement.children[i], "inch", resultCompare[i][0], false);
-        }
-    })
-    cmButton.addEventListener('click', () => {
-        for (let i = 0; i < resultCompare.length; i++) {
-            console.log(measurementValueElement.children[i]);
-            displaySSenseDifference(measurementValueElement.children[i], "cm", resultCompare[i][1], false);
-        }
-    })
+    toggleUnitSystems(measurementValueElement, resultCompare, Object.values(resultOriginalMeasurements));
 }
 
 function validSSenseMeasurements(measurementModal) {
@@ -109,7 +107,6 @@ async function checkActiveItems(category) {
     });
 }
 function parseSSenseMeasurements(measurementModal) {
-
     const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
     if (!measurementValuesElement) {
         return -1;
@@ -127,7 +124,7 @@ function parseSSenseMeasurements(measurementModal) {
     for (let i = 0; i < measurementValuesElement.children.length; i++) {
         const categoryCSS = measurementValuesElement.children[i].style.cssText;
         const categoryValueInch = (measurementValuesElement.children[i].innerText.split(" ")[0]);
-        const categoryValueCm = Math.trunc(categoryValueInch * 2.54);
+        const categoryValueCm = (Math.trunc(categoryValueInch * 2.54)).toString();
         if (measurementCategory.hasOwnProperty(categoryCSS)) {
             measurementObject[measurementCategory[categoryCSS]] = [categoryValueInch, categoryValueCm];
         }
@@ -153,14 +150,16 @@ function compareSSenseMeasurements(parsedData, item) {
     return difference;
 }
 
-function displaySSenseDifference(measurementElement, system, difference, initial = true) {
+function displaySSenseDifference(measurementElement, system, difference, originalMeasurements, initial = true) {
     let formattedDifference = difference;
     if (!initial) {
         if (system === "inch") {
-            measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " &quot";
+            measurementElement.innerHTML = originalMeasurements + " &quot";
+            //measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " &quot";
         }
         else if (system === "cm") {
-            measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " cm";
+            measurementElement.innerHTML = originalMeasurements + " cm";
+            //measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " cm";
         }
     }
     if (parseFloat(difference) === 0.00) {
@@ -175,4 +174,18 @@ function displaySSenseDifference(measurementElement, system, difference, initial
     }
 }
 
+function toggleUnitSystems(measurementValueElement, resultCompare, resultOriginalMeasurements) {
+    const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
+    const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
+    inchButton.addEventListener('click', () => {
+        for (let i = 0; i < resultCompare.length; i++) {
+            displaySSenseDifference(measurementValueElement.children[i], "inch", resultCompare[i][0], resultOriginalMeasurements[i][0], false);
+        }
+    })
+    cmButton.addEventListener('click', () => {
+        for (let i = 0; i < resultCompare.length; i++) {
+            displaySSenseDifference(measurementValueElement.children[i], "cm", resultCompare[i][1], resultOriginalMeasurements[i][1], false);
+        }
+    })
+}
 sizeGuideMutationObserver();
