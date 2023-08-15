@@ -30,34 +30,37 @@ function modalMutationObserver() {
 
 async function compareMeasurements(measurementModal) {
 
-    const resultMeasurements = validSSenseMeasurements(measurementModal);
-    if (resultMeasurements === -1) {
+    const validModal = validSSenseMeasurements(measurementModal);
+    if (validModal === -1) {
         console.log("Measured: Error - No measurements provided.");
         return;
     }
-    const category = getSSenseCategory();
 
-    const resultActiveItem = await checkActiveItems(category);
-    if (resultActiveItem === -1) {
+    const category = getSSenseCategory();
+    const activeItem = await validActiveItem(category);
+    if (activeItem === -1) {
         console.log("Measured: Error - No active items.")
         return;
     }
 
-    const resultOriginalMeasurements = parseSSenseMeasurements(measurementModal)
-    if (resultOriginalMeasurements === -1) {
+    const originalMeasurements = getOriginalMeasurements(measurementModal)
+    if (originalMeasurements === -1) {
         console.log("Measured: Error - parsing data.")
         return;
     }
 
-    const resultCompare = compareSSenseMeasurements(resultOriginalMeasurements, resultActiveItem);
-    const measurementValueElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
-
-    for (let i = 0; i < resultCompare.length; i++) {
-        displaySSenseDifference(measurementValueElement.children[i], "inch", resultCompare[i][0]);
+    const measurementDifferences = compareSSenseMeasurements(originalMeasurements, activeItem);
+    const measurementValueElements = Array.from(measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1].children);
+    console.log(measurementValueElements);
+    for (const key in measurementDifferences) {
+        const measurementValueElement = measurementValueElements.filter((item) => {
+            return item.style.cssText === originalMeasurements[key].cssPosition;
+        })[0];
+        displaySSenseDifference(measurementValueElement, measurementDifferences[key].inchDifference, originalMeasurements[key].originalInch, "inch", false);
     }
     // displayGrailedCompareItem(measurementTable, item);
 
-    toggleUnitSystems(measurementValueElement, resultCompare, Object.values(resultOriginalMeasurements));
+    toggleUnitSystems(measurementValueElements, measurementDifferences, originalMeasurements);
 }
 
 function validSSenseMeasurements(measurementModal) {
@@ -93,7 +96,7 @@ function getSSenseCategory() {
     }
 }
 
-async function checkActiveItems(category) {
+async function validActiveItem(category) {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
             const item = response.items;
@@ -106,12 +109,12 @@ async function checkActiveItems(category) {
         });
     });
 }
-function parseSSenseMeasurements(measurementModal) {
+function getOriginalMeasurements(measurementModal) {
     const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
     if (!measurementValuesElement) {
         return -1;
     }
-    const measurementObject = {};
+    const originalMeasurements = {};
 
     //Currently only works with t-shirts because of the image.
     const measurementCategory = {
@@ -122,35 +125,44 @@ function parseSSenseMeasurements(measurementModal) {
     };
 
     for (let i = 0; i < measurementValuesElement.children.length; i++) {
-        const categoryCSS = measurementValuesElement.children[i].style.cssText;
-        const categoryValueInch = (measurementValuesElement.children[i].innerText.split(" ")[0]);
-        const categoryValueCm = (Math.trunc(categoryValueInch * 2.54)).toString();
-        if (measurementCategory.hasOwnProperty(categoryCSS)) {
-            measurementObject[measurementCategory[categoryCSS]] = [categoryValueInch, categoryValueCm];
+        const cssPosition = measurementValuesElement.children[i].style.cssText;
+        const originalInch = (measurementValuesElement.children[i].innerText.split(" ")[0]);
+        const originalCm = (Math.trunc(originalInch * 2.54)).toString();
+        if (measurementCategory.hasOwnProperty(cssPosition)) {
+            originalMeasurements[measurementCategory[cssPosition]] = {
+                cssPosition,
+                originalInch,
+                originalCm
+            };
         }
     }
 
-    return measurementObject;
+    return originalMeasurements;
 }
-function compareSSenseMeasurements(parsedData, item) {
+
+function compareSSenseMeasurements(originalMeasurements, item) {
     const activeKeys = Object.keys(item.measurements);
-    const parsedKeys = Object.keys(parsedData);
+    const parsedKeys = Object.keys(originalMeasurements);
     const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
-    const difference = [];
+    const difference = {};
 
     for (const key of commonKeys) {
         const activeValue = (item.measurements[key])
-        const parsedValue = (parsedData[key])
 
-        const inchDifference = (parsedValue[0] - activeValue[0]).toFixed(2);
-        const cmDifference = (parsedValue[1] - activeValue[1]).toFixed(2);
+        const parsedValue = (originalMeasurements[key])
+        const inchDifference = (parsedValue.originalInch - activeValue[0]).toFixed(2);
+        const cmDifference = (parsedValue.originalCm - activeValue[1]).toFixed(2);
 
-        difference.push([inchDifference, cmDifference]);
+        difference[key] = {
+            inchDifference,
+            cmDifference
+        };
     }
+
     return difference;
 }
 
-function displaySSenseDifference(measurementElement, system, difference, originalMeasurements, initial = true) {
+function displaySSenseDifference(measurementElement, difference, originalMeasurements, system, initial = true) {
     let formattedDifference = difference;
     if (!initial) {
         if (system === "inch") {
@@ -174,17 +186,23 @@ function displaySSenseDifference(measurementElement, system, difference, origina
     }
 }
 
-function toggleUnitSystems(measurementValueElement, resultCompare, resultOriginalMeasurements) {
+function toggleUnitSystems(measurementValueElements, measurementDifferences, originalMeasurements) {
     const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
     const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
     inchButton.addEventListener('click', () => {
-        for (let i = 0; i < resultCompare.length; i++) {
-            displaySSenseDifference(measurementValueElement.children[i], "inch", resultCompare[i][0], resultOriginalMeasurements[i][0], false);
+        for (const key in measurementDifferences) {
+            const measurementValueElement = measurementValueElements.filter((item) => {
+                return item.style.cssText === originalMeasurements[key].cssPosition;
+            })[0];
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].inchDifference, originalMeasurements[key].originalInch, "inch", false);
         }
     })
     cmButton.addEventListener('click', () => {
-        for (let i = 0; i < resultCompare.length; i++) {
-            displaySSenseDifference(measurementValueElement.children[i], "cm", resultCompare[i][1], resultOriginalMeasurements[i][1], false);
+        for (const key in measurementDifferences) {
+            const measurementValueElement = measurementValueElements.filter((item) => {
+                return item.style.cssText === originalMeasurements[key].cssPosition;
+            })[0];
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].cmDifference, originalMeasurements[key].originalCm, "cm", false);
         }
     })
 }
