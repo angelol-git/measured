@@ -1,3 +1,8 @@
+let closeButton;
+let inchButtonHandlerRef;
+let cmButtonHandlerRef;
+let sizeButtonsHandlerRef;
+
 function sizeGuideMutationObserver() {
     const observer = new MutationObserver((mutationsList, observer) => {
         const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[1];
@@ -36,21 +41,36 @@ function modalMutationObserver() {
             let currentSystem = "inch";
             compareMeasurements(measurementModal, activeItem, currentSystem);
 
-            const selectButtons = document.querySelector(".pdp-size-chart__size-buttons-list");
+            const sizeButtons = document.querySelector(".pdp-size-chart__size-buttons-list");
             const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
             const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
 
-            inchButton.addEventListener('click', () => {
+            inchButtonHandlerRef = () => {
                 currentSystem = "inch";
                 compareMeasurements(measurementModal, activeItem, currentSystem);
-            })
-            cmButton.addEventListener('click', () => {
+            };
+
+            cmButtonHandlerRef = () => {
                 currentSystem = "cm";
                 compareMeasurements(measurementModal, activeItem, currentSystem);
-            })
-            selectButtons.addEventListener('click', () => {
+            };
+
+            sizeButtonsHandlerRef = () => {
                 compareMeasurements(measurementModal, activeItem, currentSystem);
-            })
+            };
+
+            inchButton.addEventListener('click', inchButtonHandlerRef);
+            cmButton.addEventListener('click', cmButtonHandlerRef);
+            sizeButtons.addEventListener('click', sizeButtonsHandlerRef);
+
+
+            const closeButton = measurementModal.querySelector('.modal-close'); // Replace with actual selector
+            if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                    closeModal();
+                });
+            }
+
             observer.disconnect();
         }
     });
@@ -178,6 +198,9 @@ function compareSSenseMeasurements(originalMeasurements, item, system) {
 function displaySSenseDifference(measurementElement, difference, system) {
     const newNode = document.createElement("p");
     newNode.setAttribute('class', 'measured-difference');
+    newNode.style.width = "60px";
+    newNode.style.backgroundColor = "white";
+    newNode.style.textAlign = "left";
 
     let formattedDifference = "";
     if (parseFloat(difference) === 0.00) {
@@ -204,6 +227,13 @@ function removePreviousMeasurements() {
             prevDifference[i].remove();
         }
     }
+}
+
+function closeModal() {
+    if (closeButton) closeButton.removeEventListener('click', closeModal);
+    if (inchButtonHandlerRef) inchButton.removeEventListener('click', inchButtonHandlerRef);
+    if (cmButtonHandlerRef) cmButton.removeEventListener('click', cmButtonHandlerRef);
+    if (sizeButtonsHandlerRef) sizeButtons.removeEventListener('click', sizeButtonsHandlerRef);
 }
 
 sizeGuideMutationObserver();
