@@ -29,7 +29,6 @@ function modalMutationObserver() {
 }
 
 async function compareMeasurements(measurementModal) {
-
     const validModal = validSSenseMeasurements(measurementModal);
     if (validModal === -1) {
         console.log("Measured: Error - No measurements provided.");
@@ -51,7 +50,6 @@ async function compareMeasurements(measurementModal) {
 
     const measurementDifferences = compareSSenseMeasurements(originalMeasurements, activeItem);
     const measurementValueElements = Array.from(measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1].children);
-    console.log(measurementValueElements);
     for (const key in measurementDifferences) {
         const measurementValueElement = measurementValueElements.filter((item) => {
             return item.style.cssText === originalMeasurements[key].cssPosition;
@@ -162,27 +160,20 @@ function compareSSenseMeasurements(originalMeasurements, item) {
     return difference;
 }
 
-function displaySSenseDifference(measurementElement, difference, originalMeasurements, system, initial = true) {
+function displaySSenseDifference(measurementElement, difference, system, initial = true) {
     let formattedDifference = difference;
-    if (!initial) {
-        if (system === "inch") {
-            measurementElement.innerHTML = originalMeasurements + " &quot";
-            //measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " &quot";
-        }
-        else if (system === "cm") {
-            measurementElement.innerHTML = originalMeasurements + " cm";
-            //measurementElement.innerHTML = measurementElement.innerText.trim().split(" ")[0] + " cm";
-        }
-    }
+    const newNode = document.createElement("p");
+    newNode.setAttribute('class', 'measured-difference');
+    newNode.innerHTML = ` ${formattedDifference}"`;
+
     if (parseFloat(difference) === 0.00) {
         formattedDifference = "=";
     }
     if (system === "inch") {
-        measurementElement.innerHTML += ` ${formattedDifference}"`;
+        measurementElement.appendChild(newNode);
     }
     else {
-        measurementElement.innerHTML += ` ${formattedDifference} cm`;
-
+        measurementElement.appendChild(newNode);
     }
 }
 
@@ -190,20 +181,31 @@ function toggleUnitSystems(measurementValueElements, measurementDifferences, ori
     const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
     const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
     inchButton.addEventListener('click', () => {
+        removePreviousMeasurements();
         for (const key in measurementDifferences) {
             const measurementValueElement = measurementValueElements.filter((item) => {
                 return item.style.cssText === originalMeasurements[key].cssPosition;
             })[0];
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].inchDifference, originalMeasurements[key].originalInch, "inch", false);
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].inchDifference, "inch", false);
         }
     })
     cmButton.addEventListener('click', () => {
+        removePreviousMeasurements();
         for (const key in measurementDifferences) {
             const measurementValueElement = measurementValueElements.filter((item) => {
                 return item.style.cssText === originalMeasurements[key].cssPosition;
             })[0];
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].cmDifference, originalMeasurements[key].originalCm, "cm", false);
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].cmDifference, "cm", false);
         }
     })
+}
+
+function removePreviousMeasurements() {
+    const prevDifference = document.querySelectorAll('.measured-difference');
+    if (prevDifference) {
+        for (var i = 0, len = prevDifference.length; i < len; i++) {
+            prevDifference[i].remove();
+        }
+    }
 }
 sizeGuideMutationObserver();
