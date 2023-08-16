@@ -74,7 +74,6 @@ function parseGrailedMeasurements(measurementTable) {
 }
 
 function displayGrailedCompareItem(measurementTable, item) {
-    console.log(item);
     const parentDiv = measurementTable.parentNode;
     const titleCard = document.createElement("div");
     titleCard.innerHTML += `<p style="font-size:1.4rem;text-align:right">Comparing to ${item.title}</p>`;
