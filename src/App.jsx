@@ -8,7 +8,7 @@ import "./App.css";
 
 //To do
 //scrollbar gutter
-//- add support to ssense
+//- SSense
 //Figure out what content_grailed is doing again ...
 //pop out
 //Remember last screen

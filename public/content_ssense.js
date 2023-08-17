@@ -3,7 +3,11 @@ let inchButtonHandlerRef;
 let cmButtonHandlerRef;
 let sizeButtonsHandlerRef;
 
+function isMobileView() {
+    return window.innerWidth <= 991;
+}
 function sizeGuideMutationObserver() {
+    let containerToObserve;
     const observer = new MutationObserver((mutationsList, observer) => {
         const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[1];
         if (sizeGuideButton) {
@@ -14,7 +18,12 @@ function sizeGuideMutationObserver() {
             observer.disconnect();
         }
     });
-    const containerToObserve = document.querySelector('.pdp-header__right');
+    if (isMobileView) {
+        containerToObserve = document.querySelector('.pdp-mobile');
+    }
+    else {
+        containerToObserve = document.querySelector('.pdp-desktop');
+    }
     observer.observe(containerToObserve, { childList: true, subtree: true });
 }
 
@@ -25,7 +34,6 @@ function modalMutationObserver() {
         const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
         const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
         if (measurementModalHeader && measurementValuesElement && measurementModalImage) {
-            console.log("Measured: Multiple elements loaded.");
 
             if (measurementModalHeader.children.length === 1) {
                 console.log("Measured: Error - No measurements provided.");
