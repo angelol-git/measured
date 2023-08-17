@@ -1,31 +1,28 @@
-const intervalChecker = setInterval(checkGrailedTable, 500);
-
-function checkGrailedTable() {
-    const measurementTable = document.querySelector(".Table_table__conFW");
-    const requestButton = document.querySelector(".RequestAction_button__mAClZ");
-
-    if (measurementTable) {
-        console.log("Found table!");
-        const category = getGrailedCategory();
-        //Retrieve items
-        chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
-            const item = response.items;
-            if (Object.keys(item).length === 0) {
-                console.log("Error: No active items.")
-                clearInterval(intervalChecker);
+function tableMutationObserver() {
+    let containerToObserve;
+    const observer = new MutationObserver(async (mutationsList, observer) => {
+        const measurementTable = document.querySelector(".Table_table__conFW");
+        const requestButton = document.querySelector(".RequestAction_button__mAClZ");
+        if (measurementTable) {
+            console.log("Measured: Found Table.");
+            const category = getGrailedCategory();
+            const activeItem = await validActiveItem(category);
+            if (activeItem === -1) {
+                console.log("Measured: Error - No active items.")
                 return;
             }
-            compareGrailedMeasurements(measurementTable, Object.values(item)[0]);
-            clearInterval(intervalChecker);
-        });
+            compareMeasurements(measurementTable, activeItem);
+            observer.disconnect();
+        }
+        else if (requestButton) {
+            console.log("Measured: Error no measurements provided.");
+            observer.disconnect();
+        }
 
-    }
-    //No measurements provided
-    else if (requestButton) {
-        console.log("Error: No measurements provided.")
-        clearInterval(intervalChecker);
-        return;
-    }
+    });
+
+    containerToObserve = document.querySelector('.MainContent_sidebar__29G6s');
+    observer.observe(containerToObserve, { childList: true, subtree: true });
 }
 
 function getGrailedCategory() {
@@ -34,18 +31,31 @@ function getGrailedCategory() {
     return classList[2].innerText.split(" ")[lastElement - 1];
 }
 
-function compareGrailedMeasurements(measurementTable, item) {
+async function validActiveItem(category) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
+            const item = response.items;
+            if (Object.keys(item).length === 0) {
+                resolve(-1);
+            }
+            else {
+                resolve(Object.values(item)[0]);
+            }
+        });
+    });
+}
+
+function compareMeasurements(measurementTable, item) {
     let position = 0;
-    const parsedData = parseGrailedMeasurements(measurementTable);
-    console.log(parsedData);
+    const originalMeasurements = parseGrailedMeasurements(measurementTable);
     const activeKeys = Object.keys(item.measurements);
-    const parsedKeys = Object.keys(parsedData);
+    const parsedKeys = Object.keys(originalMeasurements);
     const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
 
     displayGrailedCompareItem(measurementTable, item);
     for (const key of commonKeys) {
         const activeValue = (item.measurements[key])
-        const parsedValue = (parsedData[key])
+        const parsedValue = (originalMeasurements[key])
 
         const inchDifference = (parsedValue[0] - activeValue[0]).toFixed(2);
         const cmDifference = (parsedValue[1] - activeValue[1]).toFixed(2);
@@ -102,3 +112,4 @@ function displayGrailedDifference(measurementTable, position, inchDifference, cm
     cmCell.innerHTML += ` ${formattedCm}`;
 }
 
+tableMutationObserver();
