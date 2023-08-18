@@ -22,9 +22,9 @@ function Home(props) {
 
   return (
     <main className="main-container">
-      <div className="item-counter sub-row text-small item-counter-row">
+      <section className="item-counter sub-row text-small item-counter-row">
         <p>{activeItemsLength} Active items</p>
-      </div>
+      </section>
       <div className="flex-column gap-15 " style={{ paddingBottom: "20px" }}>
         {activeCardElements}
       </div>

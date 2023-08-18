@@ -11,7 +11,8 @@ function ActiveCard(props) {
     <button
       className="primary-button inactive-button-color"
       onClick={() => props.handleActive(title.toUpperCase(), category)}
-      tabindex={props.customTabIndex + 2}
+      tabIndex={0}
+      //tabindex={props.customTabIndex + 2}
     >
       Set as Inactive
     </button>
@@ -57,7 +58,8 @@ function ActiveCard(props) {
       onKeyDown={handleKeyDown}
       role="button"
       aria-pressed={detailView}
-      tabindex={props.customTabIndex + 1}
+      tabIndex={0}
+      // tabindex={props.customTabIndex + 1}
     >
       <header className="active-title-row">
         <div className="active-main">

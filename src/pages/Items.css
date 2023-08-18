@@ -4,6 +4,7 @@
     width: 100%;
     gap: 20px;
     z-index: 0;
+    padding-bottom: 20px;
 }
 
 .filter-container {

@@ -147,7 +147,7 @@ function Add(props) {
   }
 
   return (
-    <div className="outer-container">
+    <main className="outer-container">
       <div className="inner-container">
         <div className="sub-row">
           <Link to="/items" className="position-left">
@@ -279,7 +279,7 @@ function Add(props) {
           />
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 

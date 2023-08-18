@@ -35,38 +35,40 @@ function Items(props) {
   }
   return (
     <main className="main-container">
-      <section style={{ paddingBottom: "20px" }}>
-        <div className="sub-row item-counter-row">
-          <button
-            className="primary-button inactive-button-color position-left"
-            onClick={handleClickClose}
-          >
-            <div className="button-with-icon">
-              <img src="./data/images/filter.png" className="button-icon"></img>
-              <p> Filter</p>
-            </div>
-          </button>
-          <p className="item-counter text-small">{itemsLength} Items</p>
-          <Link to="/add" className="primary-button  position-right">
-            + Add
-          </Link>
-        </div>
-        <div
-          className={`filter-container text-normal  ${
-            displayFilters ? "slide-down" : "slide-up"
-          }`}
+      <section
+        className="sub-row item-counter-row"
+        role="region"
+        aria-label="Item Counter and Actions"
+      >
+        <button
+          className="primary-button inactive-button-color position-left"
+          onClick={handleClickClose}
         >
-          <div className="flex gap-5">
-            <label htmlFor="category">Sort By:</label>
-            <select name="sort" id="sort">
-              <option value="Default">Default</option>
-              {/* <option value="category">Category</option> */}
-            </select>
+          <div className="button-with-icon">
+            <img src="./data/images/filter.png" className="button-icon"></img>
+            <p> Filter</p>
           </div>
-        </div>
-
-        <div className="item-container">{itemCardElements}</div>
+        </button>
+        <p className="item-counter text-small">{itemsLength} Items</p>
+        <Link to="/add" className="primary-button  position-right">
+          + Add
+        </Link>
       </section>
+      <div
+        className={`filter-container text-normal  ${
+          displayFilters ? "slide-down" : "slide-up"
+        }`}
+      >
+        <div className="flex gap-5">
+          <label htmlFor="category">Sort By:</label>
+          <select name="sort" id="sort">
+            <option value="Default">Default</option>
+            {/* <option value="category">Category</option> */}
+          </select>
+        </div>
+      </div>
+
+      <section className="item-container">{itemCardElements}</section>
     </main>
   );
 }
