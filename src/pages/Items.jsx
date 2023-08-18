@@ -34,7 +34,7 @@ function Items(props) {
       });
   }
   return (
-    <div className="main-container">
+    <main className="main-container">
       <section style={{ paddingBottom: "20px" }}>
         <div className="sub-row item-counter-row">
           <button
@@ -67,7 +67,7 @@ function Items(props) {
 
         <div className="item-container">{itemCardElements}</div>
       </section>
-    </div>
+    </main>
   );
 }
 export default Items;

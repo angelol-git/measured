@@ -13,6 +13,7 @@ function Home(props) {
         <ActiveCard
           key={key}
           values={value}
+          customTabIndex={activeItemsLength}
           handleActive={props.handleActive}
         />
       ) : null;
@@ -20,14 +21,14 @@ function Home(props) {
   }
 
   return (
-    <div className="main-container">
-      <section style={{ paddingBottom: "20px" }}>
-        <div className="item-counter sub-row text-small item-counter-row">
-          <p>{activeItemsLength} Active items</p>
-        </div>
-        <div className="flex-column gap-15">{activeCardElements}</div>
-      </section>
-    </div>
+    <main className="main-container">
+      <div className="item-counter sub-row text-small item-counter-row">
+        <p>{activeItemsLength} Active items</p>
+      </div>
+      <div className="flex-column gap-15 " style={{ paddingBottom: "20px" }}>
+        {activeCardElements}
+      </div>
+    </main>
   );
 }
 export default Home;

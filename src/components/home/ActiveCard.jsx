@@ -11,6 +11,7 @@ function ActiveCard(props) {
     <button
       className="primary-button inactive-button-color"
       onClick={() => props.handleActive(title.toUpperCase(), category)}
+      tabindex={props.customTabIndex + 2}
     >
       Set as Inactive
     </button>
@@ -42,12 +43,25 @@ function ActiveCard(props) {
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
+  function handleKeyDown(event) {
+    console.log("here");
+    if (event.key === "Enter") {
+      setDetailView((detailView) => !detailView);
+    }
+  }
 
   return (
-    <div className="active-card text-normal" onClick={handleClick}>
-      <div className="active-title-row">
+    <article
+      className="active-card text-normal"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      aria-pressed={detailView}
+      tabindex={props.customTabIndex + 1}
+    >
+      <header className="active-title-row">
         <div className="active-main">
-          <p className="title bold-text">{title}</p>
+          <h2 className="title bold-text">{title}</h2>
           <p>{category}</p>
         </div>
         <img
@@ -58,15 +72,15 @@ function ActiveCard(props) {
           onLoad={handleImageLoad}
           alt={title}
         ></img>
-      </div>
-      <div className={"active-details" + (detailView ? " show" : "")}>
+      </header>
+      <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">
           {" "}
           {measurementElements}
         </div>
-        <div className="active-button-row">{activeButtonElement}</div>
-      </div>
-    </div>
+        <footer className="active-button-row">{activeButtonElement}</footer>
+      </section>
+    </article>
   );
 }
 export default ActiveCard;

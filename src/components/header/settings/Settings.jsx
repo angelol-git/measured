@@ -28,6 +28,7 @@ function Settings(props) {
               <button
                 className="back-button secondary-link-color position-left"
                 onClick={handleClickClose}
+                aria-label="Close settings"
               >
                 ←
               </button>

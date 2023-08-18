@@ -9,9 +9,10 @@ import "./App.css";
 //To do
 //scrollbar gutter
 //- SSense
-//Figure out what content_grailed is doing again ...
+//  -more options
 //pop out
 //Remember last screen
+//https://www.w3.org/WAI/tutorials/menus/structure/ - invisible text section
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
