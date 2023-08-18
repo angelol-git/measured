@@ -15,6 +15,7 @@ function Home(props) {
           values={value}
           customTabIndex={activeItemsLength}
           handleActive={props.handleActive}
+          fullModalOpen={props.fullModalOpen}
         />
       ) : null;
     });

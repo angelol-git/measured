@@ -11,7 +11,7 @@ function ItemView(props) {
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
-        <p className="measurement-header">{key}:</p>
+        <p className="measurement-label">{key}:</p>
         <div className="measurement-value">
           <div className="measurement-value-container">
             <p>{values[0]}</p>
@@ -59,33 +59,38 @@ function ItemView(props) {
         className={"medium-thumbnail"}
         src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
         onLoad={handleImageLoad}
-        alt={title}
+        alt={`Thumbnail of ${title}`}
       ></img>
     );
   }
   return (
-    <section className="modal-container">
+    <section className="modal-container" role="dialog" aria-modal="true">
       <div class="inner-container">
-        <div className="sub-row">
+        <header className="sub-row">
           <button
             className="back-button position-left"
             onClick={props.handleClickModal}
+            aria-label="Back to items page"
           >
             ←
           </button>
-          <h3 className="bold-text header-medium hidden">View Item</h3>
-        </div>
-        <div className="text-center">
-          <div className="flex justify-center">{imageElement}</div>
-          <h3 className="modal-title bold-text">{title}</h3>
-          <div className="grey-line"></div>
-          <div className="sub-row gap-15">
-            <p>{category}</p>
-            <p>{size.toUpperCase()}</p>
+          <h1 className="bold-text header-medium">Item Details</h1>
+        </header>
+        <main>
+          <div className="text-center">
+            <div className="flex justify-center">{imageElement}</div>
+            <h2 id={title} className="modal-item-title bold-text">
+              {title}
+            </h2>
+            <div className="grey-line"></div>
+            <div className="sub-row gap-15">
+              <p>{category}</p>
+              <p>{size.toUpperCase()}</p>
+            </div>
           </div>
-        </div>
-        <div className="item-measurements">{measurementElements}</div>
-        <div className="bottom-button-container">
+          <div className="item-measurements">{measurementElements}</div>
+        </main>
+        <footer className="bottom-button-container">
           {activeButtonElement}
           <button
             className="primary-button high-z-index"
@@ -100,7 +105,7 @@ function ItemView(props) {
           >
             Delete
           </button>
-        </div>
+        </footer>
       </div>
     </section>
   );

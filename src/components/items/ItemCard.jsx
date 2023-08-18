@@ -8,12 +8,14 @@ function ItemCard(props) {
   const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
   const [imageStatus, setImageStatus] = useState("");
+
   let imageElement;
 
   function handleHover() {
-    setClickModal(!hover);
+    setHover(!hover);
   }
   function handleClickModal() {
+    props.setFullModalOpen(!clickModal ? -1 : 0);
     setClickModal(!clickModal);
   }
   function handleImageLoad() {
@@ -21,8 +23,8 @@ function ItemCard(props) {
   }
 
   function handleKeyDown(event) {
-    console.log("here");
     if (event.key === "Enter") {
+      props.setFullModalOpen(!clickModal ? -1 : 0);
       setClickModal(!clickModal);
     }
   }
@@ -58,7 +60,7 @@ function ItemCard(props) {
         role="button"
         aria-label="Open item details"
         aria-pressed={clickModal}
-        tabIndex={0}
+        tabIndex={props.fullModalOpen}
       >
         {imageElement}
         <div className={"title-hover" + (hover ? " show" : "")}>
@@ -75,6 +77,8 @@ function ItemCard(props) {
         handleClickModal={handleClickModal}
         handleFunctions={props.handleFunctions}
         settingsData={props.settingsData}
+        fullModalOpen={props.fullModalOpen}
+        setFullModalOpen={props.setFullModalOpen}
       />
     </article>
   );

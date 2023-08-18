@@ -151,7 +151,9 @@ function Add(props) {
       <div className="inner-container">
         <div className="sub-row">
           <Link to="/items" className="position-left">
-            <button className="back-button">←</button>
+            <button className="back-button" aria-label="Back to items page">
+              ←
+            </button>
           </Link>
           <h3 className="bold-text header-medium">Add a new item</h3>
         </div>

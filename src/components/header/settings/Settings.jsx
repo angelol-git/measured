@@ -42,6 +42,7 @@ function Settings(props) {
               <button
                 className="back-button secondary-link-color position-left"
                 onClick={() => setSettingsMode("menu")}
+                aria-label="Back to settings"
               >
                 ←
               </button>
@@ -55,6 +56,7 @@ function Settings(props) {
               <button
                 className="back-button secondary-link-color position-left"
                 onClick={() => setSettingsMode("menu")}
+                aria-label="Back to settings"
               >
                 ←
               </button>

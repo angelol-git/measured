@@ -5,13 +5,13 @@ import ItemCard from "../components/items/ItemCard";
 import "./Items.css";
 function Items(props) {
   const itemsLength = Object.keys(props.itemData).length;
-  const [displayFilters, setDisplayFilters] = useState(false);
+  //const [displayFilters, setDisplayFilters] = useState(false);
 
   let itemCardElements;
 
   function handleClickClose() {
     // setSlideDown(!slideDown);
-    setDisplayFilters(!displayFilters);
+    //setDisplayFilters(!displayFilters);
   }
   if (itemsLength) {
     itemCardElements = Object.entries(props.itemData)
@@ -29,6 +29,8 @@ function Items(props) {
             values={value}
             settingsData={props.settingsData}
             handleFunctions={props.handleFunctions}
+            fullModalOpen={props.fullModalOpen}
+            setFullModalOpen={props.setFullModalOpen}
           />
         );
       });
@@ -40,7 +42,7 @@ function Items(props) {
         role="region"
         aria-label="Item Counter and Actions"
       >
-        <button
+        {/* <button
           className="primary-button inactive-button-color position-left"
           onClick={handleClickClose}
         >
@@ -48,28 +50,33 @@ function Items(props) {
             <img src="./data/images/filter.png" className="button-icon"></img>
             <p> Filter</p>
           </div>
-        </button>
+        </button> */}
         <p className="item-counter text-small">{itemsLength} Items</p>
-        <Link to="/add" className="primary-button  position-right">
+        <Link
+          to="/add"
+          className="primary-button  position-right"
+          tabIndex={props.fullModalOpen}
+        >
           + Add
         </Link>
       </section>
-      <div
-        className={`filter-container text-normal  ${
-          displayFilters ? "slide-down" : "slide-up"
-        }`}
-      >
-        <div className="flex gap-5">
-          <label htmlFor="category">Sort By:</label>
-          <select name="sort" id="sort">
-            <option value="Default">Default</option>
-            {/* <option value="category">Category</option> */}
-          </select>
-        </div>
-      </div>
 
       <section className="item-container">{itemCardElements}</section>
     </main>
   );
 }
 export default Items;
+
+// {/* <div
+// className={`filter-container text-normal  ${
+//   displayFilters ? "slide-down" : "slide-up"
+// }`}
+// >
+// <div className="flex gap-5">
+//   <label htmlFor="category">Sort By:</label>
+//   <select name="sort" id="sort">
+//     <option value="Default">Default</option>
+//     {/* <option value="category">Category</option> */}
+//   </select>
+// </div>
+// </div> */}

@@ -11,8 +11,7 @@ function ActiveCard(props) {
     <button
       className="primary-button inactive-button-color"
       onClick={() => props.handleActive(title.toUpperCase(), category)}
-      tabIndex={0}
-      //tabindex={props.customTabIndex + 2}
+      tabIndex={props.fullModalOpen}
     >
       Set as Inactive
     </button>
@@ -22,7 +21,7 @@ function ActiveCard(props) {
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>
-        <p className="measurement-header">{key}:</p>
+        <p className="measurement-label">{key}:</p>
         <div className="measurement-value">
           <div className="measurement-value-container">
             <p>{values[0]}</p>
@@ -45,7 +44,6 @@ function ActiveCard(props) {
     setDetailView((detailView) => !detailView);
   }
   function handleKeyDown(event) {
-    console.log("here");
     if (event.key === "Enter") {
       setDetailView((detailView) => !detailView);
     }
@@ -58,7 +56,7 @@ function ActiveCard(props) {
       onKeyDown={handleKeyDown}
       role="button"
       aria-pressed={detailView}
-      tabIndex={0}
+      tabIndex={props.fullModalOpen}
       // tabindex={props.customTabIndex + 1}
     >
       <header className="active-title-row">

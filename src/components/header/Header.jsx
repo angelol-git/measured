@@ -7,6 +7,7 @@ function Header(props) {
   const [displaySettings, setDisplaySettings] = useState(false);
 
   function handleClickSettings() {
+    props.setFullModalOpen(!displaySettings ? -1 : 0);
     setDisplaySettings(!displaySettings);
   }
 
@@ -36,6 +37,8 @@ function Header(props) {
           itemData={props.itemData}
           settingsData={props.settingsData}
           handleSizeUpdate={props.handleSizeUpdate}
+          fullModalOpen={props.fullModalOpen}
+          setFullModalOpen={props.setFullModalOpen}
         />
       ) : (
         ""
@@ -45,6 +48,8 @@ function Header(props) {
           <button
             className="menu-icon text-normal"
             onClick={handleClickSettings}
+            tabIndex={props.fullModalOpen}
+            aria-label="Settings"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,10 +65,10 @@ function Header(props) {
         </div>
         <nav className="nav-bar">
           <ul className="flex">
-            <CustomLink to="/" tabIndex={1}>
+            <CustomLink to="/" tabIndex={props.fullModalOpen}>
               Home
             </CustomLink>
-            <CustomLink to="/items" tabIndex={2}>
+            <CustomLink to="/items" tabIndex={props.fullModalOpen}>
               Items
             </CustomLink>
           </ul>

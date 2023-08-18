@@ -180,6 +180,7 @@ function EditView(props) {
               props.handleClickModal;
               props.handleEditBack();
             }}
+            aria-label="Back to item details"
           >
             ←
           </button>

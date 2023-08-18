@@ -17,6 +17,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [fullModalOpen, setFullModalOpen] = useState(0);
   const [titleError, setTittleError] = useState(false);
   const [items, setItems] = useState({});
   const [settings, setSettings] = useState({
@@ -150,13 +151,21 @@ function App() {
           settingsData={settings}
           handleImport={handleImport}
           handleSizeUpdate={handleSizeUpdate}
+          fullModalOpen={fullModalOpen}
+          setFullModalOpen={setFullModalOpen}
         />
       ) : null}
 
       <Routes>
         <Route
           path="/"
-          element={<Home itemData={items} handleActive={handleActive} />}
+          element={
+            <Home
+              itemData={items}
+              handleActive={handleActive}
+              fullModalOpen={fullModalOpen}
+            />
+          }
         />
         <Route
           path="/items"
@@ -165,6 +174,8 @@ function App() {
               itemData={items}
               settingsData={settings}
               handleFunctions={handleFunctions}
+              fullModalOpen={fullModalOpen}
+              setFullModalOpen={setFullModalOpen}
             />
           }
         />
