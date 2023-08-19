@@ -37,10 +37,7 @@ function Data(props) {
         setImportMessage(`${event.target.files[0].name}`);
         if (event.target.files[0].type !== "application/JSON") {
           setImportError(
-            <p className="import-error error-text">
-              File format is invalid. <br />
-              Only .json files are allowed.
-            </p>
+            `File format is invalid. Only .json files are allowed.`
           );
           return;
         }
@@ -53,20 +50,46 @@ function Data(props) {
     }
   }
 
+  function handleImportButton(event) {
+    if (event.key === "Enter" || event.type === "click") {
+      document.getElementById("file").click();
+    }
+  }
   return (
-    <div className="data-container">
-      <div className="flex-column gap-15">
+    <section className="inner-container">
+      <header className="sub-row">
+        <button
+          className="back-button secondary-link-color position-left"
+          onClick={() => props.setSettingsMode("menu")}
+          aria-label="Back to settings"
+        >
+          ←
+        </button>
+        <h2 className="bold-text header-medium">Data</h2>
+      </header>
+      <main className="button-container">
         <p className="text-center">Export and Import saved Items.</p>
         <div className="button-row">
-          <button className="primary-button" onClick={handleExportClick}>
+          <button
+            className="primary-button"
+            onClick={handleExportClick}
+            aria-label="Export items"
+          >
             Export
           </button>
           <p>{exportLength} Items</p>
         </div>
         <div className="button-row">
-          <label for="file" className="primary-button inactive-button-color">
+          <button
+            htmlFor="file"
+            className="primary-button inactive-button-color"
+            tabIndex={0}
+            onClick={handleImportButton}
+            onKeyDown={handleImportButton}
+            aria-label="Import items"
+          >
             Import
-          </label>
+          </button>
           <input
             id="file"
             type="file"
@@ -75,9 +98,11 @@ function Data(props) {
           />
           <p>{importMessage}</p>
         </div>
-        {importError}
-      </div>
-    </div>
+        <p className="import-error error-text" role="alert">
+          {importError}
+        </p>
+      </main>
+    </section>
   );
 }
 

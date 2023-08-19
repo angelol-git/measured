@@ -21,53 +21,18 @@ function Settings(props) {
         slideOut ? "slide-out" : "slide-in"
       }`}
     >
-      <div className="inner-container">
-        <div className="sub-row">
-          {settingsMode === "menu" ? (
-            <div>
-              <button
-                className="back-button secondary-link-color position-left"
-                onClick={handleClickClose}
-                aria-label="Close settings"
-              >
-                ←
-              </button>
-              <h3 className="bold-text header-medium">Settings</h3>
-            </div>
-          ) : (
-            ""
-          )}
-          {settingsMode === "filterSizes" ? (
-            <div>
-              <button
-                className="back-button secondary-link-color position-left"
-                onClick={() => setSettingsMode("menu")}
-                aria-label="Back to settings"
-              >
-                ←
-              </button>
-              <h3 className="bold-text header-medium">Filter Sizes</h3>
-            </div>
-          ) : (
-            ""
-          )}
-          {settingsMode === "data" ? (
-            <div>
-              <button
-                className="back-button secondary-link-color position-left"
-                onClick={() => setSettingsMode("menu")}
-                aria-label="Back to settings"
-              >
-                ←
-              </button>
-              <h3 className="bold-text header-medium">Data</h3>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-
-        {settingsMode === "menu" ? (
+      {settingsMode === "menu" ? (
+        <div className="inner-container">
+          <header className="sub-row">
+            <button
+              className="back-button secondary-link-color position-left"
+              onClick={handleClickClose}
+              aria-label="Close settings"
+            >
+              ←
+            </button>
+            <h1 className="bold-text header-medium">Settings</h1>
+          </header>
           <ul className="settings-list">
             <a
               href="#"
@@ -100,23 +65,28 @@ function Settings(props) {
               </svg>
             </a>
           </ul>
-        ) : (
-          ""
-        )}
-        {settingsMode === "filterSizes" ? (
-          <FilterSizes
-            settingsData={props.settingsData}
-            handleSizeUpdate={props.handleSizeUpdate}
-          />
-        ) : (
-          ""
-        )}
-        {settingsMode === "data" ? (
-          <Data handleImport={props.handleImport} itemData={props.itemData} />
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {settingsMode === "filterSizes" ? (
+        <FilterSizes
+          settingsData={props.settingsData}
+          handleSizeUpdate={props.handleSizeUpdate}
+          setSettingsMode={setSettingsMode}
+        />
+      ) : (
+        ""
+      )}
+      {settingsMode === "data" ? (
+        <Data
+          handleImport={props.handleImport}
+          itemData={props.itemData}
+          setSettingsMode={setSettingsMode}
+        />
+      ) : (
+        ""
+      )}
     </section>
   );
 }

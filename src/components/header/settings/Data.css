@@ -1,18 +1,22 @@
-.data-container {
+.button-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 100%;
+    gap: 15px;
 }
-
 
 .button-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 250px;
     gap: 10px;
 }
 
 .import-error {
     margin-top: -10px;
+    display: flex;
+    align-items: center;
+    width: 250px;
 }

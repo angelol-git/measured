@@ -156,14 +156,26 @@ function FilterSizes(props) {
   };
 
   return (
-    <div className="filterSizes-container">
-      <p>Add or remove sizes to appear when adding or editing items.</p>
-      <div className="allSizes-container">
-        {categoryElement("Tops")}
-        {categoryElement("Bottoms")}
-        {categoryElement("Outerwear")}
-      </div>
-    </div>
+    <section className="inner-container">
+      <header className="sub-row">
+        <button
+          className="back-button secondary-link-color position-left"
+          onClick={() => props.setSettingsMode("menu")}
+          aria-label="Back to settings"
+        >
+          ←
+        </button>
+        <h2 className="bold-text header-medium">Filter Sizes</h2>
+      </header>
+      <main>
+        <p>Add or remove sizes to appear when adding or editing items.</p>
+        <div className="allSizes-container">
+          {categoryElement("Tops")}
+          {categoryElement("Bottoms")}
+          {categoryElement("Outerwear")}
+        </div>
+      </main>
+    </section>
   );
 }
 
