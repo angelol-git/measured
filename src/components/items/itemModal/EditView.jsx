@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./EditView.css";
 
 function EditView(props) {
@@ -15,6 +15,8 @@ function EditView(props) {
   const [currSize, setSize] = useState(size);
   const [currMeasurements, setMeasurements] = useState(measurements);
   const [imageStatus, setImageStatus] = useState("");
+  const [titleEmpty, setTitleEmpty] = useState(false);
+  const titleInputRef = useRef(null);
 
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
@@ -100,8 +102,6 @@ function EditView(props) {
       cmValue = value;
       inchValue = (cmValue / 2.54).toFixed(2);
     }
-    console.log(inchValue);
-    console.log(cmValue);
 
     setMeasurements((prevMeasurements) => ({
       ...prevMeasurements,
@@ -140,7 +140,11 @@ function EditView(props) {
       return;
     }
 
-    console.log(newItem);
+    if (currTitle.length == 0) {
+      setTitleEmpty(true);
+      return;
+    }
+
     handleUpdate(newItem, prevTitle.toUpperCase());
     props.handleEditBack();
   }
@@ -157,18 +161,31 @@ function EditView(props) {
     setImageUrl(event.target.value);
   }
 
+  function handleCurrTitle(event) {
+    setTitleEmpty(false);
+    setTitle(event.target.value);
+  }
+
   useEffect(() => {
     handleTitle(currTitle, prevTitle);
   }, [currTitle]);
+
+  useEffect(() => {
+    if (titleError || titleEmpty) {
+      titleInputRef.current.focus();
+    }
+  }, [titleError, titleEmpty]);
 
   const titleErrorElement =
     titleError === true ? (
       <div className="title-error">
         <p className="error-text">Error {currTitle} already exists.</p>
       </div>
-    ) : (
-      ""
-    );
+    ) : titleEmpty === true ? (
+      <div className="title-error">
+        <p className="error-text">Title cannot be empty.</p>
+      </div>
+    ) : null;
 
   return (
     <section className="modal-container">
@@ -240,11 +257,15 @@ function EditView(props) {
             <input
               type="text"
               id="title"
+              ref={titleInputRef}
               name="title"
               value={currTitle}
-              className="text-normal form-input"
-              onChange={(e) => setTitle(e.target.value)}
-            ></input>
+              className={`form-input text-normal ${
+                titleError || titleEmpty ? "error-border" : ""
+              }`}
+              onChange={handleCurrTitle}
+              required
+            />
           </div>
           {titleErrorElement}
           <div className="edit-grey-line"></div>

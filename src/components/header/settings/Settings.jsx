@@ -31,7 +31,7 @@ function Settings(props) {
             >
               ←
             </button>
-            <h1 className="bold-text header-medium">Settings</h1>
+            <h2 className="bold-text header-medium">Settings</h2>
           </header>
           <ul className="settings-list">
             <a
@@ -45,6 +45,7 @@ function Settings(props) {
                 width="12"
                 height="12"
                 viewBox="0 0 24 24"
+                title="Right arrow icon"
               >
                 <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
               </svg>
@@ -60,6 +61,7 @@ function Settings(props) {
                 width="12"
                 height="12"
                 viewBox="0 0 24 24"
+                title="Right arrow icon"
               >
                 <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
               </svg>

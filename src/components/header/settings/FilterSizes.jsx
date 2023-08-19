@@ -96,6 +96,8 @@ function FilterSizes(props) {
           onClick={() => {
             handleCategoryClick(category);
           }}
+          role="button"
+          aria-expanded={allSizesShow[category]}
         >
           <div className="category-row-left">
             <h2 className="bold-text text-large">{category}</h2>
@@ -107,12 +109,14 @@ function FilterSizes(props) {
                 : ""}
             </div>
           </div>
+          {/* Drop down Arrows*/}
           {allSizesShow[category] ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
               height="12"
               viewBox="0 0 24 24"
+              title="Shrink arrow"
             >
               <path d="M0 16.67l2.829 2.83 9.175-9.339 9.167 9.339 2.829-2.83-11.996-12.17z" />
             </svg>
@@ -122,6 +126,7 @@ function FilterSizes(props) {
               width="12"
               height="12"
               viewBox="0 0 24 24"
+              title="Expand arrow"
             >
               <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
             </svg>
@@ -146,7 +151,7 @@ function FilterSizes(props) {
                 className="checkbox-medium"
               />
 
-              <label for={`${category}-${item.value}`}>{item.value}</label>
+              <label htmlFor={`${category}-${item.value}`}>{item.value}</label>
             </div>
           ))}
         </div>

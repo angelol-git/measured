@@ -55,7 +55,7 @@ function ActiveCard(props) {
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role="button"
-      aria-pressed={detailView}
+      aria-expanded={detailView}
       tabIndex={props.fullModalOpen}
       // tabindex={props.customTabIndex + 1}
     >
