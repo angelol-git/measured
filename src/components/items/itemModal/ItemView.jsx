@@ -65,7 +65,7 @@ function ItemView(props) {
   }
   return (
     <section className="modal-container" role="dialog" aria-modal="true">
-      <div class="inner-container">
+      <div class="modal-inner-container">
         <header className="sub-row">
           <button
             className="back-button position-left"

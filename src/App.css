@@ -20,6 +20,7 @@
 }
 
 .outer-container {
+    position: relative;
     overflow-y: scroll;
     height: 100%;
     width: 100%;
@@ -28,7 +29,6 @@
 .inner-container {
     position: relative;
     padding: 20px;
-
 }
 
 /*Colors*/

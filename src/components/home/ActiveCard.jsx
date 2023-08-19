@@ -59,9 +59,9 @@ function ActiveCard(props) {
       tabIndex={props.fullModalOpen}
       // tabindex={props.customTabIndex + 1}
     >
-      <header className="active-title-row">
-        <div className="active-main">
-          <h2 className="title bold-text">{title}</h2>
+      <header className="active-header">
+        <div className="active-title-container">
+          <h2 className="active-title bold-text">{title}</h2>
           <p>{category}</p>
         </div>
         <img

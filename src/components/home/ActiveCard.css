@@ -4,13 +4,19 @@
     cursor: pointer;
 }
 
-.active-title-row {
+.active-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     height: 100%;
+}
 
+.active-title-container {
+    max-width: 270px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .active-details {

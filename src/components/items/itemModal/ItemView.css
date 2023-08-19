@@ -1,6 +1,15 @@
+.modal-inner-container {
+    height: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    padding-bottom: 40px;
+    position: relative;
+}
+
 .modal-item-title {
     padding-top: 10px;
     padding-bottom: 25px;
+    word-break: break-all;
 }
 
 .grey-line {
@@ -20,11 +29,10 @@
 
 .bottom-button-container {
     display: flex;
+    position: absolute;
     justify-content: center;
-    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     gap: 15px;
-    padding-bottom: 20px;
 }
