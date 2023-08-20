@@ -16,6 +16,7 @@ function EditView(props) {
   const [currMeasurements, setMeasurements] = useState(measurements);
   const [imageStatus, setImageStatus] = useState("");
   const [titleEmpty, setTitleEmpty] = useState(false);
+  const [measurementError, setMeasurementError] = useState(false);
   const titleInputRef = useRef(null);
 
   const measurementCategory = {
@@ -29,7 +30,7 @@ function EditView(props) {
     unit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
     unit === "in" ? " secondary-button-color" : " primary-button";
-
+  const inputRefs = useRef({});
   const measurementElements = (
     <div className="measurement-container">
       {measurementCategory[category].map((item, index) => (
@@ -37,12 +38,21 @@ function EditView(props) {
           <label htmlFor={`${item}`} className="text-normal">
             {item}
           </label>
-          <div>
+
+          <div className="flex gap-5 align-center">
+            {measurementError[item] && (
+              <p className="error-text" role="alert">
+                {measurementError[item]}
+              </p>
+            )}
             <input
               type="number"
               id={`${item}`}
               name={`${item}`}
-              className="unit-input text-normal"
+              ref={(input) => (inputRefs.current[item] = input)}
+              className={`unit-input text-normal ${
+                measurementError[item] ? "error-border" : ""
+              }`}
               value={currMeasurements[item]?.[unitIndex] || ""}
               min="0.00"
               step=".1"
@@ -71,11 +81,13 @@ function EditView(props) {
   );
 
   function handleUnitClick() {
+    setMeasurementError(false);
     const newUnit = unit === "in" ? "cm" : "in";
     setUnit(newUnit);
   }
 
   function handleUnitInput(event) {
+    setMeasurementError(false);
     const { name, value } = event.target;
 
     if (value === "") {
@@ -134,20 +146,21 @@ function EditView(props) {
         currMeasurements[categoryKey][1],
       ];
 
-      // if (unit === "in" && currMeasurements[categoryKey][0] > 99) {
-      //   setMeasurementError({
-      //     [category]: `Error: Value cannot be over 99 inches`,
-      //   });
-      //   console.log("Error: Inches too long");
-      //   return;
-      // }
-      // if (unit === "cm" && currMeasurements[categoryKey][1] > 999) {
-      //   setMeasurementError({
-      //     [category]: `Error: Value cannot be over 999 cms`,
-      //   });
-      //   console.log("Error: Cm too long");
-      //   return;
-      // }
+      if (unit === "in" && currMeasurements[categoryKey][0] > 99) {
+        setMeasurementError({
+          [categoryKey]: `Error: Max 99 ${unit}`,
+        });
+        inputRefs.current[categoryKey].focus(); // Focus on the input element
+        return;
+      }
+      if (unit === "cm" && currMeasurements[categoryKey][1] > 999) {
+        setMeasurementError({
+          [categoryKey]: `Error: Max 999 ${unit}`,
+        });
+        inputRefs.current[categoryKey].focus();
+        return;
+      }
+
       newItem.measurements[categoryKey] = categoryValue;
     }
 
@@ -194,11 +207,15 @@ function EditView(props) {
   const titleErrorElement =
     titleError === true ? (
       <div className="title-error">
-        <p className="error-text">Error {currTitle} already exists.</p>
+        <p className="error-text" role="alert">
+          Error {currTitle} already exists.
+        </p>
       </div>
     ) : titleEmpty === true ? (
       <div className="title-error">
-        <p className="error-text">Title cannot be empty.</p>
+        <p className="error-text" role="alert">
+          Title cannot be empty.
+        </p>
       </div>
     ) : null;
 

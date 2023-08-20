@@ -173,7 +173,9 @@ function Add(props) {
               required
             />
             {props.titleError ? (
-              <p className="error-text">Error {title} already exist</p>
+              <p className="error-text" role="alert">
+                Error {title} already exist
+              </p>
             ) : (
               ""
             )}
@@ -219,7 +221,9 @@ function Add(props) {
               onChange={handleImageChange}
             />
             {imageStatus === "error" ? (
-              <p className="error-text">Image cannot be found </p>
+              <p className="error-text" role="alert">
+                Image cannot be found{" "}
+              </p>
             ) : (
               ""
             )}
