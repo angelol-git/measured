@@ -79,9 +79,12 @@ function ItemView(props) {
         <main>
           <div className="text-center">
             <div className="flex justify-center">{imageElement}</div>
-            <h2 id={title} className="modal-item-title bold-text">
-              {title}
-            </h2>
+            <div className="modal-item-title-container">
+              <h2 id={title} className="modal-item-title bold-text">
+                {title}
+              </h2>
+            </div>
+
             <div className="grey-line"></div>
             <div className="sub-row gap-15">
               <p>{category}</p>

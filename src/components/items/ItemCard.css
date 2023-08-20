@@ -5,6 +5,10 @@
     height: 150px;
 }
 
+.item-card-title {
+    word-break: break-all;
+}
+
 .title-hover {
     position: absolute;
     bottom: 0;

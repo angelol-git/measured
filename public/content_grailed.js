@@ -4,6 +4,7 @@ function tableMutationObserver() {
         const measurementTable = document.querySelector(".Table_table__conFW");
         const requestButton = document.querySelector(".RequestAction_button__mAClZ");
         if (measurementTable) {
+            observer.disconnect();
             console.log("Measured: Found Table.");
             const category = getGrailedCategory();
             const activeItem = await validActiveItem(category);
@@ -11,8 +12,9 @@ function tableMutationObserver() {
                 console.log("Measured: Error - No active items.")
                 return;
             }
+
             compareMeasurements(measurementTable, activeItem);
-            observer.disconnect();
+
         }
         else if (requestButton) {
             console.log("Measured: Error no measurements provided.");
@@ -39,6 +41,7 @@ async function validActiveItem(category) {
                 resolve(-1);
             }
             else {
+
                 resolve(Object.values(item)[0]);
             }
         });

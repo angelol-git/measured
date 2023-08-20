@@ -10,6 +10,7 @@ function ItemCard(props) {
   const [imageStatus, setImageStatus] = useState("");
 
   let imageElement;
+  let titleElement = title;
 
   function handleHover() {
     setHover(!hover);
@@ -47,6 +48,11 @@ function ItemCard(props) {
       ></img>
     );
   }
+
+  if (title.length > 70) {
+    titleElement = title.slice(0, 67) + "...";
+  }
+
   return (
     <article>
       <div
@@ -64,7 +70,9 @@ function ItemCard(props) {
       >
         {imageElement}
         <div className={"title-hover" + (hover ? " show" : "")}>
-          <h2 className="text-medium bold-text">{title}</h2>
+          <h2 className="text-medium bold-text item-card-title">
+            {titleElement}
+          </h2>
         </div>
         <div className={"active-tag text-normal" + (active ? " show" : "")}>
           <p>Active</p>

@@ -24,6 +24,7 @@ function EditView(props) {
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
   const [unit, setUnit] = useState("in");
+  const [maxUnit, setMaxUnit] = useState(999);
   const unitIndex = unit === "in" ? 0 : 1;
   const inchButtonClass =
     unit === "in" ? " primary-button" : " secondary-button-color";
@@ -45,7 +46,8 @@ function EditView(props) {
               className="unit-input text-normal"
               value={currMeasurements[item]?.[unitIndex] || ""}
               min="0.00"
-              step=".01"
+              max={maxUnit}
+              step=".1"
               placeholder="0.00"
               onChange={handleUnitInput}
             />
@@ -72,6 +74,7 @@ function EditView(props) {
 
   function handleUnitClick() {
     const newUnit = unit === "in" ? "cm" : "in";
+    setMaxUnit(999);
     setUnit(newUnit);
   }
 
@@ -110,6 +113,7 @@ function EditView(props) {
   }
 
   function handleSave(event) {
+    console.log(maxUnit);
     event.preventDefault();
     const newItem = {
       category: currCategory,
@@ -189,8 +193,8 @@ function EditView(props) {
 
   return (
     <section className="modal-container">
-      <div className="inner-container">
-        <div className="sub-row">
+      <div className="modal-inner-edit-container">
+        <header className="sub-row">
           <button
             className="back-button secondary-link-color position-left"
             onClick={() => {
@@ -202,7 +206,7 @@ function EditView(props) {
             ←
           </button>
           <h3 className="bold-text header-medium">Edit item</h3>
-        </div>
+        </header>
         <form id="edit-form" className="text-normal" onSubmit={handleSave}>
           <div className="image-preview-container">
             {currImageSrc.length !== 0 ? (

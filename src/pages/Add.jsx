@@ -18,6 +18,7 @@ function Add(props) {
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
   const unitIndex = unit === "in" ? 0 : 1;
+  const maxUnit = unit === "in" ? 99.9 : 999.9;
   const inchButtonClass =
     unit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
@@ -37,6 +38,8 @@ function Add(props) {
               name={`${item}`}
               className="unit-input text-normal"
               value={measurements[item]?.[unitIndex] || ""}
+              max={maxUnit}
+              step=".1"
               placeholder="0.00"
               onChange={handleUnitInput}
             />
@@ -125,7 +128,6 @@ function Add(props) {
       event.target.category.value,
       true
     );
-    console.log(newItem);
     navigate("/items");
   }
 
@@ -147,8 +149,8 @@ function Add(props) {
   }
 
   return (
-    <main className="outer-container">
-      <div className="inner-container">
+    <main className="add-container">
+      <div className="add-inner-container">
         <div className="sub-row">
           <Link to="/items" className="position-left">
             <button className="back-button" aria-label="Back to items page">
