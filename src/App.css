@@ -129,7 +129,7 @@ a {
 
 .measurement-value {
     display: flex;
-    width: 55%;
+    width: 50%;
     gap: 10px;
 }
 

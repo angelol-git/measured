@@ -24,7 +24,6 @@ function EditView(props) {
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
   const [unit, setUnit] = useState("in");
-  const [maxUnit, setMaxUnit] = useState(999);
   const unitIndex = unit === "in" ? 0 : 1;
   const inchButtonClass =
     unit === "in" ? " primary-button" : " secondary-button-color";
@@ -46,7 +45,6 @@ function EditView(props) {
               className="unit-input text-normal"
               value={currMeasurements[item]?.[unitIndex] || ""}
               min="0.00"
-              max={maxUnit}
               step=".1"
               placeholder="0.00"
               onChange={handleUnitInput}
@@ -74,7 +72,6 @@ function EditView(props) {
 
   function handleUnitClick() {
     const newUnit = unit === "in" ? "cm" : "in";
-    setMaxUnit(999);
     setUnit(newUnit);
   }
 
@@ -113,7 +110,6 @@ function EditView(props) {
   }
 
   function handleSave(event) {
-    console.log(maxUnit);
     event.preventDefault();
     const newItem = {
       category: currCategory,
@@ -137,6 +133,21 @@ function EditView(props) {
         currMeasurements[categoryKey][0],
         currMeasurements[categoryKey][1],
       ];
+
+      // if (unit === "in" && currMeasurements[categoryKey][0] > 99) {
+      //   setMeasurementError({
+      //     [category]: `Error: Value cannot be over 99 inches`,
+      //   });
+      //   console.log("Error: Inches too long");
+      //   return;
+      // }
+      // if (unit === "cm" && currMeasurements[categoryKey][1] > 999) {
+      //   setMeasurementError({
+      //     [category]: `Error: Value cannot be over 999 cms`,
+      //   });
+      //   console.log("Error: Cm too long");
+      //   return;
+      // }
       newItem.measurements[categoryKey] = categoryValue;
     }
 
@@ -193,7 +204,7 @@ function EditView(props) {
 
   return (
     <section className="modal-container">
-      <div className="modal-inner-edit-container">
+      <div className="inner-container">
         <header className="sub-row">
           <button
             className="back-button secondary-link-color position-left"

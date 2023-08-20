@@ -18,7 +18,7 @@ function Add(props) {
     Outerwear: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
   };
   const unitIndex = unit === "in" ? 0 : 1;
-  const maxUnit = unit === "in" ? 99.9 : 999.9;
+  const maxUnit = unit === "in" ? 99 : 999;
   const inchButtonClass =
     unit === "in" ? " primary-button" : " secondary-button-color";
   const cmButtonClass =
@@ -149,16 +149,16 @@ function Add(props) {
   }
 
   return (
-    <main className="add-container">
-      <div className="add-inner-container">
-        <div className="sub-row">
-          <Link to="/items" className="position-left">
-            <button className="back-button" aria-label="Back to items page">
-              ←
-            </button>
-          </Link>
-          <h3 className="bold-text header-medium">Add a new item</h3>
-        </div>
+    <section className="add-container">
+      <header className="sub-row">
+        <Link to="/items" className="position-left">
+          <button className="back-button" aria-label="Back to items page">
+            ←
+          </button>
+        </Link>
+        <h3 className="bold-text header-medium">Add a new item</h3>
+      </header>
+      <main>
         <form id="add-form" onSubmit={handleSubmit}>
           <div className="form-input">
             <label htmlFor="title" className="bold-text">
@@ -282,8 +282,8 @@ function Add(props) {
             className="primary-button submit-button"
           />
         </form>
-      </div>
-    </main>
+      </main>
+    </section>
   );
 }
 

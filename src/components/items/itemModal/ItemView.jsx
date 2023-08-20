@@ -10,7 +10,7 @@ function ItemView(props) {
   let imageElement;
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
-      <div className="flex" key={key}>
+      <div className="measurement-label-value-container" key={key}>
         <p className="measurement-label">{key}:</p>
         <div className="measurement-value">
           <div className="measurement-value-container">

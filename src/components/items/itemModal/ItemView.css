@@ -1,14 +1,5 @@
-.modal-inner-container {
-    height: 100%;
-    position: relative;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
-}
-
 .modal-item-title-container {
     word-wrap: break-word;
-    max-width: 330px;
 }
 
 .modal-item-title {
@@ -28,7 +19,15 @@
     gap: 3px;
     padding-top: 5px;
     padding-bottom: 10px;
+    width: 100%;
+}
 
+.modal-inner-container {
+    height: 100%;
+    padding: 20px 15px 20px 15px;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    position: relative;
 }
 
 .bottom-button-container {
@@ -39,4 +38,10 @@
     left: 0;
     right: 0;
     gap: 15px;
+    margin-top: 20px;
+}
+
+.measurement-label-value-container {
+    display: flex;
+    justify-content: space-between;
 }
