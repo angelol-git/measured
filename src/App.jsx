@@ -7,12 +7,9 @@ import Add from "./pages/Add";
 import "./App.css";
 
 //To do
-//scrollbar gutter
-//- SSense
-//  -more options
+//--SSense
+//-- Figure out whats up with the scroll bars on different displays
 //pop out
-//Remember last screen
-//https://www.w3.org/WAI/tutorials/menus/structure/ - invisible text section
 function App() {
   const location = useLocation();
   const navigate = useNavigate();

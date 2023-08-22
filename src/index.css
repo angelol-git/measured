@@ -30,13 +30,10 @@
 
 body {
   background-color: var(--primary-bkg-color);
-  /* Changing width effects item-modal-container,
-  item-card,title:hover, medium thumbnail*/
   width: 375px;
   height: 500px;
   padding: 0;
   margin: 0;
-
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
