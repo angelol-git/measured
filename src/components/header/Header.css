@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
     padding: 10px;
 }
 
@@ -33,16 +34,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: absolute;
-    left: 0;
     padding: 5px 10px 5px 10px;
     background-color: var(--primary-bkg-color);
-    margin-left: 10px;
     text-decoration: none;
     list-style-type: none;
     cursor: pointer;
     border: none;
+}
+
+.menu-icon.position-left {
+    margin-left: 10px;
+    left: 0;
+}
+
+.menu-icon.position-right {
+    margin-right: 10px;
+    right: 0;
 }
 
 .small-icon {

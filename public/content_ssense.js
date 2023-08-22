@@ -14,7 +14,7 @@ function bodyMutationObserver() {
     const observer = new MutationObserver((mutationsList, observer) => {
         const productContainer = isMobileView() ? document.querySelector('.pdp-mobile') : document.querySelector('.pdp-desktop');
         if (productContainer) {
-            sizeGuideMutationObserver();
+            sizeGuideMutationObserver(productContainer);
         }
     });
 
@@ -26,7 +26,7 @@ function bodyMutationObserver() {
     }
 }
 
-function sizeGuideMutationObserver() {
+function sizeGuideMutationObserver(productContainer) {
     //console.log("Observer loading");
     const observer = new MutationObserver((mutationsList, observer) => {
         const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[1];
@@ -40,13 +40,11 @@ function sizeGuideMutationObserver() {
         }
     });
 
-    const containerToObserve = isMobileView() ? document.querySelector('.pdp-mobile') : document.querySelector('.pdp-desktop');
-    if (containerToObserve) {
-        observer.observe(containerToObserve, { childList: true, subtree: true });
+    if (productContainer) {
+        observer.observe(productContainer, { childList: true, subtree: true });
     } else {
         console.log("Product container not found");
     }
-
 }
 
 function modalMutationObserver() {
@@ -56,9 +54,11 @@ function modalMutationObserver() {
         const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
         const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
         const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
-        const closeButton = document.querySelector('.modal-close');
-        if (measurementModalHeader && measurementValuesElement && measurementModalImage && closeButton) {
+        const closeButton = isMobileView() ? document.querySelector('.modal-close') : document.querySelector('.modal-btn-close');
+        const backDropButton = document.getElementById('backdrop');
 
+        if (measurementModalHeader && measurementValuesElement && measurementModalImage && closeButton) {
+            console.log("Measured: Comparing");
             if (measurementModalHeader.children.length === 1) {
                 console.log("Measured: Error - No measurements provided.");
                 return;
@@ -70,7 +70,6 @@ function modalMutationObserver() {
                 return;
             }
 
-            console.log("Measured: Comparing");
             let currentSystem = "inch";
             const imageSource = imageData[category][measurementModalImage.children[0].src];
             displaySSenseCompareItem(measurementModalImage, activeItem);
@@ -104,11 +103,21 @@ function modalMutationObserver() {
                 });
             }
 
+            if (backDropButton) {
+                backDropButton.addEventListener('click', () => {
+                    closeModal(inchButton, cmButton, sizeButtons, closeButton);
+                });
+            }
             observer.disconnect();
         }
     });
-    const containerToObserve = document.querySelector('.modal-container-outer');
-    observer.observe(containerToObserve, { childList: true, subtree: true });
+    const modalContainer = document.querySelector('.modal-container-outer');
+    if (modalContainer) {
+        observer.observe(modalContainer, { childList: true, subtree: true });
+    } else {
+        console.log("Product container not found");
+    }
+
 }
 
 async function compareMeasurements(measurementModal, activeItem, system, imageSource) {
@@ -132,7 +141,6 @@ async function compareMeasurements(measurementModal, activeItem, system, imageSo
             displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, system);
         }
     }
-
 }
 
 function getSSenseCategory() {
@@ -260,9 +268,7 @@ function removePreviousMeasurements() {
 }
 
 function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
-
     console.log("closing");
-
     if (inchButtonHandlerRef) inchButton.removeEventListener('click', inchButtonHandlerRef);
     if (cmButtonHandlerRef) cmButton.removeEventListener('click', cmButtonHandlerRef);
     if (sizeButtonsHandlerRef) sizeButtons.removeEventListener('click', sizeButtonsHandlerRef);

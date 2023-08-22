@@ -9,8 +9,9 @@ import "./App.css";
 //To do
 //-SSense
 //-- Figure out whats up with the scroll bars on different displays
-//-- Sweaters
-//-- Sweater as a jacket bug
+//-- Mutation observer to watch for dynamic loading kind of works
+//   except if the user goes back. Need to find a better way to only scan the
+//   the site for specific changes.
 //pop out
 function App() {
   const location = useLocation();

@@ -21,3 +21,7 @@ function returnValidItems(items, category) {
     return activeItems;
 
 }
+
+
+let openPopupCount = 0;
+
