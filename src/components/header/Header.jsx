@@ -13,7 +13,6 @@ function Header(props) {
 
   function isPopupWindow() {
     const popUpViews = chrome.extension.getViews({ type: "popup" });
-    console.log(popUpViews);
     if (popUpViews.length > 0) {
       return true;
     }

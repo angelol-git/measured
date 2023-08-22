@@ -7,7 +7,7 @@
 
 .main-container {
     height: 100%;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 25px 0px 25px;
     overflow-y: auto;
     scrollbar-gutter: stable both-edges;
 }
@@ -23,7 +23,7 @@
 
 .inner-container {
     position: relative;
-    padding: 20px 15px 20px 15px;
+    padding: 20px 20px 20px 20px;
 }
 
 /*Colors*/
@@ -92,6 +92,10 @@ a {
     font-weight: bold;
     height: 100%;
     width: 100%;
+}
+
+.image-replacement.image-replacement-active-card {
+    background-color: var(--primary-bkg-color);
 }
 
 .sub-row {

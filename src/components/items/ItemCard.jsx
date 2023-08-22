@@ -49,8 +49,8 @@ function ItemCard(props) {
     );
   }
 
-  if (title.length > 70) {
-    titleElement = title.slice(0, 67) + "...";
+  if (title.length > 60) {
+    titleElement = title.slice(0, 57) + "...";
   }
 
   return (

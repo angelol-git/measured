@@ -5,8 +5,8 @@ import "./ActiveCard.css";
 function ActiveCard(props) {
   const { active, category, title, imageSrc, measurements } = props.values;
   const [imageStatus, setImageStatus] = useState("");
-
   const [detailView, setDetailView] = useState(false);
+  let imageElement;
   const activeButtonElement = active ? (
     <button
       className="primary-button inactive-button-color"
@@ -36,6 +36,27 @@ function ActiveCard(props) {
     )
   );
 
+  if (imageSrc.length === 0) {
+    const firstTitleLetter = title.split("")[0];
+    imageElement = (
+      <div
+        className={
+          "image-replacement image-replacement-active-card mini-thumbnail"
+        }
+      >
+        <p>{firstTitleLetter}</p>
+      </div>
+    );
+  } else {
+    imageElement = (
+      <img
+        className="mini-thumbnail"
+        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
+        onLoad={handleImageLoad}
+        alt={title}
+      ></img>
+    );
+  }
   function handleImageLoad() {
     setImageStatus("success");
   }
@@ -57,21 +78,13 @@ function ActiveCard(props) {
       role="button"
       aria-expanded={detailView}
       tabIndex={props.fullModalOpen}
-      // tabindex={props.customTabIndex + 1}
     >
       <header className="active-header">
         <div className="active-title-container">
           <h2 className="active-title bold-text">{title}</h2>
           <p>{category}</p>
         </div>
-        <img
-          className="mini-thumbnail"
-          src={
-            imageStatus === "success" ? imageSrc : "./data/images/loading.gif"
-          }
-          onLoad={handleImageLoad}
-          alt={title}
-        ></img>
+        {imageElement}
       </header>
       <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">
