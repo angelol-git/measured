@@ -270,8 +270,6 @@ function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
     buttonListenersAttached = false;
 }
 
-
-
 const imageData = {
     Tops: {
         //Henley
@@ -299,6 +297,35 @@ const imageData = {
         "https://res.cloudinary.com/ssense/image/upload/v1509463872/size_guide/category_218.jpg": {
             "left: 42%; top: 44%;": "Chest",
             "left: 72%; top: 55%;": "Length"
+        },
+        //Sweaters
+        //Cardigan
+        "https://res.cloudinary.com/ssense/image/upload/v1485365331/size_guide/category_204.jpg": {
+            "left: 49%; top: 42%;": "Chest",
+            "left: 13%; top: 32%;": "Sleeve Length",
+            "left: 49%; top: 9%;": "Shoulders",
+            "left: 87%; top: 56%;": "Length"
+        },
+        //Sweater
+        "https://res.cloudinary.com/ssense/image/upload/v1485365334/size_guide/category_205_208.jpg": {
+            "left: 51%; top: 41%;": "Chest",
+            "left: 18%; top: 23%;": "Sleeve Length",
+            "left: 51%; top: 7%;": "Shoulders",
+            "left: 88%; top: 52%;": "Length"
+        },
+        //Hoodie
+        "https://res.cloudinary.com/ssense/image/upload/v1509463877/size_guide/category_206.jpg": {
+            "left: 48%; top: 42%;": "Chest",
+            "left: 15%; top: 24%;": "Sleeve Length",
+            "left: 48%; top: 9%;": "Shoulders",
+            "left: 84%; top: 51%;": "Length"
+        },
+        //Turtle Neck
+        "https://res.cloudinary.com/ssense/image/upload/v1509463875/size_guide/category_207_209.jpg": {
+            "left: 48%; top: 41%;": "Chest",
+            "left: 15%; top: 25%;": "Sleeve Length",
+            "left: 48%; top: 5%;": "Shoulders",
+            "left: 83%; top: 55%;": "Length"
         }
     },
     Outerwear: {
@@ -332,10 +359,4 @@ const imageData = {
     }
 }
 
-
 bodyMutationObserver();
-
-
-// Initial check when the content script is executed
-
-

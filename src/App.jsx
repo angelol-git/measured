@@ -7,8 +7,10 @@ import Add from "./pages/Add";
 import "./App.css";
 
 //To do
-//--SSense
+//-SSense
 //-- Figure out whats up with the scroll bars on different displays
+//-- Sweaters
+//-- Sweater as a jacket bug
 //pop out
 function App() {
   const location = useLocation();
