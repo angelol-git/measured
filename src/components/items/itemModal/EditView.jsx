@@ -18,7 +18,7 @@ function EditView(props) {
   const [titleEmpty, setTitleEmpty] = useState(false);
   const [measurementError, setMeasurementError] = useState(false);
   const titleInputRef = useRef(null);
-
+  let imageElement = "";
   const measurementCategory = {
     Tops: ["Chest", "Length", "Shoulders", "Sleeve Length", "Hem"],
     Bottoms: ["Front Rise", "Inseam", "Leg Opening", "Thigh", "Knee", "Waist"],
@@ -219,9 +219,30 @@ function EditView(props) {
       </div>
     ) : null;
 
+  if (currImageSrc.length === 0) {
+    const firstTitleLetter = title.split("")[0];
+    imageElement = (
+      <div className="image-replacement medium-thumbnail text-medium bold-text">
+        <p>{firstTitleLetter}</p>
+      </div>
+    );
+  } else {
+    imageElement = (
+      <img
+        id="image"
+        src={
+          imageStatus === "success" ? currImageSrc : "./data/images/loading.gif"
+        }
+        className="medium-thumbnail"
+        onLoad={handleImageLoad}
+        onError={handleImageError}
+        alt={`Thumbnail of ${title}`}
+      />
+    );
+  }
   return (
     <section className="modal-container">
-      <div className="inner-container">
+      <div className="modal-inner-container">
         <header className="sub-row">
           <button
             className="back-button secondary-link-color position-left"
@@ -237,26 +258,15 @@ function EditView(props) {
         </header>
         <form id="edit-form" className="text-normal" onSubmit={handleSave}>
           <div className="image-preview-container">
+            {/* {currImageSrc.length === 0 ? { imageElement } : ""} */}
             {currImageSrc.length !== 0 ? (
               <div className="image-preview-container">
                 {imageStatus !== "error" && (
-                  <div className="image-container">
-                    <img
-                      id="image"
-                      src={
-                        imageStatus === "success"
-                          ? currImageSrc
-                          : "./data/images/loading.gif"
-                      }
-                      className="medium-thumbnail"
-                      onLoad={handleImageLoad}
-                      onError={handleImageError}
-                    />
-                  </div>
+                  <div className="image-container">{imageElement}</div>
                 )}
               </div>
             ) : (
-              ""
+              imageElement
             )}
           </div>
           <div>
