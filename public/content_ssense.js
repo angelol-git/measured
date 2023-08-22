@@ -326,6 +326,13 @@ const imageData = {
             "left: 15%; top: 25%;": "Sleeve Length",
             "left: 48%; top: 5%;": "Shoulders",
             "left: 83%; top: 55%;": "Length"
+        },
+        //V Neck Sweater
+        "https://res.cloudinary.com/ssense/image/upload/v1485365334/size_guide/category_210.jpg": {
+            "left: 51%; top: 40%;": "Chest",
+            "left: 16%; top: 18%;": "Sleeve Length",
+            "left: 51%; top: 51%;": "Shoulders",
+            "left: 87%; top: 55%;": "Length"
         }
     },
     Outerwear: {
