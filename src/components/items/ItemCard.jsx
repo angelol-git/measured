@@ -41,7 +41,7 @@ function ItemCard(props) {
     imageElement = (
       <img
         id="image"
-        className={"medium-thumbnail" + (hover ? " darken-image" : "")}
+        className={"full-cover-thumbnail" + (hover ? " darken-image" : "")}
         src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
         onLoad={handleImageLoad}
         alt={`Thumbnail of ${title}`}

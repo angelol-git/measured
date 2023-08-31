@@ -258,7 +258,6 @@ function EditView(props) {
         </header>
         <form id="edit-form" className="text-normal" onSubmit={handleSave}>
           <div className="image-preview-container">
-            {/* {currImageSrc.length === 0 ? { imageElement } : ""} */}
             {currImageSrc.length !== 0 ? (
               <div className="image-preview-container">
                 {imageStatus !== "error" && (
