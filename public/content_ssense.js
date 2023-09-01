@@ -3,53 +3,28 @@ let closeButton;
 let inchButtonHandlerRef;
 let cmButtonHandlerRef;
 let sizeButtonsHandlerRef;
-let buttonListenersAttached = false;
 
 function isMobileView() {
     return window.innerWidth <= 991;
 }
 
-function bodyMutationObserver() {
-    //console.log("Main Observer Loading");
+function setupGlobalMutationObserver() {
     const observer = new MutationObserver((mutationsList, observer) => {
-        const productContainer = isMobileView() ? document.querySelector('.pdp-mobile') : document.querySelector('.pdp-desktop');
-        if (productContainer) {
-            sizeGuideMutationObserver(productContainer);
+        for (const mutation of mutationsList) {
+            for (const addedNode of mutation.addedNodes) {
+                if (addedNode.nodeType === Node.ELEMENT_NODE && addedNode.classList.contains('modal')) {
+                    modalMutationObserver(addedNode);
+                }
+            }
         }
     });
 
-    const containerToObserve = document.querySelector(".main");
-    if (containerToObserve) {
-        observer.observe(containerToObserve, { childList: true, subtree: true });
-    } else {
-        console.log("Main container not found");
-    }
+    const mainContainer = document.querySelector('.main');
+    observer.observe(mainContainer, { childList: true, subtree: true });
 }
 
-function sizeGuideMutationObserver(productContainer) {
-    //console.log("Observer loading");
-    const observer = new MutationObserver((mutationsList, observer) => {
-        const sizeGuideButton = document.querySelectorAll('.pdp-size-chart__model-wearing')[1];
-        if (sizeGuideButton && !buttonListenersAttached) { // Attach listeners only if not already attached
-            console.log("Measured: Found button.");
-            sizeGuideButton.addEventListener('click', () => {
-                modalMutationObserver();
-            });
-            buttonListenersAttached = true; // Set the flag to true
-            observer.disconnect();
-        }
-    });
-
-    if (productContainer) {
-        observer.observe(productContainer, { childList: true, subtree: true });
-    } else {
-        console.log("Product container not found");
-    }
-}
-
-function modalMutationObserver() {
+function modalMutationObserver(targetElement) {
     const observer = new MutationObserver(async (mutationsList, observer) => {
-
         const measurementModal = document.querySelector('.modal-container-outer');
         const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
         const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
@@ -57,6 +32,7 @@ function modalMutationObserver() {
         const closeButton = isMobileView() ? document.querySelector('.modal-close') : document.querySelector('.modal-btn-close');
         const backDropButton = document.getElementById('backdrop');
 
+        //Wait for values to load before comparing
         if (measurementModalHeader && measurementValuesElement && measurementModalImage && closeButton) {
             console.log("Measured: Comparing");
             if (measurementModalHeader.children.length === 1) {
@@ -268,7 +244,6 @@ function removePreviousMeasurements() {
 }
 
 function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
-    console.log("closing");
     if (inchButtonHandlerRef) inchButton.removeEventListener('click', inchButtonHandlerRef);
     if (cmButtonHandlerRef) cmButton.removeEventListener('click', cmButtonHandlerRef);
     if (sizeButtonsHandlerRef) sizeButtons.removeEventListener('click', sizeButtonsHandlerRef);
@@ -372,4 +347,4 @@ const imageData = {
     }
 }
 
-bodyMutationObserver();
+setupGlobalMutationObserver();
