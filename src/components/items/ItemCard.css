@@ -37,11 +37,10 @@
     position: absolute;
     top: 5px;
     left: 5px;
-
     visibility: hidden;
     padding: 2px 5px 2px 5px;
 
-    background-color: var(--primary-button-bkg);
+    background-color: var(--accent-blue);
     color: var(--secondary-text-color);
 }
 

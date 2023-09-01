@@ -12,8 +12,8 @@
   -webkit-text-size-adjust: 100%;
 
   --primary-text-color: black;
-  --primary-bkg-color: white;
   --secondary-text-color: white;
+  --primary-bkg-color: white;
   --primary-button-bkg: black;
   --primary-button-bkg-hover: rgb(47, 47, 47);
   --secondary-button-bkg: white;
@@ -21,6 +21,7 @@
   --secondary-bkg-color: rgb(232, 232, 232);
   --error-text: red;
   --error-border: red;
+  --accent-blue: blue;
 
 }
 
