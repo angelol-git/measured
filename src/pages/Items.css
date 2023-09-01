@@ -1,12 +1,11 @@
 .item-container {
     display: grid;
-
-    justify-content: center;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 20px;
     z-index: 0;
     padding-bottom: 20px;
 }
+
 
 .filter-container {
     height: 0px;
