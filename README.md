@@ -20,6 +20,16 @@ Shopping for clothes online can be a challenging task, especially when it comes 
  - JavaScript for the comapring logic
 
 ## Demo
+
+### Adding an item
+<img src="https://github.com/aladores/measured/blob/main/readme_assets/adding.gif" width="400">
+
+### Viewing an item
+<img src="https://github.com/aladores/measured/blob/main/readme_assets/editing.gif" width="400">
+
+### Comparing an item
+<img src="https://github.com/aladores/measured/blob/main/readme_assets/comparing.gif" width="800">
+
 ### SSense
 Before                     | After
 :-------------------------:|:-------------------------:
