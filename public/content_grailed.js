@@ -97,9 +97,8 @@ function displayGrailedDifference(measurementTable, position, inchDifference, cm
     const inchCell = measurementTable.children[position].children[1];
     const cmCell = measurementTable.children[position].children[2];
 
-    const inchDiv = document.createElement("div");
-    inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
-    inchDiv.innerText = `${inchDifference} in`;
+    // const inchDiv = document.createElement("div");
+    // inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
 
     let formattedInch = "";
     let formattedCm = "";
@@ -111,8 +110,8 @@ function displayGrailedDifference(measurementTable, position, inchDifference, cm
         formattedInch = inchDifference.match(/^\d/) ? `+${inchDifference} in` : `${inchDifference} in`;
         formattedCm = cmDifference.match(/^\d/) ? `+${cmDifference} cm` : `${cmDifference} cm`;
     }
-    inchCell.innerHTML += ` ${formattedInch}`;
-    cmCell.innerHTML += ` ${formattedCm}`;
+    inchCell.innerHTML += `<br> ${formattedInch}`;
+    cmCell.innerHTML += `<br>  ${formattedCm}`;
 }
 
 tableMutationObserver();
