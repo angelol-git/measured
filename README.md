@@ -5,6 +5,7 @@ Measured is a Chrome extension designed to streamline the process of comparing m
  - Select an active item to compare to the current pages listing/product
      - Only once item per category can be active at a time
  - Import and export local data
+ - Clothing category support: Tops,Outerwear and Bottoms 
 
 ## Websites supported 
  - Grailed
@@ -20,6 +21,7 @@ Shopping for clothes online can be a challenging task, especially when it comes 
 
 ## Features I would like to add
  - Support more websites: Uniqlo, Haven and etc
+ - Support more item categories
  - Dark and light mode
  - Lazy load images for better experience
  - Auto add feature
