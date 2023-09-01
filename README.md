@@ -19,6 +19,18 @@ Shopping for clothes online can be a challenging task, especially when it comes 
  - React for the Chrome extension front end
  - JavaScript for the comapring logic
 
+## Demo
+### SSense
+Before                     | After
+:-------------------------:|:-------------------------:
+<img src="https://github.com/aladores/measured/blob/main/readme_assets/ssense_before.jpg" width="400" > | <img src="https://github.com/aladores/measured/blob/main/readme_assets/ssense_after.jpg" width="400" >
+
+### Grailed
+Before                     | After
+:-------------------------:|:-------------------------:
+<img src="https://github.com/aladores/measured/blob/main/readme_assets/grailed_before.jpg" width="400" > | <img src="https://github.com/aladores/measured/blob/main/readme_assets/grailed_after.jpg" width="400" >
+
+
 ## Features I would like to add
  - Support more websites: Uniqlo, Haven and etc
  - Support more item categories
