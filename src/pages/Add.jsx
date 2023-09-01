@@ -251,7 +251,7 @@ function Add(props) {
             ""
           )}
 
-          <div>
+          <div className="active-input">
             <label htmlFor="active">
               Set as active:
               <input type="checkbox" id="active" name="active" value="active" />
