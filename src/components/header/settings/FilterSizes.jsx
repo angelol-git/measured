@@ -87,17 +87,29 @@ function FilterSizes(props) {
       [category]: !prevSizes[category],
     }));
   }
+  function handleKeyDown(event, category) {
+    if (event.key === "Enter") {
+      setAllSizesShow((prevSizes) => ({
+        ...prevSizes,
+        [category]: !prevSizes[category],
+      }));
+    }
+  }
 
   const categoryElement = (category) => {
     return (
       <div key={category}>
         <div
           className="category-row"
+          role="button"
+          aria-expanded={allSizesShow[category]}
+          tabIndex={0}
           onClick={() => {
             handleCategoryClick(category);
           }}
-          role="button"
-          aria-expanded={allSizesShow[category]}
+          onKeyDown={(event) => {
+            handleKeyDown(event, category);
+          }}
         >
           <div className="category-row-left">
             <h2 className="bold-text text-large">{category}</h2>
