@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import "./Add.css";
 function Add(props) {
   const navigate = useNavigate();
@@ -126,7 +125,7 @@ function Add(props) {
     props.handleActive(
       event.target.title.value.toUpperCase(),
       event.target.category.value,
-      true
+      true,
     );
     navigate("/items");
   }
