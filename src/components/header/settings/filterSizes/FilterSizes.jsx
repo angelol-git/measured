@@ -1,42 +1,25 @@
 import { useState, useEffect, useRef } from "react";
-import Category from "./filterSizes/Category";
+import { outerwearSizes, topsSizes, bottomsSizes } from "./sizesData";
+import Category from "./Category";
 import "./FilterSizes.css";
 
 function FilterSizes(props) {
   const { sizes } = props.settingsData;
   const isInitialRender = useRef(true);
   const [outerwear, setOuterwear] = useState(
-    ["XXS/40", "XS/42", "S/44-46", "M/48-50", "L/52-54", "XL/56", "XXL/58"].map(
-      (size) => ({
-        value: size,
-        checked: sizes["Outerwear"].includes(size),
-      }),
-    ),
+    outerwearSizes.map((size) => ({
+      value: size,
+      checked: sizes["Outerwear"].includes(size),
+    })),
   );
   const [tops, setTops] = useState(
-    ["XXS/40", "XS/42", "S/44-46", "M/48-50", "L/52-54", "XL/56", "XXL/58"].map(
-      (size) => ({
-        value: size,
-        checked: sizes["Tops"].includes(size),
-      }),
-    ),
+    topsSizes.map((size) => ({
+      value: size,
+      checked: sizes["Tops"].includes(size),
+    })),
   );
   const [bottoms, setBottoms] = useState(
-    [
-      "26",
-      "27",
-      "28",
-      "29",
-      "30",
-      "31",
-      "32",
-      "33",
-      "34",
-      "35",
-      "36",
-      "37",
-      "38",
-    ].map((size) => ({
+    bottomsSizes.map((size) => ({
       value: size,
       checked: sizes["Bottoms"].includes(size),
     })),
@@ -83,7 +66,7 @@ function FilterSizes(props) {
           />
           <Category
             category={bottoms}
-            categoryType="bottoms"
+            categoryType="Bottoms"
             setCategory={setBottoms}
           />
         </div>

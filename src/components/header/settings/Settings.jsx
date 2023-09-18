@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Data from "./Data";
-import FilterSizes from "./FilterSizes";
+import FilterSizes from "./filterSizes/FilterSizes";
 import "./Settings.css";
 
 function Settings(props) {
