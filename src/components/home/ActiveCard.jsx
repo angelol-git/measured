@@ -1,12 +1,12 @@
 import { useState } from "react";
 import React from "react";
+// Update import statements to use the correct casing
+import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
 function ActiveCard(props) {
   const { active, category, title, imageSrc, measurements } = props.values;
-  const [imageStatus, setImageStatus] = useState("");
   const [detailView, setDetailView] = useState(false);
-  let imageElement;
   const activeButtonElement = active ? (
     <button
       className="primary-button inactive-button-color"
@@ -33,33 +33,8 @@ function ActiveCard(props) {
           </div>
         </div>
       </div>
-    )
+    ),
   );
-
-  if (imageSrc.length === 0) {
-    const firstTitleLetter = title.split("")[0];
-    imageElement = (
-      <div
-        className={
-          "image-replacement image-replacement-active-card mini-thumbnail"
-        }
-      >
-        <p>{firstTitleLetter}</p>
-      </div>
-    );
-  } else {
-    imageElement = (
-      <img
-        className="mini-thumbnail"
-        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
-        onLoad={handleImageLoad}
-        alt={title}
-      ></img>
-    );
-  }
-  function handleImageLoad() {
-    setImageStatus("success");
-  }
 
   function handleClick() {
     setDetailView((detailView) => !detailView);
@@ -84,7 +59,7 @@ function ActiveCard(props) {
           <h2 className="active-title bold-text">{title}</h2>
           <p>{category}</p>
         </div>
-        {imageElement}
+        <ItemImage imageSrc={imageSrc} title={title} />
       </header>
       <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">

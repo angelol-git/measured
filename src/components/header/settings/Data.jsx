@@ -37,7 +37,7 @@ function Data(props) {
         setImportMessage(`${event.target.files[0].name}`);
         if (event.target.files[0].type !== "application/JSON") {
           setImportError(
-            `File format is invalid. Only .json files are allowed.`
+            `File format is invalid. Only .json files are allowed.`,
           );
           return;
         }
@@ -55,6 +55,7 @@ function Data(props) {
       document.getElementById("file").click();
     }
   }
+
   return (
     <section className="inner-container">
       <header className="sub-row">

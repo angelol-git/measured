@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import ItemImage from "../itemImage/ItemImage";
 import "./ItemView.css";
 
 function ItemView(props) {
@@ -7,7 +8,6 @@ function ItemView(props) {
     props.values;
   const { handleActive, handleDelete } = props.handleFunctions;
   const [imageStatus, setImageStatus] = useState("");
-  let imageElement;
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="measurement-label-value-container" key={key}>
@@ -23,7 +23,7 @@ function ItemView(props) {
           </div>
         </div>
       </div>
-    )
+    ),
   );
   const activeButtonElement = active ? (
     <button
@@ -45,24 +45,6 @@ function ItemView(props) {
     setImageStatus("success");
   }
 
-  if (imageSrc.length === 0) {
-    const firstTitleLetter = title.split("")[0];
-    imageElement = (
-      <div className="image-replacement medium-thumbnail">
-        <p>{firstTitleLetter}</p>
-      </div>
-    );
-  } else {
-    imageElement = (
-      <img
-        id="image"
-        className={"medium-thumbnail"}
-        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
-        onLoad={handleImageLoad}
-        alt={`Thumbnail of ${title}`}
-      ></img>
-    );
-  }
   return (
     <section className="modal-container" role="dialog" aria-modal="true">
       <div class="modal-inner-container">
@@ -78,7 +60,9 @@ function ItemView(props) {
         </header>
         <main>
           <div className="text-center">
-            <div className="flex justify-center">{imageElement}</div>
+            <div className="flex justify-center">
+              <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
+            </div>
             <div className="modal-item-title-container">
               <h2 id={title} className="modal-item-title bold-text">
                 {title}

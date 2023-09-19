@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/items/ItemCard";
 import "./Items.css";
-function Items(props) {
-  const itemsLength = Object.keys(props.itemData).length;
-  //const [displayFilters, setDisplayFilters] = useState(false);
+function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
+  const itemsLength = Object.keys(items).length;
 
   let itemCardElements;
 
@@ -14,7 +13,8 @@ function Items(props) {
     //setDisplayFilters(!displayFilters);
   }
   if (itemsLength) {
-    itemCardElements = Object.entries(props.itemData)
+    itemCardElements = Object.entries(items)
+      //Put the active items first, and by alphabetically
       .sort(([, itemA], [, itemB]) => {
         if (itemA.active !== itemB.active) {
           return itemA.active ? -1 : 1;
@@ -23,14 +23,14 @@ function Items(props) {
         }
       })
       .map(([key, value]) => {
+        console.log(value);
         return (
           <ItemCard
             key={key}
             values={value}
-            settingsData={props.settingsData}
-            handleFunctions={props.handleFunctions}
-            fullModalOpen={props.fullModalOpen}
-            setFullModalOpen={props.setFullModalOpen}
+            settingsData={settingsData}
+            fullModalOpen={fullModalOpen}
+            setFullModalOpen={setFullModalOpen}
           />
         );
       });
@@ -55,7 +55,7 @@ function Items(props) {
         <Link
           to="/add"
           className="primary-button  position-right"
-          tabIndex={props.fullModalOpen}
+          tabIndex={fullModalOpen}
         >
           + Add
         </Link>

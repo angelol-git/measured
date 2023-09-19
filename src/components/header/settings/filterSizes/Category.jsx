@@ -3,6 +3,7 @@ import "./Category.css";
 
 function Category({ category, categoryType, setCategory }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
   function handleSizeClick(value) {
     const updatedCategory = category.map((item) => {
       if (item.value === value) {
@@ -15,7 +16,7 @@ function Category({ category, categoryType, setCategory }) {
   }
 
   return (
-    <div key={category}>
+    <div key={categoryType}>
       <div
         className="category-row"
         role="button"

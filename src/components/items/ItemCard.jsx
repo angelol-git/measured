@@ -1,15 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import ItemModal from "./ItemModal";
+import ItemImage from "./itemImage/ItemImage";
 import "./ItemCard.css";
 
-function ItemCard(props) {
-  const { active, title, imageSrc } = props.values;
+function ItemCard({
+  key,
+  values,
+  settingsData,
+  fullModalOpen,
+  setFullModalOpen,
+}) {
+  const { active, title, imageSrc } = values;
   const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
-  const [imageStatus, setImageStatus] = useState("");
 
-  let imageElement;
   let titleElement = title;
 
   function handleHover() {
@@ -19,9 +24,6 @@ function ItemCard(props) {
     props.setFullModalOpen(!clickModal ? -1 : 0);
     setClickModal(!clickModal);
   }
-  function handleImageLoad() {
-    setImageStatus("success");
-  }
 
   function handleKeyDown(event) {
     if (event.key === "Enter") {
@@ -30,31 +32,12 @@ function ItemCard(props) {
     }
   }
 
-  if (imageSrc.length === 0) {
-    const firstTitleLetter = title.split("")[0];
-    imageElement = (
-      <div className={"image-replacement" + (hover ? " darken-image" : "")}>
-        <p>{firstTitleLetter}</p>
-      </div>
-    );
-  } else {
-    imageElement = (
-      <img
-        id="image"
-        className={"full-cover-thumbnail" + (hover ? " darken-image" : "")}
-        src={imageStatus === "success" ? imageSrc : "./data/images/loading.gif"}
-        onLoad={handleImageLoad}
-        alt={`Thumbnail of ${title}`}
-      ></img>
-    );
-  }
-
   if (title.length > 60) {
     titleElement = title.slice(0, 57) + "...";
   }
 
   return (
-    <article>
+    <article key={key}>
       <div
         className="item-card black-border"
         onClick={handleClickModal}
@@ -66,9 +49,9 @@ function ItemCard(props) {
         role="button"
         aria-label="Open item details"
         aria-pressed={clickModal}
-        tabIndex={props.fullModalOpen}
+        tabIndex={fullModalOpen}
       >
-        {imageElement}
+        <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
         <div className={"title-hover" + (hover ? " show" : "")}>
           <h2 className="text-medium bold-text item-card-title">
             {titleElement}
@@ -80,13 +63,12 @@ function ItemCard(props) {
       </div>
       <ItemModal
         key={title}
-        values={props.values}
+        values={values}
         clickModal={clickModal}
         handleClickModal={handleClickModal}
-        handleFunctions={props.handleFunctions}
-        settingsData={props.settingsData}
-        fullModalOpen={props.fullModalOpen}
-        setFullModalOpen={props.setFullModalOpen}
+        settingsData={settingsData}
+        fullModalOpen={fullModalOpen}
+        setFullModalOpen={setFullModalOpen}
       />
     </article>
   );

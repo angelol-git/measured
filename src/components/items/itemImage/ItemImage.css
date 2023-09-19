@@ -1,0 +1,18 @@
+.item-image-container {
+    height: 100%;
+    width: 100%;
+}
+
+.image-replacement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-bkg-color);
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+}
+
+.image-replacement.image-replacement-active-card {
+    background-color: var(--primary-bkg-color);
+}

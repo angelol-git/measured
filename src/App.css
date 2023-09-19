@@ -84,19 +84,6 @@ a {
     text-align: center;
 }
 
-.image-replacement {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--secondary-bkg-color);
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
-}
-
-.image-replacement.image-replacement-active-card {
-    background-color: var(--primary-bkg-color);
-}
 
 .sub-row {
     display: flex;
@@ -308,6 +295,11 @@ a {
     to {
         transform: rotate(360deg);
     }
+}
+
+.skeleton {
+    height: 100%;
+    width: 100%;
 }
 
 .loading-spinner {

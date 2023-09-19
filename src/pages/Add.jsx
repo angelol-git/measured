@@ -121,8 +121,8 @@ function Add(props) {
       return;
     }
 
-    props.handleAddItem(newItem);
-    props.handleActive(
+    props.addItem(newItem);
+    props.activeItem(
       event.target.title.value.toUpperCase(),
       event.target.category.value,
       true,
