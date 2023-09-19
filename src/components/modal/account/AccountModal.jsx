@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Data from "../../../pages/account/Data";
 import FilterSizes from "../../../pages/account/filterSizes/FilterSizes";
-import "./Account.css";
+import "./AccountModal.css";
 
-function Account(props) {
+function AccountModal(props) {
   const [slideOut, setSlideOut] = useState(false);
   const [settingsMode, setSettingsMode] = useState("menu");
 
@@ -89,4 +89,4 @@ function Account(props) {
   );
 }
 
-export default Account;
+export default AccountModal;

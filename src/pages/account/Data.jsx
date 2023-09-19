@@ -24,8 +24,6 @@ function Data(props) {
     const reader = new FileReader();
 
     reader.onload = () => {
-      console.log(event.target.files[0].type);
-
       try {
         const jsonObject = JSON.parse(reader.result);
         const importLength = Object.keys(jsonObject).length;

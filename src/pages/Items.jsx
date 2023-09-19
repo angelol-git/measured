@@ -23,7 +23,6 @@ function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
         }
       })
       .map(([key, value]) => {
-        console.log(value);
         return (
           <ItemCard
             key={key}

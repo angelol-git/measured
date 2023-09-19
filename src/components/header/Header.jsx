@@ -1,29 +1,14 @@
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import PopupButton from "./PopupButton";
-import Account from "./account/Account";
+import AccountModal from "../modal/account/AccountModal";
 import Modal from "../modal/Modal";
 import "./header.css";
 
 function Header(props) {
   const [showModal, setShowModal] = useState(false);
-
-  function CustomLink({ to, children, ...props }) {
-    const resolvedPath = useResolvedPath(to);
-    const isActive = useMatch({ path: resolvedPath.pathname, end: true });
-
-    return (
-      <li className={isActive ? "active" : ""}>
-        <Link
-          to={to}
-          {...props}
-          className="nav-bar-links black-text text-normal "
-        >
-          {children}
-        </Link>
-      </li>
-    );
-  }
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
     <div>
@@ -53,24 +38,34 @@ function Header(props) {
         </div>
 
         <nav className="nav-bar">
-          <ul className="flex">
-            <CustomLink to="/">Home</CustomLink>
-            <CustomLink to="/items">Items</CustomLink>
-          </ul>
+          <Link
+            to="/"
+            className={`nav-bar-links black-text text-normal ${
+              currentPath === "/" ? "active" : ""
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/items"
+            c
+            className={`nav-bar-links black-text text-normal ${
+              currentPath === "/items" ? "active" : ""
+            }`}
+          >
+            Items
+          </Link>
         </nav>
 
         {showModal ? (
           <Modal>
-            {/* <Settings
-              handleClickSettings={handleClickSettings}
+            <AccountModal
               handleImport={props.handleImport}
               itemData={props.itemData}
               settingsData={props.settingsData}
               handleSizeUpdate={props.handleSizeUpdate}
-              fullModalOpen={props.fullModalOpen}
-              setFullModalOpen={props.setFullModalOpen}
               setShowModal={setShowModal}
-            /> */}
+            />
           </Modal>
         ) : null}
       </header>

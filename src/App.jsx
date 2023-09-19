@@ -9,7 +9,6 @@ import Add from "./pages/Add";
 import "./App.css";
 
 function App() {
-  console.log(Routes);
   const location = useLocation();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [titleError, setTittleError] = useState(false);
