@@ -27,7 +27,7 @@ function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
         return (
           <ItemCard
             key={key}
-            values={value}
+            items={value}
             settingsData={settingsData}
             fullModalOpen={fullModalOpen}
             setFullModalOpen={setFullModalOpen}

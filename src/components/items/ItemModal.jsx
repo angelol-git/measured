@@ -28,7 +28,7 @@ function ItemModal(props) {
       return (
         <EditView
           key={props.title}
-          values={props.values}
+          values={props.items}
           handleFunctions={props.handleFunctions}
           handleEditBack={handleEditBack}
           convertedCategory={convertedCategory}
@@ -39,7 +39,7 @@ function ItemModal(props) {
       return (
         <ItemView
           key={props.title}
-          values={props.values}
+          values={props.items}
           handleFunctions={props.handleFunctions}
           handleClickModal={props.handleClickModal}
           handleEdit={handleEdit}

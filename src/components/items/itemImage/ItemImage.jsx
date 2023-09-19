@@ -3,7 +3,7 @@ import "./ItemImage.css";
 
 function ItemImage({ imageSrc, title, hover }) {
   return (
-    <div className="item-image-container">
+    <div className="item-image-container skeleton">
       {imageSrc.length === 0 ? (
         <div className={"image-replacement" + (hover ? " darken-image" : "")}>
           <p>{title.split("")[0]}</p>

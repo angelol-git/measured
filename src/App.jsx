@@ -12,7 +12,6 @@ function App() {
   console.log(Routes);
   const location = useLocation();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [fullModalOpen, setFullModalOpen] = useState(0);
   const [titleError, setTittleError] = useState(false);
   const [items, addItem, deleteItem, updateItem, activeItem] = useItems({});
   const [settings, setSettings] = useState({
@@ -70,27 +69,14 @@ function App() {
           itemData={items}
           settingsData={settings}
           handleImport={handleImport}
-          //handleSizeUpdate={handleSizeUpdate}
-          fullModalOpen={fullModalOpen}
-          setFullModalOpen={setFullModalOpen}
         />
       ) : null}
 
       <Routes>
-        <Route
-          path="/"
-          element={<Home itemData={items} fullModalOpen={fullModalOpen} />}
-        />
+        <Route path="/" element={<Home itemData={items} />} />
         <Route
           path="/items"
-          element={
-            <Items
-              items={items}
-              settingsData={settings}
-              fullModalOpen={fullModalOpen}
-              setFullModalOpen={setFullModalOpen}
-            />
-          }
+          element={<Items items={items} settingsData={settings} />}
         />
 
         <Route

@@ -1,16 +1,18 @@
 import { useState } from "react";
-import Data from "./Data";
-import FilterSizes from "./filterSizes/FilterSizes";
-import "./Settings.css";
+import Data from "../../../pages/account/Data";
+import FilterSizes from "../../../pages/account/filterSizes/FilterSizes";
+import "./Account.css";
 
-function Settings(props) {
+function Account(props) {
   const [slideOut, setSlideOut] = useState(false);
   const [settingsMode, setSettingsMode] = useState("menu");
 
   function handleClickClose() {
     setSlideOut(true);
+
     setTimeout(() => {
-      props.handleClickSettings();
+      //props.handleClickSettings();
+      props.setShowModal(false);
       setSlideOut(false);
     }, 200);
   }
@@ -31,7 +33,7 @@ function Settings(props) {
             >
               ←
             </button>
-            <h2 className="bold-text header-medium">Settings</h2>
+            <h2 className="bold-text header-medium">Account</h2>
           </header>
           <ul className="settings-list">
             <a
@@ -68,29 +70,23 @@ function Settings(props) {
             </a>
           </ul>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
       {settingsMode === "filterSizes" ? (
         <FilterSizes
           settingsData={props.settingsData}
           handleSizeUpdate={props.handleSizeUpdate}
           setSettingsMode={setSettingsMode}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
       {settingsMode === "data" ? (
         <Data
           handleImport={props.handleImport}
           itemData={props.itemData}
           setSettingsMode={setSettingsMode}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
     </section>
   );
 }
 
-export default Settings;
+export default Account;

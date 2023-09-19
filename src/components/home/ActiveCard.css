@@ -12,6 +12,10 @@
     height: 100%;
 }
 
+.active-image-container {
+    height: 50px;
+}
+
 .active-title {
     max-width: 235px;
     text-overflow: ellipsis;

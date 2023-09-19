@@ -6,12 +6,12 @@ import "./ItemCard.css";
 
 function ItemCard({
   key,
-  values,
+  items,
   settingsData,
   fullModalOpen,
   setFullModalOpen,
 }) {
-  const { active, title, imageSrc } = values;
+  const { active, title, imageSrc } = items;
   const [clickModal, setClickModal] = useState(false);
   const [hover, setHover] = useState(false);
 
@@ -21,13 +21,13 @@ function ItemCard({
     setHover(!hover);
   }
   function handleClickModal() {
-    props.setFullModalOpen(!clickModal ? -1 : 0);
+    setFullModalOpen(!clickModal ? -1 : 0);
     setClickModal(!clickModal);
   }
 
   function handleKeyDown(event) {
     if (event.key === "Enter") {
-      props.setFullModalOpen(!clickModal ? -1 : 0);
+      setFullModalOpen(!clickModal ? -1 : 0);
       setClickModal(!clickModal);
     }
   }
@@ -63,7 +63,7 @@ function ItemCard({
       </div>
       <ItemModal
         key={title}
-        values={values}
+        items={items}
         clickModal={clickModal}
         handleClickModal={handleClickModal}
         settingsData={settingsData}

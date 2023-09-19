@@ -59,11 +59,12 @@ function ActiveCard(props) {
           <h2 className="active-title bold-text">{title}</h2>
           <p>{category}</p>
         </div>
-        <ItemImage imageSrc={imageSrc} title={title} />
+        <div class="active-image-container">
+          <ItemImage imageSrc={imageSrc} title={title} />
+        </div>
       </header>
       <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">
-          {" "}
           {measurementElements}
         </div>
         <footer className="active-button-row">{activeButtonElement}</footer>

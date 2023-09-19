@@ -13,6 +13,6 @@
     width: 100%;
 }
 
-.image-replacement.image-replacement-active-card {
+.active-card.image-replacement {
     background-color: var(--primary-bkg-color);
 }
