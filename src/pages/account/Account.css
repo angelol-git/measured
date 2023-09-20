@@ -1,15 +1,3 @@
-.settings-container {
-    display: flex;
-    flex-direction: column;
-
-    height: 100%;
-    width: 100%;
-
-    background-color: var(--primary-bkg-color);
-    overflow-y: auto;
-    scrollbar-gutter: stable both-edges;
-}
-
 .slide-in {
     left: -100%;
     animation: slide-in 0.2s forwards;
@@ -32,24 +20,24 @@
     }
 }
 
-.settings-list {
+.account-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.settings-list-link {
+.account-list-link {
     display: flex;
     justify-content: space-between;
     padding: 10px 15px 10px 15px;
     color: var(--primary-text-color);
 }
 
-.settings-list-item {
+.account-list-item {
     list-style: none;
 }
 
 
-.settings-list-link:hover {
+.account-list-link:hover {
     background-color: var(--secondary-bkg-color);
 }

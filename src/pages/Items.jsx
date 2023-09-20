@@ -67,7 +67,7 @@ function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
 export default Items;
 
 // {/* <div
-// className={`filter-container text-normal  ${
+// className={`filter-container text-base  ${
 //   displayFilters ? "slide-down" : "slide-up"
 // }`}
 // >

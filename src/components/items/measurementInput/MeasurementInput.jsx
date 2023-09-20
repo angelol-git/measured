@@ -68,7 +68,7 @@ function MeasurementInput({
       <div className="measurement-container">
         {measurementCategory[category].map((item, index) => (
           <div className="unit-input-row" key={index}>
-            <label htmlFor={`${item}`} className="text-normal">
+            <label htmlFor={`${item}`} className="text-base">
               {item}
             </label>
             <div>
@@ -76,7 +76,7 @@ function MeasurementInput({
                 type="number"
                 id={`${item}`}
                 name={`${item}`}
-                className="unit-input text-normal"
+                className="unit-input text-base"
                 value={measurements[item]?.[unitIndex] || ""}
                 max={maxUnit}
                 step=".1"

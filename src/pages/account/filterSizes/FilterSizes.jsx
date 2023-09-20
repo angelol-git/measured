@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { outerwearSizes, topsSizes, bottomsSizes } from "./sizesData";
 import Category from "./Category";
+import SubHeader from "../../../components/header/SubHeader";
+
 import "./FilterSizes.css";
 
 function FilterSizes(props) {
@@ -44,19 +46,16 @@ function FilterSizes(props) {
   }, [outerwear, tops, bottoms]);
 
   return (
-    <section className="inner-container">
-      <header className="sub-row">
-        <button
-          className="back-button secondary-link-color position-left"
-          onClick={() => props.setSettingsMode("menu")}
-          aria-label="Back to settings"
-        >
-          ←
-        </button>
-        <h2 className="bold-text header-medium">Filter Sizes</h2>
-      </header>
-      <main>
-        <p>Add or remove sizes to appear when adding or editing items.</p>
+    <main className="main-container">
+      <SubHeader
+        link={"/account"}
+        title={"Filter Sizes"}
+        aria={"Back to Home"}
+      />
+      <div>
+        <p className="text-base text-center">
+          Add or remove sizes to appear when adding or editing items.
+        </p>
         <div className="categories-container">
           <Category category={tops} categoryType="Tops" setCategory={setTops} />
           <Category
@@ -70,8 +69,8 @@ function FilterSizes(props) {
             setCategory={setBottoms}
           />
         </div>
-      </main>
-    </section>
+      </div>
+    </main>
   );
 }
 

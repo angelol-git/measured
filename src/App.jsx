@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import useItems from "./hooks/useItems";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
-
 import Items from "./pages/Items";
 import Add from "./pages/Add";
+import Account from "./pages/account/Account";
+import Data from "./pages/account/Data";
+import FilterSizes from "./pages/account/filterSizes/FilterSizes";
+
 import "./App.css";
 
 function App() {
@@ -63,14 +66,7 @@ function App() {
   }, [settings]);
   return (
     <div className="app">
-      {location.pathname !== "/add" ? (
-        <Header
-          itemData={items}
-          settingsData={settings}
-          handleImport={handleImport}
-        />
-      ) : null}
-
+      {location.pathname !== "/add" ? <Header /> : null}
       <Routes>
         <Route path="/" element={<Home itemData={items} />} />
         <Route
@@ -87,6 +83,21 @@ function App() {
               handleTitle={handleTitle}
               titleError={titleError}
               settingsData={settings}
+            />
+          }
+        />
+        <Route
+          path="/data"
+          element={<Data itemData={items} handleImport={handleImport} />}
+        />
+        <Route path="/account" element={<Account />} />
+        <Route
+          path="/filterSizes"
+          element={
+            <FilterSizes
+              settingsData={settings}
+              handleSizeUpdate={handleSizeUpdate}
+              setSettingsMode={setSettings}
             />
           }
         />

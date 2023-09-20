@@ -47,7 +47,7 @@ function ActiveCard(props) {
 
   return (
     <article
-      className="active-card text-normal"
+      className="active-card text-base"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role="button"

@@ -57,7 +57,7 @@ function ItemCard({
             {titleElement}
           </h2>
         </div>
-        <div className={"active-tag text-normal" + (active ? " show" : "")}>
+        <div className={"active-tag text-base" + (active ? " show" : "")}>
           <p>Active</p>
         </div>
       </div>

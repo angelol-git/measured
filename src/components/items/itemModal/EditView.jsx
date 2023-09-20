@@ -35,7 +35,7 @@ function EditView(props) {
     <div className="measurement-container">
       {measurementCategory[category].map((item, index) => (
         <div className="unit-input-row" key={index}>
-          <label htmlFor={`${item}`} className="text-normal">
+          <label htmlFor={`${item}`} className="text-base">
             {item}
           </label>
 
@@ -50,7 +50,7 @@ function EditView(props) {
               id={`${item}`}
               name={`${item}`}
               ref={(input) => (inputRefs.current[item] = input)}
-              className={`unit-input text-normal ${
+              className={`unit-input text-base ${
                 measurementError[item] ? "error-border" : ""
               }`}
               value={currMeasurements[item]?.[unitIndex] || ""}
@@ -256,7 +256,7 @@ function EditView(props) {
           </button>
           <h3 className="bold-text header-medium">Edit item</h3>
         </header>
-        <form id="edit-form" className="text-normal" onSubmit={handleSave}>
+        <form id="edit-form" className="text-base" onSubmit={handleSave}>
           <div className="image-preview-container">
             {currImageSrc.length !== 0 ? (
               <div className="image-preview-container">
@@ -279,7 +279,7 @@ function EditView(props) {
                 name="image"
                 placeholder="Image URL"
                 value={currImageSrc}
-                className="text-normal form-input"
+                className="text-base form-input"
                 onChange={handleImageChange}
               />
             </div>
@@ -301,7 +301,7 @@ function EditView(props) {
               ref={titleInputRef}
               name="title"
               value={currTitle}
-              className={`form-input text-normal ${
+              className={`form-input text-base ${
                 titleError || titleEmpty ? "error-border" : ""
               }`}
               onChange={handleCurrTitle}

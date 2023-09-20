@@ -1,4 +1,6 @@
 import { useState } from "react";
+import SubHeader from "../../components/header/SubHeader";
+
 import "./Data.css";
 
 function Data(props) {
@@ -55,33 +57,25 @@ function Data(props) {
   }
 
   return (
-    <section className="inner-container">
-      <header className="sub-row">
-        <button
-          className="back-button secondary-link-color position-left"
-          onClick={() => props.setSettingsMode("menu")}
-          aria-label="Back to settings"
-        >
-          ←
-        </button>
-        <h2 className="bold-text header-medium">Data</h2>
-      </header>
-      <main className="button-container">
-        <p className="text-center">Export and Import saved Items.</p>
+    <main className="main-container">
+      <SubHeader link={"/account"} title={"Data"} aria={"Back to Account"} />
+
+      <div className="button-container">
+        <p className="text-center text-base">Export and Import saved Items.</p>
         <div className="button-row">
           <button
-            className="primary-button"
+            className="primary-button text-base"
             onClick={handleExportClick}
             aria-label="Export items"
           >
             Export
           </button>
-          <p>{exportLength} Items</p>
+          <p className="text-base">{exportLength} Items</p>
         </div>
         <div className="button-row">
           <button
             htmlFor="file"
-            className="primary-button inactive-button-color"
+            className="primary-button inactive-button-color text-base"
             tabIndex={0}
             onClick={handleImportButton}
             onKeyDown={handleImportButton}
@@ -100,8 +94,8 @@ function Data(props) {
         <p className="import-error error-text" role="alert">
           {importError}
         </p>
-      </main>
-    </section>
+      </div>
+    </main>
   );
 }
 

@@ -32,15 +32,15 @@ function Category({ category, categoryType, setCategory }) {
         }}
       >
         <div className="category-row-left">
-          <h2 className="bold-text text-large">{categoryType}</h2>
-          <div className="size-item text-small">
+          <h2 className="text-bold text-large">{categoryType}</h2>
+          <div className="size-item">
             {!isCategoryOpen
               ? category.map((item) => {
                   if (item.checked === true) {
-                    return <p>{item.value}</p>;
+                    return <p class="text-small">{item.value}</p>;
                   }
                 })
-              : ""}
+              : null}
           </div>
         </div>
         {isCategoryOpen ? (
@@ -81,7 +81,10 @@ function Category({ category, categoryType, setCategory }) {
               className="checkbox-medium"
             />
 
-            <label htmlFor={`${categoryType}-${item.value}`}>
+            <label
+              htmlFor={`${categoryType}-${item.value}`}
+              className="text-base"
+            >
               {item.value}
             </label>
           </div>

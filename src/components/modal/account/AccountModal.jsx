@@ -1,17 +1,13 @@
 import { useState } from "react";
-import Data from "../../../pages/account/Data";
-import FilterSizes from "../../../pages/account/filterSizes/FilterSizes";
+import { Link } from "react-router-dom";
 import "./AccountModal.css";
 
 function AccountModal(props) {
   const [slideOut, setSlideOut] = useState(false);
-  const [settingsMode, setSettingsMode] = useState("menu");
 
   function handleClickClose() {
     setSlideOut(true);
-
     setTimeout(() => {
-      //props.handleClickSettings();
       props.setShowModal(false);
       setSlideOut(false);
     }, 200);
@@ -19,29 +15,29 @@ function AccountModal(props) {
 
   return (
     <section
-      className={`settings-container text-normal ${
+      className={`settings-container text-base ${
         slideOut ? "slide-out" : "slide-in"
       }`}
     >
-      {settingsMode === "menu" ? (
-        <div className="inner-container">
-          <header className="sub-row">
-            <button
-              className="back-button secondary-link-color position-left"
+      <div className="inner-container">
+        <header className="sub-row">
+          <button
+            className="back-button secondary-link-color position-left"
+            onClick={handleClickClose}
+            aria-label="Close settings"
+          >
+            ←
+          </button>
+          <h2 className="bold-text header-medium">Account</h2>
+        </header>
+        <ul className="settings-list">
+          <li className="settings-list-item">
+            <Link
+              to="/data"
+              className={`settings-list-link`}
               onClick={handleClickClose}
-              aria-label="Close settings"
             >
-              ←
-            </button>
-            <h2 className="bold-text header-medium">Account</h2>
-          </header>
-          <ul className="settings-list">
-            <a
-              href="#"
-              className="settings-list-link"
-              onClick={() => setSettingsMode("filterSizes")}
-            >
-              <li className="settings-list-item">Filter Sizes</li>
+              Data
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -51,13 +47,15 @@ function AccountModal(props) {
               >
                 <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
               </svg>
-            </a>
-            <a
-              href="#"
-              className="settings-list-link"
-              onClick={() => setSettingsMode("data")}
+            </Link>
+          </li>
+          <li className="settings-list-item">
+            <Link
+              to="/filterSizes"
+              className={`settings-list-link`}
+              onClick={handleClickClose}
             >
-              <li className="settings-list-item">Data</li>
+              Filter Sizes
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -67,24 +65,10 @@ function AccountModal(props) {
               >
                 <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" />
               </svg>
-            </a>
-          </ul>
-        </div>
-      ) : null}
-      {settingsMode === "filterSizes" ? (
-        <FilterSizes
-          settingsData={props.settingsData}
-          handleSizeUpdate={props.handleSizeUpdate}
-          setSettingsMode={setSettingsMode}
-        />
-      ) : null}
-      {settingsMode === "data" ? (
-        <Data
-          handleImport={props.handleImport}
-          itemData={props.itemData}
-          setSettingsMode={setSettingsMode}
-        />
-      ) : null}
+            </Link>
+          </li>
+        </ul>
+      </div>
     </section>
   );
 }
