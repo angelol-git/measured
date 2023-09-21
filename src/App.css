@@ -125,7 +125,7 @@ a {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     position: relative;
 }
 
@@ -133,7 +133,6 @@ a {
     position: absolute;
     right: 0;
 }
-
 
 .sub-row .position-left {
     position: absolute;
@@ -143,7 +142,6 @@ a {
 .item-counter {
     color: var(--primary-text-color);
 }
-
 
 /* BUTTONS */
 .primary-button {

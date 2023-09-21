@@ -43,7 +43,10 @@ function ActiveCard({ key, values, activeItem }) {
       </header>
       <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">
-          <MeasurementValues measurements={measurements} />
+          <MeasurementValues
+            measurements={measurements}
+            textSize={"text-base"}
+          />
         </div>
         <footer className="active-button-row">{activeButtonElement}</footer>
       </section>

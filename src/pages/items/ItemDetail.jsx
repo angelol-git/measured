@@ -19,28 +19,31 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
         title={"Item Details"}
         aria={"Back to Items"}
       />
-      <section>
-        <div className="text-center">
-          <div className="item-detail-image-container">
-            <div class="large-thumbnail">
-              <ItemImage imageSrc={imageSrc} title={title} />
-            </div>
-          </div>
-          <div className="modal-item-title-container">
-            <h2 id={title} className="modal-item-title text-bold">
-              {title}
-            </h2>
-          </div>
-          <div className="grey-line"></div>
-          <div className="sub-row gap-15">
-            <p>{category}</p>
-            <p>{size.toUpperCase()}</p>
+      <section className="item-detail-container">
+        <div className="item-detail-image-container">
+          <div class="large-thumbnail">
+            <ItemImage imageSrc={imageSrc} title={title} />
           </div>
         </div>
+        <div className="item-detail-title-container">
+          <h2 id={title} className="item-detail-title text-bold">
+            {title}
+          </h2>
+        </div>
+        <div className="grey-line"></div>
+        <div className="item-detail-category-size-row text-large">
+          <p>{category}</p>
+          <p>{size.toUpperCase()}</p>
+        </div>
+
         <div className="item-measurements">
-          <MeasurementValues measurements={measurements} />
+          <MeasurementValues
+            measurements={measurements}
+            textSize={"text-large"}
+          />
         </div>
       </section>
+
       <footer className="bottom-button-container">
         <button
           className={`primary-button position-right ${

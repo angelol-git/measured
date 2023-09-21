@@ -1,29 +1,37 @@
+.item-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .item-detail-image-container {
     display: flex;
     justify-content: center;
 }
 
-.modal-item-title-container {
+.item-detail-title-container {
     word-wrap: break-word;
 }
 
-.modal-item-title {
-    padding-top: 10px;
-    padding-bottom: 10px;
+.item-detail-title {
+    text-align: center;
 }
 
 .grey-line {
     width: 100%;
-    padding-bottom: 15px;
     border-top: 1px solid var(--secondary-bkg-color);
+}
+
+.item-detail-category-size-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 .item-measurements {
     display: flex;
     flex-direction: column;
     gap: 3px;
-    padding-top: 5px;
-    padding-bottom: 10px;
     width: 100%;
 }
 
@@ -31,6 +39,7 @@
     display: flex;
     justify-content: center;
     gap: 15px;
+    padding-top: 10px;
 }
 
 .measurement-label-value-container {
