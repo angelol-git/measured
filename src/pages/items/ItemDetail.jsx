@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import SubHeader from "../../components/header/SubHeader";
 import MeasurementValues from "../../components/items/measurementValues/MeasurementValues";
 import ItemImage from "../../components/items/itemImage/ItemImage";
-import SubHeader from "../../components/header/SubHeader";
 import "./ItemDetail.css";
+
 function ItemDetail({ items, activeItem, deleteItem, navigate }) {
   const { title } = useParams();
   const item = Object.values(items).filter((item) => {
@@ -14,10 +15,9 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
   return (
     <main className="main-container">
       <SubHeader
-        link={"/items"}
+        navigate={navigate}
         title={"Item Details"}
         aria={"Back to Items"}
-        navigate={navigate}
       />
       <section>
         <div className="text-center">

@@ -25,7 +25,7 @@ function ItemCard({ key, items, activeItem, deleteItem }) {
   }
 
   return (
-    <Link to={`/detail/${items.title}`}>
+    <Link to={`/detail/${items.title}`} className="item-card-link">
       <article key={key}>
         <div
           className="item-card black-border"
