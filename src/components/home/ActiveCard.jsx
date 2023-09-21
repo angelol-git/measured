@@ -56,7 +56,7 @@ function ActiveCard(props) {
     >
       <header className="active-header">
         <div className="active-title-container">
-          <h2 className="active-title bold-text">{title}</h2>
+          <h2 className="active-title text-bold text-base">{title}</h2>
           <p>{category}</p>
         </div>
         <div class="active-image-container">

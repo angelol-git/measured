@@ -2,17 +2,12 @@ import React from "react";
 import { useState } from "react";
 import ItemModal from "./ItemModal";
 import ItemImage from "./itemImage/ItemImage";
+import Modal from "../modal/Modal";
 import "./ItemCard.css";
 
-function ItemCard({
-  key,
-  items,
-  settingsData,
-  fullModalOpen,
-  setFullModalOpen,
-}) {
+function ItemCard({ key, items, activeItem, deleteItem }) {
   const { active, title, imageSrc } = items;
-  const [clickModal, setClickModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [hover, setHover] = useState(false);
 
   let titleElement = title;
@@ -21,14 +16,12 @@ function ItemCard({
     setHover(!hover);
   }
   function handleClickModal() {
-    setFullModalOpen(!clickModal ? -1 : 0);
-    setClickModal(!clickModal);
+    setClickModal(!showModal);
   }
 
   function handleKeyDown(event) {
     if (event.key === "Enter") {
-      setFullModalOpen(!clickModal ? -1 : 0);
-      setClickModal(!clickModal);
+      setClickModal(!showModal);
     }
   }
 
@@ -40,7 +33,10 @@ function ItemCard({
     <article key={key}>
       <div
         className="item-card black-border"
-        onClick={handleClickModal}
+        // onClick={handleClickModal}
+        onClick={() => {
+          setShowModal(true);
+        }}
         onKeyDown={handleKeyDown}
         onMouseEnter={handleHover}
         onMouseLeave={handleHover}
@@ -48,12 +44,12 @@ function ItemCard({
         onBlur={handleHover}
         role="button"
         aria-label="Open item details"
-        aria-pressed={clickModal}
-        tabIndex={fullModalOpen}
+        aria-pressed={showModal}
+        // tabIndex={fullModalOpen}
       >
         <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
         <div className={"title-hover" + (hover ? " show" : "")}>
-          <h2 className="text-medium bold-text item-card-title">
+          <h2 className="text-medium text-bold item-card-title">
             {titleElement}
           </h2>
         </div>
@@ -61,15 +57,17 @@ function ItemCard({
           <p>Active</p>
         </div>
       </div>
-      <ItemModal
-        key={title}
-        items={items}
-        clickModal={clickModal}
-        handleClickModal={handleClickModal}
-        settingsData={settingsData}
-        fullModalOpen={fullModalOpen}
-        setFullModalOpen={setFullModalOpen}
-      />
+
+      {showModal ? (
+        <Modal>
+          <ItemModal
+            key={title}
+            items={items}
+            activeItem={activeItem}
+            deleteItem={deleteItem}
+          />
+        </Modal>
+      ) : null}
     </article>
   );
 }

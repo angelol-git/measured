@@ -1,15 +1,14 @@
 import { useState } from "react";
 import SubHeader from "../../components/header/SubHeader";
-
 import "./Data.css";
 
-function Data(props) {
+function Data({ items, handleImport }) {
   const [importMessage, setImportMessage] = useState("");
   const [importError, setImportError] = useState("");
-  const exportLength = Object.keys(props.itemData).length;
+  const exportLength = Object.keys(items).length;
 
-  function handleExportClick() {
-    const itemDataString = JSON.stringify(props.itemData, null, 2);
+  function handleExport() {
+    const itemDataString = JSON.stringify(items, null, 2);
     const blob = new Blob([itemDataString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -32,7 +31,7 @@ function Data(props) {
         setImportError(``);
         setImportMessage(`Imported ${importLength} Items`);
         console.log(importMessage);
-        props.handleImport(jsonObject);
+        handleImport(jsonObject);
       } catch (error) {
         setImportMessage(`${event.target.files[0].name}`);
         if (event.target.files[0].type !== "application/JSON") {
@@ -65,7 +64,7 @@ function Data(props) {
         <div className="button-row">
           <button
             className="primary-button text-base"
-            onClick={handleExportClick}
+            onClick={handleExport}
             aria-label="Export items"
           >
             Export

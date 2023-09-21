@@ -17,7 +17,7 @@ function SubHeader({ link, title, aria }) {
           <path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" />
         </svg>
       </Link>
-      <h2 className="text-bold text-large">{title}</h2>
+      <h2 className="text-bold text-xl">{title}</h2>
     </header>
   );
 }

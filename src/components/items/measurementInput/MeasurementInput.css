@@ -1,3 +1,9 @@
+.measurement-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .measurement-container {
     display: flex;
     flex-direction: column;

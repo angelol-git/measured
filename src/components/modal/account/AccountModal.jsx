@@ -28,7 +28,7 @@ function AccountModal(props) {
           >
             ←
           </button>
-          <h2 className="bold-text header-medium">Account</h2>
+          <h2 className="text-bold header-medium">Account</h2>
         </header>
         <ul className="settings-list">
           <li className="settings-list-item">

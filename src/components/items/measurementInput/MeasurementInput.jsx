@@ -46,19 +46,21 @@ function MeasurementInput({
   }
   return (
     <div>
-      <div className="flex align-center justify-space-between">
-        <label className="bold-text">Measurements</label>
+      <div className="measurement-header-row">
+        <label className="text-bold text-large">Measurements</label>
         <div>
           <button
             type="button"
-            className={"primary-button black-border" + inchButtonClass}
+            className={
+              "primary-button text-base black-border" + inchButtonClass
+            }
             onClick={handleUnitClick}
           >
             Inch
           </button>
           <button
             type="button"
-            className={"primary-button black-border" + cmButtonClass}
+            className={"primary-button text-base black-border" + cmButtonClass}
             onClick={handleUnitClick}
           >
             Cm

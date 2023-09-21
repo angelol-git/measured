@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/items/ItemCard";
 import "./Items.css";
-function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
+function Items({ items, activeItem, deleteItem }) {
   const itemsLength = Object.keys(items).length;
 
   let itemCardElements;
@@ -27,9 +27,8 @@ function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
           <ItemCard
             key={key}
             items={value}
-            settingsData={settingsData}
-            fullModalOpen={fullModalOpen}
-            setFullModalOpen={setFullModalOpen}
+            activeItem={activeItem}
+            deleteItem={deleteItem}
           />
         );
       });
@@ -53,8 +52,8 @@ function Items({ items, settingsData, fullModalOpen, setFullModalOpen }) {
         <p className="item-counter text-small">{itemsLength} Items</p>
         <Link
           to="/add"
-          className="primary-button  position-right"
-          tabIndex={fullModalOpen}
+          className="primary-button position-right text-base"
+          // tabIndex={fullModalOpen}
         >
           + Add
         </Link>

@@ -222,7 +222,7 @@ function EditView(props) {
   if (currImageSrc.length === 0) {
     const firstTitleLetter = title.split("")[0];
     imageElement = (
-      <div className="image-replacement medium-thumbnail text-medium bold-text">
+      <div className="image-replacement medium-thumbnail text-medium text-bold">
         <p>{firstTitleLetter}</p>
       </div>
     );
@@ -254,7 +254,7 @@ function EditView(props) {
           >
             ←
           </button>
-          <h3 className="bold-text header-medium">Edit item</h3>
+          <h3 className="text-bold header-medium">Edit item</h3>
         </header>
         <form id="edit-form" className="text-base" onSubmit={handleSave}>
           <div className="image-preview-container">
@@ -270,7 +270,7 @@ function EditView(props) {
           </div>
           <div>
             <div className="form-row">
-              <label htmlFor="image" className="bold-text">
+              <label htmlFor="image" className="text-bold">
                 Image:{" "}
               </label>
               <input
@@ -292,7 +292,7 @@ function EditView(props) {
           </div>
 
           <div className="form-row">
-            <label htmlFor="html" className="bold-text">
+            <label htmlFor="html" className="text-bold">
               Title:{" "}
             </label>
             <input
@@ -312,7 +312,7 @@ function EditView(props) {
           <div className="edit-grey-line"></div>
           <div className="form-row gap-15">
             <div className="flex align-center gap-5">
-              <label htmlFor="category" className="bold-text">
+              <label htmlFor="category" className="text-bold">
                 Category:
               </label>
               <select
@@ -328,7 +328,7 @@ function EditView(props) {
               </select>
             </div>
             <div className="flex align-center gap-5">
-              <label htmlFor="size" className="bold-text">
+              <label htmlFor="size" className="text-bold">
                 Size:
               </label>
 
@@ -337,7 +337,7 @@ function EditView(props) {
           </div>
           <div className="edit-measurement-container">
             <div className="form-row justify-space-between">
-              <label className="bold-text">Measurements</label>
+              <label className="text-bold">Measurements</label>
               <div>
                 <button
                   type="button"

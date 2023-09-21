@@ -56,7 +56,7 @@ function ItemView(props) {
           >
             ←
           </button>
-          <h1 className="bold-text header-medium">Item Details</h1>
+          <h1 className="text-bold header-medium">Item Details</h1>
         </header>
         <main>
           <div className="text-center">
@@ -64,7 +64,7 @@ function ItemView(props) {
               <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
             </div>
             <div className="modal-item-title-container">
-              <h2 id={title} className="modal-item-title bold-text">
+              <h2 id={title} className="modal-item-title text-bold">
                 {title}
               </h2>
             </div>

@@ -2,18 +2,18 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import PopupButton from "./PopupButton";
 import AccountModal from "../modal/account/AccountModal";
-import Modal from "../modal/Modal";
+
 import "./header.css";
 
 function Header() {
-  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   let showMenu = true;
   if (
     currentPath === "/data" ||
     currentPath === "/filterSizes" ||
-    currentPath === "/account"
+    currentPath === "/account" ||
+    currentPath === "/add"
   ) {
     showMenu = false;
   }

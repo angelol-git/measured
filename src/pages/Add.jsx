@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { measurementCategory } from "../components/items/measurementInput/categoriesData";
+import SubHeader from "../components/header/SubHeader";
 import MeasurementInput from "../components/items/measurementInput/MeasurementInput";
 import "./Add.css";
-function Add(props) {
+function Add({ activeItem, addItem, handleTitleError, titleError, settings }) {
   const navigate = useNavigate();
   const [imageStatus, setImageStatus] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -22,7 +23,6 @@ function Add(props) {
       size: event.target.size.value,
       imageSrc: imageUrl,
       active: event.target.active.checked,
-
       measurements: {},
     };
 
@@ -39,12 +39,12 @@ function Add(props) {
       newItem.measurements[categoryKey] = categoryValue;
     }
 
-    if (props.titleError || imageStatus === "error") {
+    if (titleError || imageStatus === "error") {
       return;
     }
 
-    props.addItem(newItem);
-    props.activeItem(
+    addItem(newItem);
+    activeItem(
       event.target.title.value.toUpperCase(),
       event.target.category.value,
       true,
@@ -53,7 +53,7 @@ function Add(props) {
   }
 
   useEffect(() => {
-    props.handleTitle(title);
+    handleTitleError(title);
   }, [title]);
 
   useEffect(() => {
@@ -61,19 +61,17 @@ function Add(props) {
   }, [imageUrl]);
 
   return (
-    <section className="add-container">
-      <header className="sub-row">
-        <Link to="/items" className="position-left">
-          <button className="back-button" aria-label="Back to items page">
-            ←
-          </button>
-        </Link>
-        <h3 className="bold-text header-medium">Add a new item</h3>
-      </header>
+    <section className="main-container">
+      <SubHeader
+        link={"/items"}
+        title={"Add a new Item"}
+        aria={"Back to items"}
+      />
+
       <main>
         <form id="add-form" onSubmit={handleSubmit}>
           <div className="form-input">
-            <label htmlFor="title" className="bold-text">
+            <label htmlFor="title" className="text-bold text-large">
               Title
             </label>
             <input
@@ -81,19 +79,19 @@ function Add(props) {
               id="title"
               name="title"
               onChange={(e) => setTitle(e.target.value)}
-              className={`input-text ${props.titleError ? "error-border" : ""}`}
+              className={`input-text ${titleError ? "error-border" : ""}`}
               required
             />
 
-            {props.titleError ? (
-              <p className="error-text" role="alert">
+            {titleError ? (
+              <p className="error-text text-base" role="alert">
                 Error {title} already exist
               </p>
             ) : null}
           </div>
 
           <div className="form-input">
-            <label htmlFor="category" className="bold-text">
+            <label htmlFor="category" className="text-bold text-large">
               Category
             </label>
             <select
@@ -112,18 +110,18 @@ function Add(props) {
           </div>
 
           <div className="form-input">
-            <label htmlFor="size" className="bold-text">
+            <label htmlFor="size" className="text-bold text-large">
               Size
             </label>
             <select name="size" id="size" className="input-category">
-              {props.settingsData.sizes[category].map((item) => {
+              {settings.sizes[category].map((item) => {
                 return <option value={item}>{item}</option>;
               })}
             </select>
           </div>
 
           <div className="form-input">
-            <label htmlFor="image" className="bold-text">
+            <label htmlFor="image" className="text-bold text-large">
               Image
             </label>
             <input
@@ -167,8 +165,8 @@ function Add(props) {
             </div>
           ) : null}
 
-          <div className="active-input">
-            <label htmlFor="active">
+          <div className="form-input">
+            <label htmlFor="active" className="text-large">
               Set as active:
               <input type="checkbox" id="active" name="active" value="active" />
             </label>

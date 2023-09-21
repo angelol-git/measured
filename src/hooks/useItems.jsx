@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function useItems(initialItems) {
   const [items, setItems] = useState({});
-
+  const [titleError, setTittleError] = useState(false);
   const addItem = (newItem) => {
     setItems((prevItems) => {
       return { ...prevItems, [newItem.title.toUpperCase()]: newItem };
@@ -52,6 +52,23 @@ function useItems(initialItems) {
     });
   };
 
+  function handleTitleError(title, prevTitle = "") {
+    if (title === prevTitle) {
+      setTittleError(false);
+      return;
+    }
+    if (items[title.toUpperCase()]) {
+      setTittleError(true);
+      return;
+    }
+
+    setTittleError(false);
+  }
+
+  function handleImport(importedItems) {
+    setItems(importedItems);
+  }
+
   //Load data from local storage
   useEffect(() => {
     chrome.storage.local.get("items", (result) => {
@@ -65,7 +82,16 @@ function useItems(initialItems) {
     chrome.storage.local.set({ items }, () => {});
   }, [items]);
 
-  return [items, addItem, deleteItem, updateItem, activeItem];
+  return [
+    items,
+    addItem,
+    deleteItem,
+    updateItem,
+    activeItem,
+    titleError,
+    handleTitleError,
+    handleImport,
+  ];
 }
 
 export default useItems;

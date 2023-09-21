@@ -1,11 +1,6 @@
-.filterSizes-container {
-    display: flex;
-    flex-direction: column;
-}
-
 .categories-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding-top: 15px;
+    gap: 15px;
+    padding-top: 10px;
 }

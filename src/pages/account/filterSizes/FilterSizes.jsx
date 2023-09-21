@@ -5,8 +5,8 @@ import SubHeader from "../../../components/header/SubHeader";
 
 import "./FilterSizes.css";
 
-function FilterSizes(props) {
-  const { sizes } = props.settingsData;
+function FilterSizes({ settings, handleSizeUpdate }) {
+  const { sizes } = settings;
   const isInitialRender = useRef(true);
   const [outerwear, setOuterwear] = useState(
     outerwearSizes.map((size) => ({
@@ -41,7 +41,7 @@ function FilterSizes(props) {
           .map((item) => item.value),
       };
 
-      props.handleSizeUpdate(checkedData);
+      handleSizeUpdate(checkedData);
     }
   }, [outerwear, tops, bottoms]);
 
