@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function useItems(initialItems) {
+function useItems() {
   const [items, setItems] = useState({});
   const [titleError, setTittleError] = useState(false);
   const addItem = (newItem) => {
@@ -71,6 +71,7 @@ function useItems(initialItems) {
 
   //Load data from local storage
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     chrome.storage.local.get("items", (result) => {
       const savedItems = result.items;
       setItems(savedItems || {});
@@ -79,18 +80,19 @@ function useItems(initialItems) {
 
   //Save data to local storage
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     chrome.storage.local.set({ items }, () => {});
   }, [items]);
 
   return [
     items,
+    titleError,
     addItem,
     deleteItem,
     updateItem,
     activeItem,
-    titleError,
-    handleTitleError,
     handleImport,
+    handleTitleError,
   ];
 }
 

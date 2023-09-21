@@ -27,11 +27,11 @@ function Items({ items, activeItem, deleteItem }) {
         );
       });
   }
+
   return (
     <main className="main-container">
       <section
         className="sub-row item-counter-row"
-        role="region"
         aria-label="Item Counter and Actions"
       >
         {/* <button
@@ -45,7 +45,7 @@ function Items({ items, activeItem, deleteItem }) {
         </button> */}
         <p className="item-counter text-small">{itemsLength} Items</p>
         <Link
-          to="/add"
+          to="/items/add"
           className="primary-button position-right text-base"
           // tabIndex={fullModalOpen}
         >

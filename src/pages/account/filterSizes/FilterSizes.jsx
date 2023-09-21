@@ -5,7 +5,7 @@ import SubHeader from "../../../components/header/SubHeader";
 
 import "./FilterSizes.css";
 
-function FilterSizes({ settings, handleSizeUpdate }) {
+function FilterSizes({ settings, handleSizeUpdate, navigate }) {
   const { sizes } = settings;
   const isInitialRender = useRef(true);
   const [outerwear, setOuterwear] = useState(
@@ -48,7 +48,7 @@ function FilterSizes({ settings, handleSizeUpdate }) {
   return (
     <main className="main-container">
       <SubHeader
-        link={"/account"}
+        navigate={navigate}
         title={"Filter Sizes"}
         aria={"Back to Home"}
       />

@@ -1,14 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import PopupButton from "./PopupButton";
-import "./header.css";
+import "./Header.css";
 
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
   let showMenu = true;
   if (
-    currentPath === "/data" ||
-    currentPath === "/filterSizes" ||
+    currentPath === "/account/data" ||
+    currentPath === "/account/filterSizes" ||
     currentPath === "/account" ||
     currentPath === "/add" ||
     currentPath.includes("/detail")
@@ -18,13 +18,13 @@ function Header() {
   return (
     <header>
       <div className="header-row">
-        <Link to="/account" className="header-icon header-position-left">
+        <Link to="account" className="header-icon header-position-left">
           <svg
             width="24"
             height="24"
             xmlns="http://www.w3.org/2000/svg"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
           >
             <path
               d="M24 18v1h-24v-1h24zm0-6v1h-24v-1h24zm0-6v1h-24v-1h24z"
@@ -51,7 +51,7 @@ function Header() {
             Home
           </Link>
           <Link
-            to="/items"
+            to="items"
             className={`nav-bar-links black-text text-base ${
               currentPath === "/items" ? "active" : ""
             }`}

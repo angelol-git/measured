@@ -2,7 +2,8 @@ import { useState } from "react";
 import SubHeader from "../../components/header/SubHeader";
 import "./Data.css";
 
-function Data({ items, handleImport }) {
+function Data({ items, handleImport, navigate }) {
+  console.log("Here");
   const [importMessage, setImportMessage] = useState("");
   const [importError, setImportError] = useState("");
   const exportLength = Object.keys(items).length;
@@ -57,7 +58,7 @@ function Data({ items, handleImport }) {
 
   return (
     <main className="main-container">
-      <SubHeader link={"/account"} title={"Data"} aria={"Back to Account"} />
+      <SubHeader navigate={navigate} title={"Data"} aria={"Back to Account"} />
 
       <div className="button-container">
         <p className="text-center text-base">Export and Import saved Items.</p>

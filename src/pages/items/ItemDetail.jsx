@@ -62,7 +62,10 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
 
         <button
           className="primary-button"
-          onClick={() => deleteItem(title.toUpperCase())}
+          onClick={() => {
+            deleteItem(title.toUpperCase());
+            navigate("/");
+          }}
         >
           Delete
         </button>

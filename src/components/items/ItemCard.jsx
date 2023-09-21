@@ -5,7 +5,7 @@ import ItemImage from "./itemImage/ItemImage";
 
 import "./ItemCard.css";
 
-function ItemCard({ key, items, activeItem, deleteItem }) {
+function ItemCard({ key, items }) {
   const { active, title, imageSrc } = items;
   const [hover, setHover] = useState(false);
 
@@ -25,7 +25,7 @@ function ItemCard({ key, items, activeItem, deleteItem }) {
   }
 
   return (
-    <Link to={`/detail/${items.title}`} className="item-card-link">
+    <Link to={`/items/detail/${items.title}`} className="item-card-link">
       <article key={key}>
         <div
           className="item-card black-border"
@@ -36,6 +36,7 @@ function ItemCard({ key, items, activeItem, deleteItem }) {
           onBlur={handleHover}
           role="button"
           aria-label="Open item details"
+          tabIndex={0}
         >
           <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
           <div className={"title-hover" + (hover ? " show" : "")}>

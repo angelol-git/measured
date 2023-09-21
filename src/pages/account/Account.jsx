@@ -5,15 +5,10 @@ import "./Account.css";
 function Account({ navigate }) {
   return (
     <main className="main-container">
-      <SubHeader
-        link={"/"}
-        title={"Account"}
-        aria={"Back to Home"}
-        navigate={navigate}
-      />
+      <SubHeader navigate={navigate} title={"Account"} aria={"Back to Home"} />
       <ul className="account-list">
         <li className="account-list-item">
-          <Link to="/data" className={`account-list-link`}>
+          <Link to="/account/data" className={`account-list-link`}>
             <span className="text-base">Data</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +22,7 @@ function Account({ navigate }) {
           </Link>
         </li>
         <li className="account-list-item">
-          <Link to="/filterSizes" className={`account-list-link`}>
+          <Link to="/account/filterSizes" className={`account-list-link`}>
             <span className="text-base">Filter Sizes</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
