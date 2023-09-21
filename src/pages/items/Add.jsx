@@ -1,12 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { measurementCategory } from "../components/items/measurementInput/categoriesData";
-import SubHeader from "../components/header/SubHeader";
-import MeasurementInput from "../components/items/measurementInput/MeasurementInput";
+import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
+import SubHeader from "../../components/header/SubHeader";
+import MeasurementInput from "../../components/items/measurementInput/MeasurementInput";
 import "./Add.css";
-function Add({ activeItem, addItem, handleTitleError, titleError, settings }) {
-  const navigate = useNavigate();
+function Add({
+  activeItem,
+  addItem,
+  handleTitleError,
+  titleError,
+  settings,
+  navigate,
+}) {
   const [imageStatus, setImageStatus] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [unit, setUnit] = useState("in");
@@ -63,7 +69,7 @@ function Add({ activeItem, addItem, handleTitleError, titleError, settings }) {
   return (
     <section className="main-container">
       <SubHeader
-        link={"/items"}
+        navigate={navigate}
         title={"Add a new Item"}
         aria={"Back to items"}
       />

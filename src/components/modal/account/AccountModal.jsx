@@ -5,13 +5,13 @@ import "./AccountModal.css";
 function AccountModal(props) {
   const [slideOut, setSlideOut] = useState(false);
 
-  function handleClickClose() {
-    setSlideOut(true);
-    setTimeout(() => {
-      props.setShowModal(false);
-      setSlideOut(false);
-    }, 200);
-  }
+  // function handleClickClose() {
+  //   setSlideOut(true);
+  //   setTimeout(() => {
+  //     props.setShowModal(false);
+  //     setSlideOut(false);
+  //   }, 200);
+  // }
 
   return (
     <section

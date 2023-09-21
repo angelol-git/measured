@@ -15,9 +15,7 @@ function ActiveCard(props) {
     >
       Set as Inactive
     </button>
-  ) : (
-    ""
-  );
+  ) : null;
   const measurementElements = Object.entries(measurements).map(
     ([key, values]) => (
       <div className="flex" key={key}>

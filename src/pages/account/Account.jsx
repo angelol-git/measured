@@ -2,10 +2,15 @@ import { Link } from "react-router-dom";
 import SubHeader from "../../components/header/SubHeader";
 import "./Account.css";
 
-function Account() {
+function Account({ navigate }) {
   return (
     <main className="main-container">
-      <SubHeader link={"/"} title={"Account"} aria={"Back to Home"} />
+      <SubHeader
+        link={"/"}
+        title={"Account"}
+        aria={"Back to Home"}
+        navigate={navigate}
+      />
       <ul className="account-list">
         <li className="account-list-item">
           <Link to="/data" className={`account-list-link`}>

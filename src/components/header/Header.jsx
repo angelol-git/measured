@@ -1,8 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
 import PopupButton from "./PopupButton";
-import AccountModal from "../modal/account/AccountModal";
-
 import "./header.css";
 
 function Header() {
@@ -13,7 +10,8 @@ function Header() {
     currentPath === "/data" ||
     currentPath === "/filterSizes" ||
     currentPath === "/account" ||
-    currentPath === "/add"
+    currentPath === "/add" ||
+    currentPath.includes("/detail")
   ) {
     showMenu = false;
   }
@@ -62,12 +60,6 @@ function Header() {
           </Link>
         </nav>
       ) : null}
-
-      {/* {showModal ? (
-        <Modal>
-          <AccountModal setShowModal={setShowModal} />
-        </Modal>
-      ) : null} */}
     </header>
   );
 }
