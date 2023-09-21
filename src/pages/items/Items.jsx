@@ -1,17 +1,11 @@
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import ItemCard from "../../components/items/ItemCard";
 import "./Items.css";
 function Items({ items, activeItem, deleteItem }) {
   const itemsLength = Object.keys(items).length;
-
   let itemCardElements;
 
-  function handleClickClose() {
-    // setSlideDown(!slideDown);
-    //setDisplayFilters(!displayFilters);
-  }
   if (itemsLength) {
     itemCardElements = Object.entries(items)
       //Put the active items first, and by alphabetically

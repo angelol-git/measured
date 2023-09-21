@@ -1,22 +1,16 @@
 import ActiveCard from "../components/home/ActiveCard";
 
-function Home(props) {
-  let itemsLength = Object.keys(props.itemData).length;
+function Home({ items, activeItem }) {
+  let itemsLength = Object.keys(items).length;
   let activeItemsLength = 0;
   let activeCardElements;
   if (itemsLength) {
-    activeCardElements = Object.entries(props.itemData).map(([key, value]) => {
+    activeCardElements = Object.entries(items).map(([key, value]) => {
       if (value.active) {
         activeItemsLength++;
       }
       return value.active ? (
-        <ActiveCard
-          key={key}
-          values={value}
-          customTabIndex={activeItemsLength}
-          handleActive={props.handleActive}
-          fullModalOpen={props.fullModalOpen}
-        />
+        <ActiveCard key={key} values={value} activeItem={activeItem} />
       ) : null;
     });
   }

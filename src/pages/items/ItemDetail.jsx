@@ -1,48 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
+import MeasurementValues from "../../components/items/measurementValues/MeasurementValues";
 import ItemImage from "../../components/items/itemImage/ItemImage";
 import SubHeader from "../../components/header/SubHeader";
 import "./ItemDetail.css";
-function ItemDetail({ items, handleActive, handleDelete, navigate }) {
+function ItemDetail({ items, activeItem, deleteItem, navigate }) {
   const { title } = useParams();
   const item = Object.values(items).filter((item) => {
     return item.title === title;
   });
   const { active, category, size, imageSrc, measurements } = item[0];
-
-  const measurementElements = Object.entries(measurements).map(
-    ([key, values]) => (
-      <div className="flex" key={key}>
-        <p className="measurement-label">{key}:</p>
-        <div className="measurement-value">
-          <div className="measurement-value-container">
-            <p>{values[0]}</p>
-            <p>in</p>
-          </div>
-          <div className="measurement-value-container">
-            <p>{values[1]}</p>
-            <p>cm</p>
-          </div>
-        </div>
-      </div>
-    ),
-  );
-  const activeButtonElement = active ? (
-    <button
-      className="primary-button inactive-button-color high-z-index position-right"
-      onClick={() => handleActive(title.toUpperCase(), category)}
-    >
-      Set as Inactive
-    </button>
-  ) : (
-    <button
-      className="primary-button high-z-index position-right"
-      onClick={() => handleActive(title.toUpperCase(), category)}
-    >
-      Set as Active
-    </button>
-  );
 
   return (
     <main className="main-container">
@@ -70,20 +37,29 @@ function ItemDetail({ items, handleActive, handleDelete, navigate }) {
             <p>{size.toUpperCase()}</p>
           </div>
         </div>
-        <div className="item-measurements">{measurementElements}</div>
+        <div className="item-measurements">
+          <MeasurementValues measurements={measurements} />
+        </div>
       </section>
       <footer className="bottom-button-container">
-        {activeButtonElement}
         <button
-          className="primary-button high-z-index"
+          className={`primary-button position-right ${
+            active ? "inactive-button-color" : ""
+          }`}
+          onClick={() => activeItem(title.toUpperCase(), category)}
+        >
+          {active ? "Set as Inactive" : "Set as Active"}
+        </button>
+        <button
+          className="primary-button"
           // onClick={props.handleEdit}
         >
           Edit
         </button>
 
         <button
-          className="primary-button high-z-index"
-          onClick={() => handleDelete(title.toUpperCase())}
+          className="primary-button"
+          onClick={() => deleteItem(title.toUpperCase())}
         >
           Delete
         </button>

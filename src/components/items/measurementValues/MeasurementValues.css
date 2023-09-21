@@ -1,0 +1,26 @@
+.measurement-values-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.measurement-values-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.measurement-values-value {
+    display: flex;
+    width: 50%;
+    gap: 10px;
+}
+
+.measurement-values-label {
+    width: 150px;
+}
+
+.measurement-values-value-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    width: 100%;
+}

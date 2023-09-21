@@ -1,39 +1,19 @@
 import { useState } from "react";
-import React from "react";
-// Update import statements to use the correct casing
+import MeasurementValues from "../items/measurementValues/MeasurementValues";
 import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
-function ActiveCard(props) {
-  const { active, category, title, imageSrc, measurements } = props.values;
+function ActiveCard({ key, values, activeItem }) {
+  const { active, category, title, imageSrc, measurements } = values;
   const [detailView, setDetailView] = useState(false);
   const activeButtonElement = active ? (
     <button
       className="primary-button inactive-button-color"
-      onClick={() => props.handleActive(title.toUpperCase(), category)}
-      tabIndex={props.fullModalOpen}
+      onClick={() => activeItem(title.toUpperCase(), category)}
     >
       Set as Inactive
     </button>
   ) : null;
-  const measurementElements = Object.entries(measurements).map(
-    ([key, values]) => (
-      <div className="flex" key={key}>
-        <p className="measurement-label">{key}:</p>
-        <div className="measurement-value">
-          <div className="measurement-value-container">
-            <p>{values[0]}</p>
-            <p>in</p>
-          </div>
-          <div className="measurement-value-container">
-            <p>{values[1]}</p>
-            <p>cm</p>
-          </div>
-        </div>
-      </div>
-    ),
-  );
-
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
@@ -45,12 +25,12 @@ function ActiveCard(props) {
 
   return (
     <article
+      key={key}
       className="active-card text-base"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role="button"
       aria-expanded={detailView}
-      tabIndex={props.fullModalOpen}
     >
       <header className="active-header">
         <div className="active-title-container">
@@ -63,7 +43,7 @@ function ActiveCard(props) {
       </header>
       <section className={"active-details" + (detailView ? " show" : "")}>
         <div className="active-measurement-container">
-          {measurementElements}
+          <MeasurementValues measurements={measurements} />
         </div>
         <footer className="active-button-row">{activeButtonElement}</footer>
       </section>

@@ -1,4 +1,4 @@
-/*Containers*/
+/* CONTAINERS */
 .app {
     display: flex;
     flex-direction: column;
@@ -12,21 +12,7 @@
     scrollbar-gutter: stable both-edges;
 }
 
-.inner-container {
-    position: relative;
-    padding: 20px 20px 20px 20px;
-}
-
-/*Colors*/
-.black-text {
-    color: var(--primary-text-color);
-}
-
-.white-text {
-    color: var(--secondary-text-color);
-}
-
-/*Text sizes*/
+/* TEXT */
 
 .text-small {
     font-size: 0.75rem;
@@ -53,7 +39,6 @@
     line-height: 2rem;
 }
 
-
 .text-bold {
     font-weight: bold;
 }
@@ -62,7 +47,20 @@
     font-weight: normal;
 }
 
-/*Components*/
+.black-text {
+    color: var(--primary-text-color);
+}
+
+.white-text {
+    color: var(--secondary-text-color);
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+/* GENERAL */
 a {
     text-decoration: none;
 }
@@ -80,53 +78,6 @@ a {
     flex-direction: column;
 }
 
-.text-center {
-    text-align: center;
-}
-
-
-.sub-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.sub-row .position-right {
-    position: absolute;
-    right: 0;
-}
-
-
-.sub-row .position-left {
-    position: absolute;
-    left: 0;
-}
-
-.item-counter {
-    color: var(--primary-text-color);
-}
-
-
-.measurement-label {
-    width: 150px;
-}
-
-.measurement-value {
-    display: flex;
-    width: 50%;
-    gap: 10px;
-}
-
-.measurement-value-container {
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-    width: 100%;
-}
-
 .align-center {
     align-items: center;
 }
@@ -134,7 +85,6 @@ a {
 .align-end {
     align-items: end;
 }
-
 
 .justify-center {
     justify-content: center;
@@ -168,7 +118,33 @@ a {
     white-space: pre;
 }
 
-/*Buttons*/
+/* COMPONENTS*/
+.sub-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.sub-row .position-right {
+    position: absolute;
+    right: 0;
+}
+
+
+.sub-row .position-left {
+    position: absolute;
+    left: 0;
+}
+
+.item-counter {
+    color: var(--primary-text-color);
+}
+
+
+/* BUTTONS */
 .primary-button {
     border: none;
     font-weight: bold;
@@ -236,10 +212,6 @@ a {
     border: 1px solid black;
 }
 
-.high-z-index {
-    z-index: 3;
-}
-
 .error-text {
     color: var(--error-text);
 }
@@ -257,7 +229,7 @@ a {
     width: 100%;
 }
 
-/*Images*/
+/* IMAGES */
 .full-cover-thumbnail {
     object-fit: cover;
     width: 100%;

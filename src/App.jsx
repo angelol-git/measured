@@ -32,7 +32,10 @@ function App() {
     <div className="app">
       <Header />
       <Routes>
-        <Route path="/" element={<Home itemData={items} />} />
+        <Route
+          path="/"
+          element={<Home items={items} activeItem={activeItem} />}
+        />
         <Route
           path="/items"
           element={
