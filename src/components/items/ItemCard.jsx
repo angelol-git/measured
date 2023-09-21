@@ -17,6 +17,7 @@ function ItemCard({ key, items }) {
   let titleElement = title;
 
   function handleHover() {
+    console.log("here");
     setHover(!hover);
   }
 
@@ -34,9 +35,9 @@ function ItemCard({ key, items }) {
           onMouseLeave={handleHover}
           onFocus={handleHover}
           onBlur={handleHover}
+          tabIndex={0}
           role="button"
           aria-label="Open item details"
-          tabIndex={0}
         >
           <ItemImage imageSrc={imageSrc} title={title} hover={hover} />
           <div className={"title-hover" + (hover ? " show" : "")}>
