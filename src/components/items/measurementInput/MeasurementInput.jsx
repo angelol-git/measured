@@ -47,7 +47,7 @@ function MeasurementInput({
   return (
     <div>
       <div className="measurement-header-row">
-        <label className="text-bold text-large">Measurements</label>
+        <p className="text-bold text-large">Measurements</p>
         <div>
           <button
             type="button"

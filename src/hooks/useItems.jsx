@@ -2,68 +2,50 @@ import { useState, useEffect } from "react";
 
 function useItems() {
   const [items, setItems] = useState({});
-  const [titleError, setTittleError] = useState(false);
+
   const addItem = (newItem) => {
     setItems((prevItems) => {
-      return { ...prevItems, [newItem.title.toUpperCase()]: newItem };
+      return { ...prevItems, [newItem.id]: newItem };
     });
   };
 
-  const deleteItem = (title) => {
+  const deleteItem = (id) => {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      delete updatedItems[title];
+      delete updatedItems[id];
       return updatedItems;
     });
   };
 
-  const updateItem = (updatedItem, prevTitle) => {
-    const updatedTitle = updatedItem.title.toUpperCase();
-
+  const updateItem = (item) => {
+    //console.log("item: ", item);
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      if (prevTitle === updatedTitle.toUpperCase()) {
-        // Replace the value for the existing key
-        updatedItems[prevTitle] = updatedItem;
-      } else {
-        updatedItems[updatedTitle] = updatedItems[prevTitle];
-        delete updatedItems[prevTitle];
-        updatedItems[updatedTitle] = updatedItem;
-      }
+
+      updatedItems[item.id] = item;
+      //console.log("updateditems: ", updatedItems);
       return updatedItems;
     });
   };
 
-  const activeItem = (title, category, newItem = false) => {
+  const activeItem = (item, isNewItem = false) => {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
 
-      if (updatedItems[title] && newItem === false) {
-        updatedItems[title].active = !updatedItems[title].active;
+      if (!isNewItem) {
+        updatedItems[item.id].active = !updatedItems[item.id].active;
       }
 
-      Object.entries(updatedItems).forEach(([key, value]) => {
-        if (key !== title && value.category === category) {
-          updatedItems[key].active = false;
+      //Make sure the other items in the category is set to inactive
+      Object.entries(updatedItems).forEach(([id, values]) => {
+        if (id !== item.id && values.category === item.category) {
+          updatedItems[id].active = false;
         }
       });
 
       return updatedItems;
     });
   };
-
-  function handleTitleError(title, prevTitle = "") {
-    if (title === prevTitle) {
-      setTittleError(false);
-      return;
-    }
-    if (items[title.toUpperCase()]) {
-      setTittleError(true);
-      return;
-    }
-
-    setTittleError(false);
-  }
 
   function handleImport(importedItems) {
     setItems(importedItems);
@@ -81,19 +63,10 @@ function useItems() {
   //Save data to local storage
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    chrome.storage.local.set({ items }, () => {});
+    chrome.storage.local.set({ items });
   }, [items]);
 
-  return [
-    items,
-    titleError,
-    addItem,
-    deleteItem,
-    updateItem,
-    activeItem,
-    handleImport,
-    handleTitleError,
-  ];
+  return [items, addItem, deleteItem, updateItem, activeItem, handleImport];
 }
 
 export default useItems;

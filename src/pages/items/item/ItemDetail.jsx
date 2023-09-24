@@ -1,16 +1,16 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import SubHeader from "../../components/header/SubHeader";
-import MeasurementValues from "../../components/items/measurementValues/MeasurementValues";
-import ItemImage from "../../components/items/itemImage/ItemImage";
+import { Link, useParams } from "react-router-dom";
+import SubHeader from "../../../components/header/SubHeader";
+import MeasurementValues from "../../../components/items/measurementValues/MeasurementValues";
+import ItemImage from "../../../components/items/itemImage/ItemImage";
 import "./ItemDetail.css";
 
 function ItemDetail({ items, activeItem, deleteItem, navigate }) {
-  const { title } = useParams();
+  const { id } = useParams();
   const item = Object.values(items).filter((item) => {
-    return item.title === title;
+    return item.id === id;
   });
-  const { active, category, size, imageSrc, measurements } = item[0];
+  const { active, category, size, imageSrc, measurements, title } = item[0];
 
   return (
     <main className="main-container">
@@ -21,7 +21,7 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
       />
       <section className="item-detail-container">
         <div className="item-detail-image-container">
-          <div class="large-thumbnail">
+          <div className="large-thumbnail">
             <ItemImage imageSrc={imageSrc} title={title} />
           </div>
         </div>
@@ -49,22 +49,19 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
           className={`primary-button position-right ${
             active ? "inactive-button-color" : ""
           }`}
-          onClick={() => activeItem(title.toUpperCase(), category)}
+          onClick={() => activeItem(item[0], false)}
         >
           {active ? "Set as Inactive" : "Set as Active"}
         </button>
-        <button
-          className="primary-button"
-          // onClick={props.handleEdit}
-        >
-          Edit
-        </button>
+        <Link to={`/items/${id}/edit`} state={item}>
+          <button className="primary-button">Edit</button>
+        </Link>
 
         <button
           className="primary-button"
           onClick={() => {
-            deleteItem(title.toUpperCase());
-            navigate("/");
+            deleteItem(id);
+            navigate("/items");
           }}
         >
           Delete

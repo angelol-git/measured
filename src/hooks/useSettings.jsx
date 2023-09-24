@@ -16,16 +16,19 @@ function useSettings() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     chrome.storage.local.get("settings", (result) => {
       if (result.settings) {
         setSettings(result.settings);
       } else {
+        // eslint-disable-next-line no-undef
         chrome.storage.local.set({ settings });
       }
     });
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     chrome.storage.local.set({ settings }, () => {});
   }, [settings]);
   return [settings, handleSizeUpdate];

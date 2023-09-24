@@ -4,7 +4,8 @@ import useSettings from "./hooks/useSettings";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
 import Items from "./pages/items/Items";
-import ItemDetail from "./pages/items/ItemDetail";
+import ItemDetail from "./pages/items/item/ItemDetail";
+import EditDetail from "./pages/items/item/ItemEdit";
 import Add from "./pages/items/Add";
 import Account from "./pages/account/Account";
 import Data from "./pages/account/Data";
@@ -14,17 +15,10 @@ import "./App.css";
 
 function App() {
   const navigate = useNavigate();
-  const [
-    items,
-    titleError,
-    addItem,
-    deleteItem,
-    updateItem,
-    activeItem,
-    handleImport,
-    handleTitleError,
-  ] = useItems({});
+  const [items, addItem, deleteItem, updateItem, activeItem, handleImport] =
+    useItems({});
   const [settings, handleSizeUpdate] = useSettings({});
+
   return (
     <div className="app">
       <Header />
@@ -52,24 +46,35 @@ function App() {
                 <Add
                   activeItem={activeItem}
                   addItem={addItem}
-                  handleTitleError={handleTitleError}
-                  titleError={titleError}
                   settings={settings}
                   navigate={navigate}
                 />
               }
             />
-            <Route
-              path="detail/:title"
-              element={
-                <ItemDetail
-                  items={items}
-                  activeItem={activeItem}
-                  deleteItem={deleteItem}
-                  navigate={navigate}
-                />
-              }
-            />
+            <Route path=":id">
+              <Route
+                index
+                element={
+                  <ItemDetail
+                    items={items}
+                    activeItem={activeItem}
+                    deleteItem={deleteItem}
+                    navigate={navigate}
+                  />
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <EditDetail
+                    items={items}
+                    settings={settings}
+                    updateItem={updateItem}
+                    navigate={navigate}
+                  />
+                }
+              />
+            </Route>
           </Route>
           <Route path="/account">
             <Route index element={<Account navigate={navigate} />} />

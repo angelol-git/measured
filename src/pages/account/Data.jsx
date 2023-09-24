@@ -3,7 +3,6 @@ import SubHeader from "../../components/header/SubHeader";
 import "./Data.css";
 
 function Data({ items, handleImport, navigate }) {
-  console.log("Here");
   const [importMessage, setImportMessage] = useState("");
   const [importError, setImportError] = useState("");
   const exportLength = Object.keys(items).length;

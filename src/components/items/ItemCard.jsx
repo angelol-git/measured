@@ -6,7 +6,7 @@ import ItemImage from "./itemImage/ItemImage";
 import "./ItemCard.css";
 
 function ItemCard({ key, items }) {
-  const { active, title, imageSrc } = items;
+  const { active, title, imageSrc, id } = items;
   const [hover, setHover] = useState(false);
 
   // function handleKeyDown(event){
@@ -17,7 +17,6 @@ function ItemCard({ key, items }) {
   let titleElement = title;
 
   function handleHover() {
-    console.log("here");
     setHover(!hover);
   }
 
@@ -26,7 +25,7 @@ function ItemCard({ key, items }) {
   }
 
   return (
-    <Link to={`/items/detail/${items.title}`} className="item-card-link">
+    <Link to={`/items/${items.id}`} className="item-card-link">
       <article key={key}>
         <div
           className="item-card black-border"

@@ -1,31 +1,23 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
+import { v4 as uuidv4 } from "uuid";
 import SubHeader from "../../components/header/SubHeader";
+import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../components/items/measurementInput/MeasurementInput";
 import "./Add.css";
-function Add({
-  activeItem,
-  addItem,
-  handleTitleError,
-  titleError,
-  settings,
-  navigate,
-}) {
-  const [imageStatus, setImageStatus] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [unit, setUnit] = useState("in");
+function Add({ activeItem, addItem, settings, navigate }) {
   const [category, setCategory] = useState("Tops");
-  const [title, setTitle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageStatus, setImageStatus] = useState("");
+  const [unit, setUnit] = useState("in");
   const [measurements, setMeasurements] = useState([]);
 
   function handleSubmit(event) {
     event.preventDefault();
 
     const newItem = {
+      id: uuidv4(),
       category: category,
-      title: title,
+      title: event.target.title.value,
       size: event.target.size.value,
       imageSrc: imageUrl,
       active: event.target.active.checked,
@@ -45,22 +37,17 @@ function Add({
       newItem.measurements[categoryKey] = categoryValue;
     }
 
-    if (titleError || imageStatus === "error") {
+    if (imageStatus === "error") {
       return;
     }
+    console.log(newItem);
 
     addItem(newItem);
-    activeItem(
-      event.target.title.value.toUpperCase(),
-      event.target.category.value,
-      true,
-    );
+    if (event.target.active.checked) {
+      activeItem(newItem, true);
+    }
     navigate("/items");
   }
-
-  useEffect(() => {
-    handleTitleError(title);
-  }, [title]);
 
   useEffect(() => {
     setImageStatus("");
@@ -84,16 +71,9 @@ function Add({
               type="text"
               id="title"
               name="title"
-              onChange={(e) => setTitle(e.target.value)}
-              className={`input-text ${titleError ? "error-border" : ""}`}
+              className={`input-text`}
               required
             />
-
-            {titleError ? (
-              <p className="error-text text-base" role="alert">
-                Error {title} already exist
-              </p>
-            ) : null}
           </div>
 
           <div className="form-input">
@@ -157,6 +137,7 @@ function Add({
                 <div className="image-container skeleton">
                   <img
                     id="image"
+                    alt={`thumbnail`}
                     src={imageUrl}
                     className="medium-thumbnail"
                     onLoad={() => {

@@ -6,13 +6,7 @@ function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
   let showMenu = true;
-  if (
-    currentPath === "/account/data" ||
-    currentPath === "/account/filterSizes" ||
-    currentPath === "/account" ||
-    currentPath === "/items/add" ||
-    currentPath.includes("/detail")
-  ) {
+  if (currentPath.includes("/account") || currentPath.includes("/items/")) {
     showMenu = false;
   }
   return (
