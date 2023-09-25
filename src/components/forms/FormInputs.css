@@ -1,0 +1,58 @@
+.form-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+}
+
+#edit-form .form-input-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+#edit-form>.form-input-container>.input-text {
+    width: 100%;
+}
+
+#edit-form label,
+#edit-form .measurement-header-row {
+    font-size: 14px;
+}
+
+/* #edit-form>.form-input-container>.error-text {
+    background-color: blue;
+    display: block !important;
+} */
+
+
+.input-text {
+    height: 22px;
+}
+
+.input-category {
+    height: 30px;
+}
+
+.image-preview-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.image-container {
+    height: 150px;
+    width: 150px;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-block {
+    display: block;
+}
+
+[type="checkbox"] {
+    vertical-align: middle;
+}

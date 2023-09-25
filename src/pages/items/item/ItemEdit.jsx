@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import SubHeader from "../../../components/header/SubHeader";
 import { measurementCategory } from "../../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../../components/items/measurementInput/MeasurementInput";
-import ItemImage from "../../../components/items/itemImage/ItemImage";
+import {
+  TextInput,
+  SelectInput,
+  ImageInput,
+} from "../../../components/forms/FormInputs";
 import "./ItemEdit.css";
 
 function ItemEdit({ items, settings, updateItem, navigate }) {
@@ -77,7 +81,7 @@ function ItemEdit({ items, settings, updateItem, navigate }) {
         {currImageSrc.length !== 0 ? (
           <div className="image-preview-container">
             {imageStatus !== "error" && (
-              <div className="large-thumbnail skeleton">
+              <div className="large-thumbnail  skeleton">
                 <img
                   id="image"
                   alt={`thumbnail`}
@@ -94,87 +98,45 @@ function ItemEdit({ items, settings, updateItem, navigate }) {
             )}
           </div>
         ) : null}
-        <div className="edit-input-row">
-          <label htmlFor="image" className="text-bold text-base">
-            Image:
-          </label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value={currImageSrc}
-            className={`input-text edit-input-text ${
-              imageStatus === "error" ? "error-border" : ""
-            }`}
-            onChange={(event) => {
-              setImageStatus("loading");
-              setCurrImageSrc(event.target.value);
-            }}
-          />
-          {imageStatus === "error" ? (
-            <p className="error-text" role="alert">
-              Image cannot be found
-            </p>
-          ) : null}
-        </div>
-        <div className="edit-input-row">
-          <label htmlFor="title" className="text-bold text-base">
-            Title:
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            // value={currTitle}
-            defaultValue={title}
-            className={"input-text edit-input-text"}
-            required
-          />
-        </div>
-        {/* {titleEmpty ? (
-          <p className="error-text text-base" role="alert">
-            Title cannot be empty.
-          </p>
-        ) : null} */}
+
+        <ImageInput
+          label={"Image:"}
+          value={currImageSrc}
+          onChange={(event) => {
+            setImageStatus("loading");
+            setCurrImageSrc(event.target.value);
+          }}
+          imageStatus={imageStatus}
+          setImageStatus={setImageStatus}
+        />
+
+        <TextInput
+          id={useId}
+          label={"Title:"}
+          name={"title"}
+          type={"text"}
+          value={title}
+          required={true}
+        />
+
         <div className="grey-line"></div>
         <div className="edit-category-size-row">
-          <div className="edit-input-row">
-            <label htmlFor="category" className="text-bold text-base">
-              Category:
-            </label>
-            <select
-              name="category"
-              id="category"
-              className="input-category edit-input-category"
-              value={currCategory}
-              onChange={(e) => setCurrCategory(e.target.value)}
-            >
-              {Object.keys(measurementCategory).map((categoryName) => (
-                <option key={categoryName} value={categoryName}>
-                  {categoryName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="edit-input-row">
-            <label htmlFor="category" className="text-bold text-base">
-              Size:
-            </label>
-            <select
-              name="size"
-              id="size"
-              className="input-category edit-input-category"
-              defaultValue={size}
-            >
-              {settings.sizes[currCategory].map((item) => {
-                return (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+          <SelectInput
+            id={useId}
+            label={"Category:"}
+            name={"category"}
+            options={Object.keys(measurementCategory)}
+            value={currCategory}
+            onChange={(e) => setCurrCategory(e.target.value)}
+          />
+
+          <SelectInput
+            id={useId}
+            label={"Size:"}
+            name={"size"}
+            value={size}
+            options={settings.sizes[category]}
+          />
         </div>
 
         <MeasurementInput

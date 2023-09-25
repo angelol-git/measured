@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { v4 as uuidv4 } from "uuid";
 import SubHeader from "../../components/header/SubHeader";
 import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../components/items/measurementInput/MeasurementInput";
+import {
+  TextInput,
+  SelectInput,
+  ImageInput,
+  CheckboxInput,
+} from "../../components/forms/FormInputs";
 import "./Add.css";
 function Add({ activeItem, addItem, settings, navigate }) {
   const [category, setCategory] = useState("Tops");
@@ -40,7 +46,6 @@ function Add({ activeItem, addItem, settings, navigate }) {
     if (imageStatus === "error") {
       return;
     }
-    console.log(newItem);
 
     addItem(newItem);
     if (event.target.active.checked) {
@@ -63,81 +68,49 @@ function Add({ activeItem, addItem, settings, navigate }) {
 
       <main>
         <form id="add-form" onSubmit={handleSubmit}>
-          <div className="form-input">
-            <label htmlFor="title" className="text-bold text-large">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className={`input-text`}
-              required
-            />
-          </div>
+          <TextInput
+            id={useId}
+            label={"Title"}
+            name={"title"}
+            type={"text"}
+            value={""}
+            required={true}
+          />
 
-          <div className="form-input">
-            <label htmlFor="category" className="text-bold text-large">
-              Category
-            </label>
-            <select
-              name="category"
-              id="category"
-              className="input-category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              {Object.keys(measurementCategory).map((categoryName) => (
-                <option key={categoryName} value={categoryName}>
-                  {categoryName}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SelectInput
+            id={useId}
+            label={"Category"}
+            name={"category"}
+            options={Object.keys(measurementCategory)}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
 
-          <div className="form-input">
-            <label htmlFor="size" className="text-bold text-large">
-              Size
-            </label>
-            <select name="size" id="size" className="input-category">
-              {settings.sizes[category].map((item) => {
-                return <option value={item}>{item}</option>;
-              })}
-            </select>
-          </div>
+          <SelectInput
+            id={useId}
+            label={"Size"}
+            name={"size"}
+            options={settings.sizes[category]}
+          />
 
-          <div className="form-input">
-            <label htmlFor="image" className="text-bold text-large">
-              Image
-            </label>
-            <input
-              type="text"
-              id="image"
-              name="image"
-              placeholder="Image URL"
-              className={`input-text ${
-                imageStatus === "error" ? "error-border" : ""
-              }`}
-              value={imageUrl}
-              onChange={(event) => {
-                setImageStatus("loading");
-                setImageUrl(event.target.value);
-              }}
-            />
-            {imageStatus === "error" ? (
-              <p className="error-text" role="alert">
-                Image cannot be found
-              </p>
-            ) : null}
-          </div>
+          <ImageInput
+            label={"Image"}
+            value={imageUrl}
+            onChange={(event) => {
+              setImageStatus("loading");
+              setImageUrl(event.target.value);
+            }}
+            imageStatus={imageStatus}
+            setImageStatus={setImageStatus}
+          />
 
           {imageUrl.length !== 0 ? (
             <div className="image-preview-container">
               {imageStatus !== "error" && (
                 <div className="image-container skeleton">
                   <img
-                    id="image"
-                    alt={`thumbnail`}
+                    id={useId}
+                    alt="preview thumbnail"
                     src={imageUrl}
                     className="medium-thumbnail"
                     onLoad={() => {
@@ -152,12 +125,12 @@ function Add({ activeItem, addItem, settings, navigate }) {
             </div>
           ) : null}
 
-          <div className="form-input">
-            <label htmlFor="active" className="text-large">
-              Set as active:
-              <input type="checkbox" id="active" name="active" value="active" />
-            </label>
-          </div>
+          <CheckboxInput
+            label={"Set as active"}
+            id={useId}
+            name={"active"}
+            checked={false}
+          />
 
           <div>
             <MeasurementInput

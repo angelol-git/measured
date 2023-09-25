@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./ItemImage.css";
 
 function ItemImage({ imageSrc, title, hover }) {

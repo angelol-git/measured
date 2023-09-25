@@ -11,3 +11,16 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
+.unit-input-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+}
+
+.unit-input-row input {
+    height: 20px;
+    width: 50px;
+    margin-right: 5px;
+}

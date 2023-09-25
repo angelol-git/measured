@@ -7,7 +7,7 @@
 
 .main-container {
     height: 100%;
-    padding: 15px;
+    padding: 17px;
     position: relative;
     overflow-y: auto;
     scrollbar-gutter: stable both-edges;
@@ -212,6 +212,7 @@ a {
 }
 
 .error-text {
+    display: block;
     color: var(--error-text);
 }
 
