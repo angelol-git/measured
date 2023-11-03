@@ -22,6 +22,3 @@ function returnValidItems(items, category) {
 
 }
 
-
-let openPopupCount = 0;
-
