@@ -46,8 +46,8 @@ function ItemEdit({ items, settings, updateItem, navigate }) {
       measurements: {},
     };
 
-    for (let i = 0; i < measurementCategory[category].length; i++) {
-      const categoryKey = measurementCategory[category][i];
+    for (let i = 0; i < measurementCategory[currCategory].length; i++) {
+      const categoryKey = measurementCategory[currCategory][i];
       if (currMeasurements[categoryKey] === undefined) {
         continue;
       }
@@ -62,6 +62,7 @@ function ItemEdit({ items, settings, updateItem, navigate }) {
 
       newItem.measurements[categoryKey] = categoryValue;
     }
+    console.log(newItem);
     updateItem(newItem);
     navigate(-1);
   }
