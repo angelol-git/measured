@@ -360,6 +360,13 @@ const imageData = {
             "left: 69%; top: 20%;": "Front Rise",
             "left: 52%; top: 57%;": "Inseam",
             "left: 45%; top: 2%;": "Waist",
+        },
+        //Sweatpants
+        "https://res.cloudinary.com/ssense/image/upload/v1509463869/size_guide/category_194.jpg": {
+            "left: 33%; top: 100%;": "Leg Opening",
+            "left: 69%; top: 20%;": "Front Rise",
+            "left: 54%; top: 59%;": "Inseam",
+            "left: 45%; top: 2%;": "Waist",
         }
     }
 }
