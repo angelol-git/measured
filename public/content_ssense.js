@@ -41,6 +41,7 @@ function modalMutationObserver(targetElement) {
             }
             const category = getSSenseCategory();
             const activeItem = await validActiveItem(category);
+
             if (activeItem === -1) {
                 console.log("Measured: Error - No active items.")
                 return;
@@ -100,6 +101,7 @@ async function compareMeasurements(measurementModal, activeItem, system, imageSo
     removePreviousMeasurements();
     const originalMeasurements = getOriginalMeasurements(measurementModal, imageSource);
 
+    console.log(originalMeasurements);
     if (originalMeasurements === -1) {
         console.log("Measured: Error - parsing data.")
         return;
@@ -121,6 +123,7 @@ async function compareMeasurements(measurementModal, activeItem, system, imageSo
 
 function getSSenseCategory() {
     const categoryElement = document.getElementById("pdpProductNameText");
+
     const categoryElementText = categoryElement.innerText.trim();
     if (categoryElementText.includes("T-Shirt") ||
         categoryElementText.includes("Henley") ||
@@ -142,6 +145,12 @@ function getSSenseCategory() {
         categoryElementText.includes("Peacoat") ||
         categoryElementText.includes("Vest")) {
         return "Outerwear";
+    }
+
+    else if (categoryElementText.includes("Pants") ||
+        categoryElementText.includes("Trousers") ||
+        categoryElementText.includes("Sweatpants")) {
+        return "Bottoms";
     }
 }
 
@@ -343,6 +352,14 @@ const imageData = {
             "left: 44%; top: 41%;": "Chest",
             "left: 44%; top: 3%;": "Shoulders",
             "left: 72%; top: 52%;": "Length"
+        }
+    },
+    Bottoms: {
+        "https://res.cloudinary.com/ssense/image/upload/v1509463868/size_guide/category_193_195.jpg": {
+            "left: 33%; top: 99%;": "Leg Opening",
+            "left: 69%; top: 20%;": "Front Rise",
+            "left: 52%; top: 57%;": "Inseam",
+            "left: 45%; top: 2%;": "Waist",
         }
     }
 }

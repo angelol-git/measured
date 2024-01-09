@@ -49,7 +49,7 @@ function ItemDetail({ items, activeItem, deleteItem, navigate }) {
           className={`primary-button position-right ${
             active ? "inactive-button-color" : ""
           }`}
-          onClick={() => activeItem(item[0], false)}
+          onClick={() => activeItem(id, false)}
         >
           {active ? "Set as Inactive" : "Set as Active"}
         </button>
