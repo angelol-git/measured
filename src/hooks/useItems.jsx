@@ -28,17 +28,18 @@ function useItems() {
     });
   };
 
-  const activeItem = (item, isNewItem = false) => {
+  const activeItem = (itemId, isNewItem = false) => {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
 
+      //console.log(updatedItems[itemId.id]);
       if (!isNewItem) {
-        updatedItems[item.id].active = !updatedItems[item.id].active;
+        updatedItems[itemId].active = !updatedItems[itemId].active;
       }
 
-      //Make sure the other items in the category is set to inactive
+      //Make sure the other itemIds in the category is set to inactive
       Object.entries(updatedItems).forEach(([id, values]) => {
-        if (id !== item.id && values.category === item.category) {
+        if (id !== itemId && values.category === itemId.category) {
           updatedItems[id].active = false;
         }
       });

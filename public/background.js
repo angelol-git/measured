@@ -21,4 +21,3 @@ function returnValidItems(items, category) {
     return activeItems;
 
 }
-

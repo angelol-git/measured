@@ -29,7 +29,6 @@ export function TextInput({ id, label, name, type, value, required }) {
 }
 
 export function SelectInput({ id, label, name, options, value, onChange }) {
-  console.log(value);
   return (
     <div className="form-input-container">
       <label htmlFor={id} className="text-bold text-large">

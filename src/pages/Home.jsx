@@ -10,7 +10,7 @@ function Home({ items, activeItem }) {
         activeItemsLength++;
       }
       return value.active ? (
-        <ActiveCard key={key} values={value} activeItem={activeItem} />
+        <ActiveCard key={key} id={key} values={value} activeItem={activeItem} />
       ) : null;
     });
   }
