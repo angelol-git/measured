@@ -1,11 +1,12 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import SubHeader from "../../../components/header/SubHeader";
 import MeasurementValues from "../../../components/items/measurementValues/MeasurementValues";
 import ItemImage from "../../../components/items/itemImage/ItemImage";
 import "./ItemDetail.css";
 
-function ItemDetail({ items, activeItem, deleteItem, navigate }) {
+function ItemDetail({ items, activeItem, deleteItem }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const item = Object.values(items).filter((item) => {
     return item.id === id;

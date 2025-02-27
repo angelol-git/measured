@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SubHeader from "../../components/header/SubHeader";
 import "./Account.css";
 
-function Account({ navigate }) {
+function Account() {
+  const navigate = useNavigate();
   return (
     <main className="main-container">
       <SubHeader navigate={navigate} title={"Account"} aria={"Back to Home"} />

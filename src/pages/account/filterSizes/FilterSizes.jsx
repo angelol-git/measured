@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { outerwearSizes, topsSizes, bottomsSizes } from "./sizesData";
 import Category from "./Category";
 import SubHeader from "../../../components/header/SubHeader";
 
 import "./FilterSizes.css";
 
-function FilterSizes({ settings, handleSizeUpdate, navigate }) {
+function FilterSizes({ settings, handleSizeUpdate }) {
+  const navigate = useNavigate();
   const { sizes } = settings;
   const isInitialRender = useRef(true);
   const [outerwear, setOuterwear] = useState(

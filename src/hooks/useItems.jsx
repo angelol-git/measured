@@ -48,9 +48,9 @@ function useItems() {
     });
   };
 
-  function handleImport(importedItems) {
-    setItems(importedItems);
-  }
+  // function handleImport(importedItems) {
+  //   setItems(importedItems);
+  // }
 
   //Load data from local storage
   useEffect(() => {
@@ -67,7 +67,7 @@ function useItems() {
     chrome.storage.local.set({ items });
   }, [items]);
 
-  return [items, addItem, deleteItem, updateItem, activeItem, handleImport];
+  return [items, setItems, addItem, deleteItem, updateItem, activeItem];
 }
 
 export default useItems;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useId } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 import SubHeader from "../../components/header/SubHeader";
 import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../components/items/measurementInput/MeasurementInput";
@@ -10,7 +11,8 @@ import {
   CheckboxInput,
 } from "../../components/forms/FormInputs";
 import "./Add.css";
-function Add({ activeItem, addItem, settings, navigate }) {
+function Add({ activeItem, addItem, settings }) {
+  const navigate = useNavigate();
   const [category, setCategory] = useState("Tops");
   const [imageUrl, setImageUrl] = useState("");
   const [imageStatus, setImageStatus] = useState("");

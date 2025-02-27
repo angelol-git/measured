@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SubHeader from "../../components/header/SubHeader";
 import "./Data.css";
 
-function Data({ items, handleImport, navigate }) {
+function Data({ items, setItems }) {
+  const navigate = useNavigate();
   const [importMessage, setImportMessage] = useState("");
   const [importError, setImportError] = useState("");
   const exportLength = Object.keys(items).length;
@@ -18,6 +20,10 @@ function Data({ items, handleImport, navigate }) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }
+
+  function handleImport(importedItems) {
+    setItems(importedItems);
   }
 
   function handleFileChange(event) {

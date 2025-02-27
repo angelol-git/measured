@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import useItems from "./hooks/useItems";
 import useSettings from "./hooks/useSettings";
 import Header from "./components/header/Header";
@@ -14,8 +14,7 @@ import FilterSizes from "./pages/account/filterSizes/FilterSizes";
 import "./App.css";
 
 function App() {
-  const navigate = useNavigate();
-  const [items, addItem, deleteItem, updateItem, activeItem, handleImport] =
+  const [items, setItems, addItem, deleteItem, updateItem, activeItem] =
     useItems({});
   const [settings, handleSizeUpdate] = useSettings({});
 
@@ -44,7 +43,6 @@ function App() {
               activeItem={activeItem}
               addItem={addItem}
               settings={settings}
-              navigate={navigate}
             />
           }
         />
@@ -55,7 +53,6 @@ function App() {
               items={items}
               activeItem={activeItem}
               deleteItem={deleteItem}
-              navigate={navigate}
             />
           }
         />
@@ -66,20 +63,13 @@ function App() {
               items={items}
               settings={settings}
               updateItem={updateItem}
-              navigate={navigate}
             />
           }
         />
-        <Route path="account" element={<Account navigate={navigate} />} />
+        <Route path="account" element={<Account />} />
         <Route
           path="account/data"
-          element={
-            <Data
-              items={items}
-              handleImport={handleImport}
-              navigate={navigate}
-            />
-          }
+          element={<Data items={items} setItems={setItems} />}
         />
         <Route
           path="account/filterSizes"
@@ -87,7 +77,6 @@ function App() {
             <FilterSizes
               settings={settings}
               handleSizeUpdate={handleSizeUpdate}
-              navigate={navigate}
             />
           }
         />

@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import SubHeader from "../../../components/header/SubHeader";
 import { measurementCategory } from "../../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../../components/items/measurementInput/MeasurementInput";
@@ -10,8 +10,9 @@ import {
 } from "../../../components/forms/FormInputs";
 import "./ItemEdit.css";
 
-function ItemEdit({ items, settings, updateItem, navigate }) {
+function ItemEdit({ items, settings, updateItem }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   let item;
