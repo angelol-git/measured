@@ -58,17 +58,3 @@ function Items({ items, activeItem, deleteItem }) {
   );
 }
 export default Items;
-
-// {/* <div
-// className={`filter-container text-base  ${
-//   displayFilters ? "slide-down" : "slide-up"
-// }`}
-// >
-// <div className="flex gap-5">
-//   <label htmlFor="category">Sort By:</label>
-//   <select name="sort" id="sort">
-//     <option value="Default">Default</option>
-//     {/* <option value="category">Category</option> */}
-//   </select>
-// </div>
-// </div> */}

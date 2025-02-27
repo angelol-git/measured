@@ -23,83 +23,74 @@ function App() {
     <div className="app">
       <Header />
       <Routes>
-        <Route path="/">
-          <Route
-            index
-            element={<Home items={items} activeItem={activeItem} />}
-          />
-          <Route path="items">
-            <Route
-              index
-              element={
-                <Items
-                  items={items}
-                  deleteItem={deleteItem}
-                  activeItem={activeItem}
-                  navigate={navigate}
-                />
-              }
+        <Route
+          path="/"
+          element={<Home items={items} activeItem={activeItem} />}
+        />
+        <Route
+          path="items"
+          element={
+            <Items
+              items={items}
+              deleteItem={deleteItem}
+              activeItem={activeItem}
             />
-            <Route
-              path="add"
-              element={
-                <Add
-                  activeItem={activeItem}
-                  addItem={addItem}
-                  settings={settings}
-                  navigate={navigate}
-                />
-              }
+          }
+        />
+        <Route
+          path="items/add"
+          element={
+            <Add
+              activeItem={activeItem}
+              addItem={addItem}
+              settings={settings}
+              navigate={navigate}
             />
-            <Route path=":id">
-              <Route
-                index
-                element={
-                  <ItemDetail
-                    items={items}
-                    activeItem={activeItem}
-                    deleteItem={deleteItem}
-                    navigate={navigate}
-                  />
-                }
-              />
-              <Route
-                path="edit"
-                element={
-                  <EditDetail
-                    items={items}
-                    settings={settings}
-                    updateItem={updateItem}
-                    navigate={navigate}
-                  />
-                }
-              />
-            </Route>
-          </Route>
-          <Route path="/account">
-            <Route index element={<Account navigate={navigate} />} />
-            <Route
-              path="data"
-              element={
-                <Data
-                  items={items}
-                  handleImport={handleImport}
-                  navigate={navigate}
-                />
-              }
+          }
+        />
+        <Route
+          path="items/:id"
+          element={
+            <ItemDetail
+              items={items}
+              activeItem={activeItem}
+              deleteItem={deleteItem}
+              navigate={navigate}
             />
-            <Route
-              path="filterSizes"
-              element={
-                <FilterSizes
-                  settings={settings}
-                  handleSizeUpdate={handleSizeUpdate}
-                  navigate={navigate}
-                />
-              }
+          }
+        />
+        <Route
+          path="items:id/edit"
+          element={
+            <EditDetail
+              items={items}
+              settings={settings}
+              updateItem={updateItem}
+              navigate={navigate}
             />
-          </Route>
-        </Route>
+          }
+        />
+        <Route path="account" element={<Account navigate={navigate} />} />
+        <Route
+          path="account/data"
+          element={
+            <Data
+              items={items}
+              handleImport={handleImport}
+              navigate={navigate}
+            />
+          }
+        />
+        <Route
+          path="account/filterSizes"
+          element={
+            <FilterSizes
+              settings={settings}
+              handleSizeUpdate={handleSizeUpdate}
+              navigate={navigate}
+            />
+          }
+        />
       </Routes>
     </div>
   );
