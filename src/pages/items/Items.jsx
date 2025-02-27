@@ -43,7 +43,7 @@ function Items({ items, activeItem, deleteItem }) {
             <p> Filter</p>
           </div>
         </button> */}
-        <p className="item-counter text-small">{itemsLength} Items</p>
+        <p className="item-counter text-small">{itemsLength} Item&#40;s&#41;</p>
         <Link
           to="/items/add"
           className="primary-button position-right text-base"

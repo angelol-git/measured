@@ -39,7 +39,21 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    padding-top: 10px;
+    padding-top: 30px;
+}
+
+.active-button {
+    border: none;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: var(--secondary-text-color);
+    background-color: var(--accent-blue);
+}
+
+.active-button:hover {
+    background-color: var(--accent-blue-hover);
 }
 
 .measurement-label-value-container {

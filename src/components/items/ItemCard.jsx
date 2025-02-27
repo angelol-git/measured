@@ -6,7 +6,7 @@ import ItemImage from "./itemImage/ItemImage";
 import "./ItemCard.css";
 
 function ItemCard({ key, items }) {
-  const { active, title, imageSrc, id } = items;
+  const { active, title, imageSrc } = items;
   const [hover, setHover] = useState(false);
 
   // function handleKeyDown(event){

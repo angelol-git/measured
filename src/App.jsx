@@ -57,7 +57,7 @@ function App() {
           }
         />
         <Route
-          path="items:id/edit"
+          path="items/:id/edit"
           element={
             <EditDetail
               items={items}

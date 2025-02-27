@@ -246,6 +246,7 @@ a {
     object-fit: cover;
     width: 180px;
     height: 180px;
+    position: relative;
 }
 
 

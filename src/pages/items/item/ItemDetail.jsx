@@ -24,6 +24,9 @@ function ItemDetail({ items, activeItem, deleteItem }) {
         <div className="item-detail-image-container">
           <div className="large-thumbnail">
             <ItemImage imageSrc={imageSrc} title={title} />
+            <div className={"active-tag text-base" + (active ? " show" : "")}>
+              <p>Active</p>
+            </div>
           </div>
         </div>
         <div className="item-detail-title-container">
@@ -47,7 +50,7 @@ function ItemDetail({ items, activeItem, deleteItem }) {
 
       <footer className="bottom-button-container">
         <button
-          className={`primary-button position-right ${
+          className={`active-button position-right ${
             active ? "inactive-button-color" : ""
           }`}
           onClick={() => activeItem(id, false)}
