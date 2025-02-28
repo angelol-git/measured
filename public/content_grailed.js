@@ -1,4 +1,4 @@
-function tableMutationObserver() {
+function mutationObserverTable() {
     let containerToObserve;
     const observer = new MutationObserver(async (mutationsList, observer) => {
         const measurementTable = document.querySelector(".Table_table__conFW");
@@ -35,13 +35,13 @@ function getGrailedCategory() {
 
 async function validActiveItem(category) {
     return new Promise((resolve, reject) => {
+        // eslint-disable-next-line no-undef
         chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
             const item = response.items;
             if (Object.keys(item).length === 0) {
                 resolve(-1);
             }
             else {
-
                 resolve(Object.values(item)[0]);
             }
         });
@@ -49,22 +49,30 @@ async function validActiveItem(category) {
 }
 
 function compareMeasurements(measurementTable, item) {
-    let position = 0;
-    const originalMeasurements = parseGrailedMeasurements(measurementTable);
+    const sourceMeasurements = parseGrailedMeasurements(measurementTable);
+    const sourceKeys = Object.keys(sourceMeasurements);
     const activeKeys = Object.keys(item.measurements);
-    const parsedKeys = Object.keys(originalMeasurements);
-    const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
 
     displayGrailedCompareItem(measurementTable, item);
-    for (const key of commonKeys) {
-        const activeValue = (item.measurements[key])
-        const parsedValue = (originalMeasurements[key])
 
-        const inchDifference = (parsedValue[0] - activeValue[0]).toFixed(2);
-        const cmDifference = (parsedValue[1] - activeValue[1]).toFixed(2);
+    for (let i = 0; i < sourceKeys.length; i++) {
+        let tableRow = "";
+        if (activeKeys.includes(sourceKeys[i])) {
+            for (let j = 0; j < measurementTable.children.length; j++) {
+                if (measurementTable.children[j].children[0].innerText.includes(sourceKeys[i])) {
+                    tableRow = measurementTable.children[j];
+                    break;
+                }
+            }
+            const activeValues = (item.measurements[sourceKeys[i]])
+            const sourceValues = (sourceMeasurements[sourceKeys[i]])
 
-        displayGrailedDifference(measurementTable, position, inchDifference, cmDifference);
-        position++;
+            const inchDifference = (sourceValues[0] - activeValues[0]).toFixed(2);
+            const cmDifference = (sourceValues[1] - activeValues[1]).toFixed(2);
+
+            displayGrailedDifference(tableRow, inchDifference, cmDifference, sourceValues[0], sourceValues[1], activeValues[0], activeValues[1]);
+        }
+
     }
 }
 
@@ -89,29 +97,33 @@ function parseGrailedMeasurements(measurementTable) {
 function displayGrailedCompareItem(measurementTable, item) {
     const parentDiv = measurementTable.parentNode;
     const titleCard = document.createElement("div");
-    titleCard.innerHTML += `<p style="font-size:1.4rem;text-align:right">Comparing to ${item.title}</p>`;
+    titleCard.innerHTML +=
+        `<p style="font-size:1.4rem;text-align:right">
+            Comparing to <span style="color:grey">${item.title}</span>
+        </p>`;
     parentDiv.insertBefore(titleCard, measurementTable);
 }
 
-function displayGrailedDifference(measurementTable, position, inchDifference, cmDifference) {
-    const inchCell = measurementTable.children[position].children[1];
-    const cmCell = measurementTable.children[position].children[2];
+function displayGrailedDifference(tableRow, inchDifference, cmDifference, originalInch, originalCm, activeInch, activeCm) {
+    // eslint-disable-next-line no-unused-vars
+    const [_, inchCell, cmCell] = tableRow.children;
 
-    // const inchDiv = document.createElement("div");
-    // inchDiv.classList.add("Text", "Callout_callout__1Kvd", "Row_column__4KcmY", "Row_unit__LJkvR");
+    function formatDifference(value, value2, unit) {
+        const num = parseFloat(value);
+        //accommodate for edge case values due to rounding conversation errors 
+        const num2 = parseFloat(value2);
+        if (num === 0 || num2 === 0) return `<span style="color: grey; font-weight:bold">=</span>`;
+        const color = num > 0 ? "green" : "red";
+        const sign = num > 0 ? "+" : "";
+        return `<span style="color: ${color}; font-weight:bold">${sign}${value} ${unit}</span>`;
+    }
 
-    let formattedInch = "";
-    let formattedCm = "";
-    if (parseFloat(inchDifference) === 0.00) {
-        formattedInch = "=";
-        formattedCm = "=";
-    }
-    else {
-        formattedInch = inchDifference.match(/^\d/) ? `+${inchDifference} in` : `${inchDifference} in`;
-        formattedCm = cmDifference.match(/^\d/) ? `+${cmDifference} cm` : `${cmDifference} cm`;
-    }
-    inchCell.innerHTML += `<br> ${formattedInch}`;
-    cmCell.innerHTML += `<br>  ${formattedCm}`;
+    inchCell.innerHTML =
+        `${originalInch}<span style="color: grey;">/${activeInch}</span> 
+                        <br> ${formatDifference(inchDifference, cmDifference, "in")}`;
+    cmCell.innerHTML =
+        `${originalCm}<span style="color: grey;">/${activeCm}</span> 
+                        <br> ${formatDifference(cmDifference, inchDifference, "cm")}`;
 }
 
-tableMutationObserver();
+mutationObserverTable();
