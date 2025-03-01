@@ -13,7 +13,7 @@
       "js": ["content_grailed.js"]
     },
     {
-      "matches": ["https://www.ssense.com/*"],
+      "matches": ["https://www.ssense.com/*/product/*"],
       "js": ["content_ssense.js"]
     }
   ],

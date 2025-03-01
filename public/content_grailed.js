@@ -7,7 +7,7 @@ function mutationObserverTable() {
             observer.disconnect();
             console.log("Measured: Found Table.");
             const category = getGrailedCategory();
-            const activeItem = await validActiveItem(category);
+            const activeItem = await getActiveItem(category);
             if (activeItem === -1) {
                 console.log("Measured: Error - No active items.")
                 return;
@@ -17,7 +17,7 @@ function mutationObserverTable() {
 
         }
         else if (requestButton) {
-            console.log("Measured: Error no measurements provided.");
+            console.log("Measured: Error - No measurements provided.");
             observer.disconnect();
         }
 
@@ -33,8 +33,8 @@ function getGrailedCategory() {
     return classList[2].innerText.split(" ")[lastElement - 1];
 }
 
-async function validActiveItem(category) {
-    return new Promise((resolve, reject) => {
+async function getActiveItem(category) {
+    return new Promise((resolve) => {
         // eslint-disable-next-line no-undef
         chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
             const item = response.items;
@@ -110,7 +110,7 @@ function displayGrailedDifference(tableRow, inchDifference, cmDifference, origin
 
     function formatDifference(value, value2, unit) {
         const num = parseFloat(value);
-        //accommodate for edge case values due to rounding conversation errors 
+        //accommodate for edge cases due to rounding conversation errors 
         const num2 = parseFloat(value2);
         if (num === 0 || num2 === 0) return `<span style="color: grey; font-weight:bold">=</span>`;
         const color = num > 0 ? "green" : "red";

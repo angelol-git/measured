@@ -1,126 +1,209 @@
-
-let closeButton;
 let inchButtonHandlerRef;
 let cmButtonHandlerRef;
 let sizeButtonsHandlerRef;
+let currentSystem = "inch";
 
 function isMobileView() {
     return window.innerWidth <= 991;
 }
 
-function setupGlobalMutationObserver() {
-    const observer = new MutationObserver((mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-            for (const addedNode of mutation.addedNodes) {
-                if (addedNode.nodeType === Node.ELEMENT_NODE && addedNode.classList.contains('modal')) {
-                    modalMutationObserver(addedNode);
-                }
-            }
-        }
-    });
-
-    const mainContainer = document.querySelector('.main');
-    observer.observe(mainContainer, { childList: true, subtree: true });
-}
-
-function modalMutationObserver(targetElement) {
-    const observer = new MutationObserver(async (mutationsList, observer) => {
+function waitForMeasurementModal() {
+    const checkModalInterval = setInterval(async () => {
         const measurementModal = document.querySelector('.modal-container-outer');
-        const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
-        const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
-        const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
-        const closeButton = isMobileView() ? document.querySelector('.modal-close') : document.querySelector('.modal-btn-close');
-        const backDropButton = document.getElementById('backdrop');
+        if (measurementModal) {
+            clearInterval(checkModalInterval);
+            console.log("Measured: Measurement Modal Found.");
+            const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
+            const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
+            const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements")?.children[1];
 
-        //Wait for values to load before comparing
-        if (measurementModalHeader && measurementValuesElement && measurementModalImage && closeButton) {
-            console.log("Measured: Comparing");
-            if (measurementModalHeader.children.length === 1) {
-                console.log("Measured: Error - No measurements provided.");
+            if (!measurementModalHeader || !measurementModalImage || !measurementValuesElement) {
+                console.log("Measured: Error - No measurements provided ");
                 return;
             }
-            const category = getSSenseCategory();
-            const activeItem = await validActiveItem(category);
 
+            const category = getSSenseCategory();
+            const activeItem = await getActiveItem(category);
             if (activeItem === -1) {
                 console.log("Measured: Error - No active items.")
                 return;
             }
 
-            let currentSystem = "inch";
             const imageSource = imageData[category][measurementModalImage.children[0].src];
+            console.log(measurementModalImage);
+            handleModalButtons(measurementModal, activeItem, imageSource);
             displaySSenseCompareItem(measurementModalImage, activeItem);
-            compareMeasurements(measurementModal, activeItem, currentSystem, imageSource);
-
-            const sizeButtons = document.querySelector(".pdp-size-chart__size-buttons-list");
-            const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[0];
-            const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list").children[1];
-
-            inchButtonHandlerRef = () => {
-                currentSystem = "inch";
-                compareMeasurements(measurementModal, activeItem, currentSystem, imageSource);
-            };
-
-            cmButtonHandlerRef = () => {
-                currentSystem = "cm";
-                compareMeasurements(measurementModal, activeItem, currentSystem, imageSource);
-            };
-
-            sizeButtonsHandlerRef = () => {
-                compareMeasurements(measurementModal, activeItem, currentSystem, imageSource);
-            };
-
-            inchButton.addEventListener('click', inchButtonHandlerRef);
-            cmButton.addEventListener('click', cmButtonHandlerRef);
-            sizeButtons.addEventListener('click', sizeButtonsHandlerRef);
-
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    closeModal(inchButton, cmButton, sizeButtons, closeButton);
-                });
-            }
-
-            if (backDropButton) {
-                backDropButton.addEventListener('click', () => {
-                    closeModal(inchButton, cmButton, sizeButtons, closeButton);
-                });
-            }
-            observer.disconnect();
+            compareMeasurements(measurementModal, activeItem, imageSource);
         }
-    });
-    const modalContainer = document.querySelector('.modal-container-outer');
-    if (modalContainer) {
-        observer.observe(modalContainer, { childList: true, subtree: true });
-    } else {
-        console.log("Product container not found");
-    }
-
+    }, 500); // Check every 500ms
 }
 
-async function compareMeasurements(measurementModal, activeItem, system, imageSource) {
+function handleModalButtons(measurementModal, activeItem, imageSource) {
+    const sizeButtons = document.querySelector(".pdp-size-chart__size-buttons-list");
+    const inchButton = document.querySelector(".pdp-size-chart__unit-buttons-list")?.children[0];
+    const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list")?.children[1];
+    const closeButton = isMobileView() ? document.querySelector('.modal-close') : document.querySelector('.modal-btn-close');
+    const backDropButton = document.getElementById('backdrop');
+
+    if (inchButton && cmButton && sizeButtons) {
+        inchButton.addEventListener('click', () => {
+            currentSystem = "inch";
+            compareMeasurements(measurementModal, activeItem, imageSource);
+        });
+
+        cmButton.addEventListener('click', () => {
+            currentSystem = "cm";
+            compareMeasurements(measurementModal, activeItem, imageSource);
+        });
+
+        sizeButtons.addEventListener('click', () => {
+            compareMeasurements(measurementModal, activeItem, imageSource);
+        });
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            closeModal(inchButton, cmButton, sizeButtons, closeButton);
+            waitForMeasurementModal();
+        });
+    }
+
+    if (backDropButton) {
+        backDropButton.addEventListener('click', () => {
+            closeModal(inchButton, cmButton, sizeButtons, closeButton);
+            waitForMeasurementModal();
+        });
+    }
+}
+
+function compareMeasurements(measurementModal, activeItem, imageSource) {
     removePreviousMeasurements();
     const originalMeasurements = getOriginalMeasurements(measurementModal, imageSource);
 
-    console.log(originalMeasurements);
     if (originalMeasurements === -1) {
         console.log("Measured: Error - parsing data.")
         return;
     }
-    const measurementDifferences = compareSSenseMeasurements(originalMeasurements, activeItem, system);
+    const measurementDifferences = compareSSenseMeasurements(originalMeasurements, activeItem, currentSystem);
     const measurementValueElements = Array.from(measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1].children);
+
     for (const key in measurementDifferences) {
         const measurementValueElement = measurementValueElements.filter((item) => {
             return item.style.cssText === originalMeasurements[key].cssPosition;
         })[0];
-        if (system === "inch") {
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, system);
+        if (currentSystem === "inch") {
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
         }
         else {
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, system);
+            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
         }
     }
 }
 
+function getOriginalMeasurements(measurementModal, imageSource) {
+    const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
+    if (!measurementValuesElement) {
+        return -1;
+    }
+    const originalMeasurements = {};
+
+    //Currently only works with t-shirts because of the image.
+    const measurementCategory = imageSource;
+
+    for (let i = 0; i < measurementValuesElement.children.length; i++) {
+        const cssPosition = measurementValuesElement.children[i].style.cssText;
+        const originalValue = (measurementValuesElement.children[i].innerText.split(" ")[0]);
+        if (measurementCategory.hasOwnProperty(cssPosition)) {
+            originalMeasurements[measurementCategory[cssPosition]] = {
+                cssPosition,
+                originalValue,
+            };
+        }
+    }
+    return originalMeasurements;
+}
+
+function compareSSenseMeasurements(originalMeasurements, item) {
+    const activeKeys = Object.keys(item.measurements);
+    const parsedKeys = Object.keys(originalMeasurements);
+    const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
+    const difference = {};
+
+
+    for (const key of commonKeys) {
+        const activeValue = (item.measurements[key])
+        const parsedValue = (originalMeasurements[key])
+        let valueDifference;
+        if (currentSystem === "inch") {
+            valueDifference = (parsedValue.originalValue - activeValue[0]).toFixed(2);
+        }
+        else {
+            valueDifference = (parsedValue.originalValue - activeValue[1]).toFixed(2);
+        }
+        difference[key] = {
+            valueDifference,
+        };
+    }
+
+    return difference;
+}
+
+function displaySSenseCompareItem(measurementElement, item) {
+    const parentDiv = measurementElement.parentNode;
+    const titleCard = document.createElement("div");
+    titleCard.innerHTML = `<p">Comparing to ${item.title}</p>`;
+    parentDiv.insertBefore(titleCard, measurementElement);
+}
+
+function displaySSenseDifference(measurementElement, difference) {
+    const newNode = document.createElement("p");
+    newNode.setAttribute('class', 'measured-difference');
+    newNode.style.width = "60px";
+    newNode.style.backgroundColor = "white";
+    newNode.style.textAlign = "left";
+
+    let formattedDifference = "";
+    if (parseFloat(difference) === 0.00) {
+        formattedDifference = "=";
+    } else {
+        const sign = difference > 0 ? "+" : "";
+        const unit = currentSystem === "inch" ? ' "' : " cm";
+        formattedDifference = `${sign}${difference} ${unit}`;
+    }
+
+    newNode.innerHTML = formattedDifference;
+    measurementElement.appendChild(newNode);
+}
+
+function removePreviousMeasurements() {
+    const prevDifference = document.querySelectorAll('.measured-difference');
+    if (prevDifference) {
+        for (var i = 0, len = prevDifference.length; i < len; i++) {
+            prevDifference[i].remove();
+        }
+    }
+}
+
+function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
+    if (inchButtonHandlerRef) inchButton.removeEventListener('click', inchButtonHandlerRef);
+    if (cmButtonHandlerRef) cmButton.removeEventListener('click', cmButtonHandlerRef);
+    if (sizeButtonsHandlerRef) sizeButtons.removeEventListener('click', sizeButtonsHandlerRef);
+    if (closeButton) closeButton.removeEventListener('click', closeModal);
+}
+async function getActiveItem(category) {
+    return new Promise((resolve) => {
+        // eslint-disable-next-line no-undef
+        chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
+            const item = response.items;
+            if (Object.keys(item).length === 0) {
+                resolve(-1);
+            }
+            else {
+                resolve(Object.values(item)[0]);
+            }
+        });
+    });
+}
 function getSSenseCategory() {
     const categoryElement = document.getElementById("pdpProductNameText");
 
@@ -152,112 +235,6 @@ function getSSenseCategory() {
         categoryElementText.includes("Sweatpants")) {
         return "Bottoms";
     }
-}
-
-async function validActiveItem(category) {
-    return new Promise((resolve, reject) => {
-        chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
-            const item = response.items;
-            if (Object.keys(item).length === 0) {
-                resolve(-1);
-            }
-            else {
-                resolve(Object.values(item)[0]);
-            }
-        });
-    });
-}
-
-function getOriginalMeasurements(measurementModal, imageSource) {
-    const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
-    if (!measurementValuesElement) {
-        return -1;
-    }
-    const originalMeasurements = {};
-
-    //Currently only works with t-shirts because of the image.
-    const measurementCategory = imageSource;
-
-    for (let i = 0; i < measurementValuesElement.children.length; i++) {
-        const cssPosition = measurementValuesElement.children[i].style.cssText;
-        const originalValue = (measurementValuesElement.children[i].innerText.split(" ")[0]);
-        if (measurementCategory.hasOwnProperty(cssPosition)) {
-            originalMeasurements[measurementCategory[cssPosition]] = {
-                cssPosition,
-                originalValue,
-            };
-        }
-    }
-    return originalMeasurements;
-}
-
-function compareSSenseMeasurements(originalMeasurements, item, system) {
-    const activeKeys = Object.keys(item.measurements);
-    const parsedKeys = Object.keys(originalMeasurements);
-    const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
-    const difference = {};
-
-
-    for (const key of commonKeys) {
-        const activeValue = (item.measurements[key])
-        const parsedValue = (originalMeasurements[key])
-        let valueDifference;
-        if (system === "inch") {
-            valueDifference = (parsedValue.originalValue - activeValue[0]).toFixed(2);
-        }
-        else {
-            valueDifference = (parsedValue.originalValue - activeValue[1]).toFixed(2);
-        }
-        difference[key] = {
-            valueDifference,
-        };
-    }
-
-    return difference;
-}
-
-function displaySSenseDifference(measurementElement, difference, system) {
-    const newNode = document.createElement("p");
-    newNode.setAttribute('class', 'measured-difference');
-    newNode.style.width = "60px";
-    newNode.style.backgroundColor = "white";
-    newNode.style.textAlign = "left";
-
-    let formattedDifference = "";
-    if (parseFloat(difference) === 0.00) {
-        formattedDifference = "=";
-    } else {
-        const sign = difference > 0 ? "+" : "";
-        const unit = system === "inch" ? ' "' : " cm";
-        formattedDifference = `${sign}${difference} ${unit}`;
-    }
-
-    newNode.innerHTML = formattedDifference;
-    measurementElement.appendChild(newNode);
-}
-
-function displaySSenseCompareItem(measurementElement, item) {
-    const parentDiv = measurementElement.parentNode;
-    const titleCard = document.createElement("div");
-    titleCard.innerHTML = `<p">Comparing to ${item.title}</p>`;
-    parentDiv.insertBefore(titleCard, measurementElement);
-}
-
-function removePreviousMeasurements() {
-    const prevDifference = document.querySelectorAll('.measured-difference');
-    if (prevDifference) {
-        for (var i = 0, len = prevDifference.length; i < len; i++) {
-            prevDifference[i].remove();
-        }
-    }
-}
-
-function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
-    if (inchButtonHandlerRef) inchButton.removeEventListener('click', inchButtonHandlerRef);
-    if (cmButtonHandlerRef) cmButton.removeEventListener('click', cmButtonHandlerRef);
-    if (sizeButtonsHandlerRef) sizeButtons.removeEventListener('click', sizeButtonsHandlerRef);
-    if (closeButton) closeButton.removeEventListener('click', closeModal);
-    buttonListenersAttached = false;
 }
 
 const imageData = {
@@ -371,4 +348,5 @@ const imageData = {
     }
 }
 
-setupGlobalMutationObserver();
+//mutationObserverGlobal();
+waitForMeasurementModal();
