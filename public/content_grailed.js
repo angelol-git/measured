@@ -12,9 +12,7 @@ function mutationObserverTable() {
                 console.log("Measured: Error - No active items.")
                 return;
             }
-
             compareMeasurements(measurementTable, activeItem);
-
         }
         else if (requestButton) {
             console.log("Measured: Error - No measurements provided.");
@@ -48,35 +46,33 @@ async function getActiveItem(category) {
     });
 }
 
-function compareMeasurements(measurementTable, item) {
-    const sourceMeasurements = parseGrailedMeasurements(measurementTable);
-    const sourceKeys = Object.keys(sourceMeasurements);
-    const activeKeys = Object.keys(item.measurements);
+function compareMeasurements(measurementTable, activeItem) {
+    const originalMeasurements = parseOriginalMeasurements(measurementTable);
+    const originalKeys = Object.keys(originalMeasurements);
+    const activeKeys = Object.keys(activeItem.measurements);
 
-    displayGrailedCompareItem(measurementTable, item);
-
-    for (let i = 0; i < sourceKeys.length; i++) {
+    displayActiveTitle(measurementTable, activeItem);
+    for (let i = 0; i < originalKeys.length; i++) {
         let tableRow = "";
-        if (activeKeys.includes(sourceKeys[i])) {
+        if (activeKeys.includes(originalKeys[i])) {
             for (let j = 0; j < measurementTable.children.length; j++) {
-                if (measurementTable.children[j].children[0].innerText.includes(sourceKeys[i])) {
+                if (measurementTable.children[j].children[0].innerText.includes(originalKeys[i])) {
                     tableRow = measurementTable.children[j];
                     break;
                 }
             }
-            const activeValues = (item.measurements[sourceKeys[i]])
-            const sourceValues = (sourceMeasurements[sourceKeys[i]])
+            const activeValues = (activeItem.measurements[originalKeys[i]])
+            const sourceValues = (originalMeasurements[originalKeys[i]])
 
             const inchDifference = (sourceValues[0] - activeValues[0]).toFixed(2);
             const cmDifference = (sourceValues[1] - activeValues[1]).toFixed(2);
 
-            displayGrailedDifference(tableRow, inchDifference, cmDifference, sourceValues[0], sourceValues[1], activeValues[0], activeValues[1]);
+            displayDifferences(tableRow, inchDifference, cmDifference, sourceValues[0], sourceValues[1], activeValues[0], activeValues[1]);
         }
-
     }
 }
 
-function parseGrailedMeasurements(measurementTable) {
+function parseOriginalMeasurements(measurementTable) {
     //Chest,Length,Shoulders,Sleeve Length,Hem
     const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
     const measurements = {};
@@ -94,17 +90,17 @@ function parseGrailedMeasurements(measurementTable) {
     return measurements;
 }
 
-function displayGrailedCompareItem(measurementTable, item) {
-    const parentDiv = measurementTable.parentNode;
-    const titleCard = document.createElement("div");
-    titleCard.innerHTML +=
+function displayActiveTitle(measurementTable, item) {
+    const activeTitle = document.createElement("div");
+    activeTitle.innerHTML +=
         `<p style="font-size:1.4rem;text-align:right">
             Comparing to <span style="color:grey">${item.title}</span>
         </p>`;
-    parentDiv.insertBefore(titleCard, measurementTable);
+    measurementTable.parentNode.insertBefore(activeTitle, measurementTable);
 }
 
-function displayGrailedDifference(tableRow, inchDifference, cmDifference, originalInch, originalCm, activeInch, activeCm) {
+function displayDifferences(tableRow, inchDifference, cmDifference, originalInch, originalCm, activeInch, activeCm) {
+
     // eslint-disable-next-line no-unused-vars
     const [_, inchCell, cmCell] = tableRow.children;
 

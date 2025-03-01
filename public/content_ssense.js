@@ -8,35 +8,71 @@ function isMobileView() {
 }
 
 function waitForMeasurementModal() {
-    const checkModalInterval = setInterval(async () => {
+    let retryDelay = 1000;
+    const maxRetryDelay = 5000;
+
+    const checkModal = async () => {
         const measurementModal = document.querySelector('.modal-container-outer');
         if (measurementModal) {
-            clearInterval(checkModalInterval);
             console.log("Measured: Measurement Modal Found.");
             const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
             const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
-            const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements")?.children[1];
-
-            if (!measurementModalHeader || !measurementModalImage || !measurementValuesElement) {
-                console.log("Measured: Error - No measurements provided ");
+            if (measurementModalHeader.children[0].innerText === "SIZE CONVERSION CHART") {
+                //Or not loaded yet, this still works fine though
+                console.log("Measured: Error - No measurements provided. Retrying in", retryDelay, "ms");
+                retryDelay = Math.min(retryDelay += 1000, maxRetryDelay);
+                setTimeout(checkModal, retryDelay);
                 return;
             }
 
             const category = getSSenseCategory();
             const activeItem = await getActiveItem(category);
             if (activeItem === -1) {
-                console.log("Measured: Error - No active items.")
+                console.log("Measured: Error - No active items. Retrying in", retryDelay, "ms");
+                retryDelay = Math.min(retryDelay += 1000, maxRetryDelay);
+                setTimeout(checkModal, retryDelay);
                 return;
             }
-
+            retryDelay = 1000;
             const imageSource = imageData[category][measurementModalImage.children[0].src];
-            console.log(measurementModalImage);
             handleModalButtons(measurementModal, activeItem, imageSource);
-            displaySSenseCompareItem(measurementModalImage, activeItem);
             compareMeasurements(measurementModal, activeItem, imageSource);
+        } else {
+            //console.log("Measured: Measurement Modal not found. Retrying in", retryDelay, "ms");
+            setTimeout(checkModal, retryDelay);
         }
-    }, 500); // Check every 500ms
+    };
+
+    checkModal();
 }
+
+// function waitForMeasurementModal() {
+//     const checkModalInterval = setInterval(async () => {
+//         const measurementModal = document.querySelector('.modal-container-outer');
+//         if (measurementModal) {
+//             console.log("Measured: Measurement Modal Found.");
+//             clearInterval(checkModalInterval);
+
+//             const measurementModalHeader = measurementModal.querySelector(".pdp-size-chart__tab-links");
+//             const measurementModalImage = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements");
+//             if (measurementModalHeader.children[0].innerText === "SIZE CONVERSION CHART") {
+//                 console.log("Measured: Error - No measurements provided ");
+//                 return;
+//             }
+
+//             const category = getSSenseCategory();
+//             const activeItem = await getActiveItem(category);
+//             if (activeItem === -1) {
+//                 console.log("Measured: Error - No active items.")
+//                 return;
+//             }
+//             const imageSource = imageData[category][measurementModalImage.children[0].src];
+//             console.log(imageSource);
+//             handleModalButtons(measurementModal, activeItem, imageSource);
+//             compareMeasurements(measurementModal, activeItem, imageSource);
+//         }
+//     }, 500); // Check every 500ms
+// }
 
 function handleModalButtons(measurementModal, activeItem, imageSource) {
     const sizeButtons = document.querySelector(".pdp-size-chart__size-buttons-list");
@@ -44,71 +80,65 @@ function handleModalButtons(measurementModal, activeItem, imageSource) {
     const cmButton = document.querySelector(".pdp-size-chart__unit-buttons-list")?.children[1];
     const closeButton = isMobileView() ? document.querySelector('.modal-close') : document.querySelector('.modal-btn-close');
     const backDropButton = document.getElementById('backdrop');
+    // Store event handler references
+    inchButtonHandlerRef = () => {
+        currentSystem = "inch";
+        compareMeasurements(measurementModal, activeItem, imageSource);
+    };
+    cmButtonHandlerRef = () => {
+        currentSystem = "cm";
+        compareMeasurements(measurementModal, activeItem, imageSource);
+    };
+    sizeButtonsHandlerRef = () => {
+        compareMeasurements(measurementModal, activeItem, imageSource);
+    };
 
     if (inchButton && cmButton && sizeButtons) {
-        inchButton.addEventListener('click', () => {
-            currentSystem = "inch";
-            compareMeasurements(measurementModal, activeItem, imageSource);
-        });
-
-        cmButton.addEventListener('click', () => {
-            currentSystem = "cm";
-            compareMeasurements(measurementModal, activeItem, imageSource);
-        });
-
-        sizeButtons.addEventListener('click', () => {
-            compareMeasurements(measurementModal, activeItem, imageSource);
-        });
+        inchButton.addEventListener('click', inchButtonHandlerRef);
+        cmButton.addEventListener('click', cmButtonHandlerRef);
+        sizeButtons.addEventListener('click', sizeButtonsHandlerRef);
     }
-
     if (closeButton) {
         closeButton.addEventListener('click', () => {
             closeModal(inchButton, cmButton, sizeButtons, closeButton);
-            waitForMeasurementModal();
+            setTimeout(waitForMeasurementModal, 500);
         });
     }
 
     if (backDropButton) {
         backDropButton.addEventListener('click', () => {
             closeModal(inchButton, cmButton, sizeButtons, closeButton);
-            waitForMeasurementModal();
+            setTimeout(waitForMeasurementModal, 500);
         });
     }
 }
 
 function compareMeasurements(measurementModal, activeItem, imageSource) {
     removePreviousMeasurements();
-    const originalMeasurements = getOriginalMeasurements(measurementModal, imageSource);
+    const originalMeasurements = parseOriginalMeasurements(measurementModal, imageSource);
+    const measurementDifferences = calculateDifferences(originalMeasurements, activeItem, currentSystem);
+    const originalMeasurementElements = Array.from(measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1].children);
 
-    if (originalMeasurements === -1) {
-        console.log("Measured: Error - parsing data.")
-        return;
-    }
-    const measurementDifferences = compareSSenseMeasurements(originalMeasurements, activeItem, currentSystem);
-    const measurementValueElements = Array.from(measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1].children);
-
+    displayActiveTitle(measurementModal, activeItem);
     for (const key in measurementDifferences) {
-        const measurementValueElement = measurementValueElements.filter((item) => {
+        const measurementValueElement = originalMeasurementElements.filter((item) => {
             return item.style.cssText === originalMeasurements[key].cssPosition;
         })[0];
         if (currentSystem === "inch") {
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
+            displayDifferences(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
         }
         else {
-            displaySSenseDifference(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
+            displayDifferences(measurementValueElement, measurementDifferences[key].valueDifference, currentSystem);
         }
     }
 }
 
-function getOriginalMeasurements(measurementModal, imageSource) {
+function parseOriginalMeasurements(measurementModal, measurementCategory) {
     const measurementValuesElement = measurementModal.querySelector(".pdp-size-chart__guide-image-measurements").children[1];
     if (!measurementValuesElement) {
         return -1;
     }
     const originalMeasurements = {};
-
-    //Currently only works with t-shirts because of the image.
-    const measurementCategory = imageSource;
 
     for (let i = 0; i < measurementValuesElement.children.length; i++) {
         const cssPosition = measurementValuesElement.children[i].style.cssText;
@@ -123,7 +153,7 @@ function getOriginalMeasurements(measurementModal, imageSource) {
     return originalMeasurements;
 }
 
-function compareSSenseMeasurements(originalMeasurements, item) {
+function calculateDifferences(originalMeasurements, item) {
     const activeKeys = Object.keys(item.measurements);
     const parsedKeys = Object.keys(originalMeasurements);
     const commonKeys = parsedKeys.filter((key) => activeKeys.includes(key));
@@ -148,14 +178,13 @@ function compareSSenseMeasurements(originalMeasurements, item) {
     return difference;
 }
 
-function displaySSenseCompareItem(measurementElement, item) {
-    const parentDiv = measurementElement.parentNode;
-    const titleCard = document.createElement("div");
-    titleCard.innerHTML = `<p">Comparing to ${item.title}</p>`;
-    parentDiv.insertBefore(titleCard, measurementElement);
+function displayActiveTitle(measurementElement, item) {
+    const activeTitle = document.createElement("div");
+    activeTitle.innerHTML = `<p style="color:grey">Comparing to ${item.title}</p>`;
+    measurementElement.parentNode.insertBefore(activeTitle, measurementElement);
 }
 
-function displaySSenseDifference(measurementElement, difference) {
+function displayDifferences(measurementElement, difference) {
     const newNode = document.createElement("p");
     newNode.setAttribute('class', 'measured-difference');
     newNode.style.width = "60px";
