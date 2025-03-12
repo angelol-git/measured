@@ -53,21 +53,22 @@ function compareMeasurements(measurementTable, activeItem) {
 
     displayActiveTitle(measurementTable, activeItem);
     for (let i = 0; i < originalKeys.length; i++) {
-        let tableRow = "";
+        let tableRowElement = "";
         if (activeKeys.includes(originalKeys[i])) {
+            //Match the correct key to the measurement table row element on the page
             for (let j = 0; j < measurementTable.children.length; j++) {
                 if (measurementTable.children[j].children[0].innerText.includes(originalKeys[i])) {
-                    tableRow = measurementTable.children[j];
+                    tableRowElement = measurementTable.children[j];
                     break;
                 }
             }
             const activeValues = (activeItem.measurements[originalKeys[i]])
-            const sourceValues = (originalMeasurements[originalKeys[i]])
+            const originalValues = (originalMeasurements[originalKeys[i]])
 
-            const inchDifference = (sourceValues[0] - activeValues[0]).toFixed(2);
-            const cmDifference = (sourceValues[1] - activeValues[1]).toFixed(2);
+            const inchDifference = (originalValues[0] - activeValues[0]).toFixed(2);
+            const cmDifference = (originalValues[1] - activeValues[1]).toFixed(2);
 
-            displayDifferences(tableRow, inchDifference, cmDifference, sourceValues[0], sourceValues[1], activeValues[0], activeValues[1]);
+            displayDifferences(tableRowElement, inchDifference, cmDifference, originalValues[0], originalValues[1], activeValues[0], activeValues[1]);
         }
     }
 }
@@ -99,10 +100,9 @@ function displayActiveTitle(measurementTable, item) {
     measurementTable.parentNode.insertBefore(activeTitle, measurementTable);
 }
 
-function displayDifferences(tableRow, inchDifference, cmDifference, originalInch, originalCm, activeInch, activeCm) {
-
+function displayDifferences(tableRowElement, inchDifference, cmDifference, originalInch, originalCm, activeInch, activeCm) {
     // eslint-disable-next-line no-unused-vars
-    const [_, inchCell, cmCell] = tableRow.children;
+    const [_, inchCell, cmCell] = tableRowElement.children;
 
     function formatDifference(value, value2, unit) {
         const num = parseFloat(value);
