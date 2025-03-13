@@ -47,47 +47,35 @@ async function getActiveItem(category) {
 }
 
 function compareMeasurements(measurementTable, activeItem) {
-    const originalMeasurements = parseOriginalMeasurements(measurementTable);
-    const originalKeys = Object.keys(originalMeasurements);
+    const originalMeasurements = getOriginalMeasurements(measurementTable);
     const activeKeys = Object.keys(activeItem.measurements);
 
     displayActiveTitle(measurementTable, activeItem);
-    for (let i = 0; i < originalKeys.length; i++) {
-        let tableRowElement = "";
-        if (activeKeys.includes(originalKeys[i])) {
-            //Match the correct key to the measurement table row element on the page
-            for (let j = 0; j < measurementTable.children.length; j++) {
-                if (measurementTable.children[j].children[0].innerText.includes(originalKeys[i])) {
-                    tableRowElement = measurementTable.children[j];
-                    break;
-                }
-            }
-            const activeValues = (activeItem.measurements[originalKeys[i]])
-            const originalValues = (originalMeasurements[originalKeys[i]])
+    for (let i = 0; i < activeKeys.length; i++) {
+        if (Object.hasOwn(originalMeasurements, activeKeys[i])) {
+            const activeValues = (activeItem.measurements[activeKeys[i]]);
+            const originalValues = (originalMeasurements[activeKeys[i]].measurements);
 
             const inchDifference = (originalValues[0] - activeValues[0]).toFixed(2);
             const cmDifference = (originalValues[1] - activeValues[1]).toFixed(2);
 
-            displayDifferences(tableRowElement, inchDifference, cmDifference, originalValues[0], originalValues[1], activeValues[0], activeValues[1]);
+            displayDifferences(originalMeasurements[activeKeys[i]].element, inchDifference, cmDifference, originalValues[0], originalValues[1], activeValues[0], activeValues[1]);
         }
     }
 }
 
-function parseOriginalMeasurements(measurementTable) {
-    //Chest,Length,Shoulders,Sleeve Length,Hem
-    const parsedData = Array.from(measurementTable.children).map(item => item.innerText.split('\n').filter(Boolean));
+function getOriginalMeasurements(measurementTable) {
     const measurements = {};
-
-    parsedData.forEach((innerArray) => {
-        const key = innerArray[0];
-        const value = [
-            (innerArray[1].split(" "))[0],
-            (innerArray[2].split(" "))[0]
-        ];
-
-        measurements[key] = value;
-    });
-
+    for (let i = 0; i < measurementTable.children.length; i++) {
+        const parsedRow = measurementTable.children[i].innerText.split('\n').filter(Boolean);
+        measurements[parsedRow[0]] = {
+            element: measurementTable.children[i],
+            measurements: [
+                parsedRow[1].split(" ")[0],
+                parsedRow[2].split(" ")[0]
+            ]
+        };
+    }
     return measurements;
 }
 

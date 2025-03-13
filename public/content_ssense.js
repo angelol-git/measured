@@ -125,9 +125,9 @@ function displayActiveTitle(measurementList, item) {
     measurementList.parentNode.parentNode.insertBefore(activeTitle, measurementList.parentNode);
 }
 
-//Have to use this method to add classes and append right beside the list item element
-//Adding directly in the innerHtml list item element causes issues with measurement/unit changes
-//(Changes from inches to cm)
+// Have to use this method to add classes and append right beside the list item element
+// Adding directly in the innerHtml list item element causes issues with measurement/unit changes
+// (Changes from inches to cm)
 function displayDifferences(listItemElement, difference) {
     //Use p tag instead of ul,li or div to not conflict with css
     const newDifferenceElement = document.createElement("p");
