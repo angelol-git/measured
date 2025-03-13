@@ -87,32 +87,30 @@ function handleModalButtons(measurementModal, activeItem, measurementMap) {
 
 function compareMeasurements(measurementList, activeItem, measurementMap) {
     deletePreviousMeasurements();
+    const originalMeasurements = getOriginalMeasurements(measurementList, measurementMap);
     const activeKeys = Object.keys(activeItem.measurements);
+
     displayActiveTitle(measurementList, activeItem);
-
     for (let i = 0; i < activeKeys.length; i++) {
-        if (Object.hasOwn(measurementMap, activeKeys[i])) {
-
-            const { element: listItemElement, value: originalValue } = getOriginalMeasurement(measurementList, measurementMap, activeKeys[i]);
-            if (!listItemElement) continue;
-
+        if (Object.hasOwn(originalMeasurements, activeKeys[i])) {
             let activeValues = currentSystem === "inch" ? activeItem.measurements[activeKeys[i]][0] : activeItem.measurements[activeKeys[i]][1];
-            let valueDifference = (originalValue - activeValues).toFixed(2);
-            displayDifferences(listItemElement, valueDifference, currentSystem);
+            let valueDifference = (originalMeasurements[activeKeys[i]].measurement - activeValues).toFixed(2);
+            displayDifferences(originalMeasurements[activeKeys[i]].element, valueDifference, currentSystem);
         }
     }
 }
 
-function getOriginalMeasurement(measurementList, measurementMap, key) {
+function getOriginalMeasurements(measurementList, measurementMap) {
+    const measurements = {};
     for (let i = 0; i < measurementList.children.length; i++) {
-        if (measurementList.children[i].style.cssText === measurementMap[key]) {
-            return {
-                element: measurementList.children[i],
-                value: measurementList.children[i].innerText.split(" ")[0]
-            };
+        const parsedItem = measurementList.children[i];
+
+        measurements[measurementMap[parsedItem.style.cssText]] = {
+            element: measurementList.children[i],
+            measurement: measurementList.children[i].innerText.split(" ")[0]
         }
     }
-    return { element: null, value: null };
+    return measurements;
 }
 
 function displayActiveTitle(measurementList, item) {
@@ -217,97 +215,97 @@ function getSSenseCategory() {
 const imageData = {
     Tops: {
         "https://res.cloudinary.com/ssense/image/upload/v1485365329/size_guide/category_215.jpg": {
-            "Chest": "left: 51%; top: 40%;",
-            "Sleeve Length": "left: 16%; top: 20%;",
-            "Shoulders": "left: 51%; top: 8%;",
-            "Length": "left: 87%; top: 54%;"
+            "left: 51%; top: 40%;": "Chest",
+            "left: 16%; top: 20%;": "Sleeve Length",
+            "left: 51%; top: 8%;": "Shoulders",
+            "left: 87%; top: 54%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365328/size_guide/category_216.jpg": {
-            "Chest": "left: 45%; top: 40%;",
-            "Sleeve Length": "left: 12%; top: 18%;",
-            "Shoulders": "left: 45%; top: 6%;",
-            "Length": "left: 91%; top: 55%;"
+            "left: 45%; top: 40%;": "Chest",
+            "left: 12%; top: 18%;": "Sleeve Length",
+            "left: 45%; top: 6%;": "Shoulders",
+            "left: 91%; top: 55%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365327/size_guide/category_217.jpg": {
-            "Chest": "left: 45%; top: 40%;",
-            "Sleeve Length": "left: 12%; top: 18%;",
-            "Shoulders": "left: 45%; top: 6%;",
-            "Length": "left: 90%; top: 55%;"
+            "left: 45%; top: 40%;": "Chest",
+            "left: 12%; top: 18%;": "Sleeve Length",
+            "left: 45%; top: 6%;": "Shoulders",
+            "left: 90%; top: 55%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1509463872/size_guide/category_218.jpg": {
-            "Chest": "left: 42%; top: 44%;",
-            "Length": "left: 72%; top: 55%;"
+            "left: 42%; top: 44%;": "Chest",
+            "left: 72%; top: 55%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365331/size_guide/category_204.jpg": {
-            "Chest": "left: 49%; top: 42%;",
-            "Sleeve Length": "left: 13%; top: 32%;",
-            "Shoulders": "left: 49%; top: 9%;",
-            "Length": "left: 87%; top: 56%;"
+            "left: 49%; top: 42%;": "Chest",
+            "left: 13%; top: 32%;": "Sleeve Length",
+            "left: 49%; top: 9%;": "Shoulders",
+            "left: 87%; top: 56%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365334/size_guide/category_205_208.jpg": {
-            "Chest": "left: 51%; top: 41%;",
-            "Sleeve Length": "left: 18%; top: 23%;",
-            "Shoulders": "left: 51%; top: 7%;",
-            "Length": "left: 88%; top: 52%;"
+            "left: 51%; top: 41%;": "Chest",
+            "left: 18%; top: 23%;": "Sleeve Length",
+            "left: 51%; top: 7%;": "Shoulders",
+            "left: 88%; top: 52%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1509463877/size_guide/category_206.jpg": {
-            "Chest": "left: 48%; top: 42%;",
-            "Sleeve Length": "left: 15%; top: 24%;",
-            "Shoulders": "left: 48%; top: 9%;",
-            "Length": "left: 84%; top: 51%;"
+            "left: 48%; top: 42%;": "Chest",
+            "left: 15%; top: 24%;": "Sleeve Length",
+            "left: 48%; top: 9%;": "Shoulders",
+            "left: 84%; top: 51%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1509463875/size_guide/category_207_209.jpg": {
-            "Chest": "left: 48%; top: 41%;",
-            "Sleeve Length": "left: 15%; top: 25%;",
-            "Shoulders": "left: 48%; top: 5%;",
-            "Length": "left: 83%; top: 55%;"
+            "left: 48%; top: 41%;": "Chest",
+            "left: 15%; top: 25%;": "Sleeve Length",
+            "left: 48%; top: 5%;": "Shoulders",
+            "left: 83%; top: 55%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365334/size_guide/category_210.jpg": {
-            "Chest": "left: 51%; top: 40%;",
-            "Sleeve Length": "left: 16%; top: 18%;",
-            "Shoulders": "left: 51%; top: 51%;",
-            "Length": "left: 87%; top: 55%;"
+            "left: 51%; top: 40%;": "Chest",
+            "left: 16%; top: 18%;": "Sleeve Length",
+            "left: 51%; top: 51%;": "Shoulders",
+            "left: 87%; top: 55%;": "Length"
         }
     },
     Outerwear: {
         "https://res.cloudinary.com/ssense/image/upload/v1485365324/size_guide/category_179_181_182_184.jpg": {
-            "Chest": "left: 48%; top: 52%;",
-            "Sleeve Length": "left: 15%; top: 33%;",
-            "Shoulders": "left: 48%; top: 16%;",
-            "Length": "left: 84%; top: 62%;"
+            "left: 48%; top: 52%;": "Chest",
+            "left: 15%; top: 33%;": "Sleeve Length",
+            "left: 48%; top: 16%;": "Shoulders",
+            "left: 84%; top: 62%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365323/size_guide/category_180_183_187_188.jpg": {
-            "Chest": "left: 48%; top: 36%;",
-            "Sleeve Length": "left: 12%; top: 25%;",
-            "Shoulders": "left: 48%; top: 1%;",
-            "Length": "left: 85%; top: 53%;"
+            "left: 48%; top: 36%;": "Chest",
+            "left: 12%; top: 25%;": "Sleeve Length",
+            "left: 48%; top: 1%;": "Shoulders",
+            "left: 85%; top: 53%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1485365325/size_guide/category_185.jpg": {
-            "Chest": "left: 48%; top: 41%;",
-            "Sleeve Length": "left: 13%; top: 22%;",
-            "Shoulders": "left: 48%; top: 5%;",
-            "Length": "left: 87%; top: 52%;"
+            "left: 48%; top: 41%;": "Chest",
+            "left: 13%; top: 22%;": "Sleeve Length",
+            "left: 48%; top: 5%;": "Shoulders",
+            "left: 87%; top: 52%;": "Length"
         },
         "https://res.cloudinary.com/ssense/image/upload/v1509463867/size_guide/category_189_202.jpg": {
-            "Chest": "left: 44%; top: 41%;",
-            "Shoulders": "left: 44%; top: 3%;",
-            "Length": "left: 72%; top: 52%;"
+            "left: 44%; top: 41%;": "Chest",
+            "left: 44%; top: 3%;": "Shoulders",
+            "left: 72%; top: 52%;": "Length"
         }
     },
     Bottoms: {
-        //Pants,Trousers,Jeans
+        //Pants, Jeans, Trousers 
         "https://res.cloudinary.com/ssense/image/upload/v1509463868/size_guide/category_193_195.jpg": {
-            "Leg Opening": "left: 33%; top: 99%;",
-            "Front Rise": "left: 69%; top: 20%;",
-            "Inseam": "left: 52%; top: 57%;",
-            "Waist": "left: 45%; top: 2%;"
+            "left: 33%; top: 99%;": "Leg Opening",
+            "left: 69%; top: 20%;": "Front Rise",
+            "left: 52%; top: 57%;": "Inseam",
+            "left: 45%; top: 2%;": "Waist"
         },
         //Sweatpants
         "https://res.cloudinary.com/ssense/image/upload/v1509463869/size_guide/category_194.jpg": {
-            "Leg Opening": "left: 33%; top: 100%;",
-            "Front Rise": "left: 69%; top: 20%;",
-            "Inseam": "left: 54%; top: 59%;",
-            "Waist": "left: 45%; top: 2%;"
+            "left: 33%; top: 100%;": "Leg Opening",
+            "left: 69%; top: 20%;": "Front Rise",
+            "left: 54%; top: 59%;": "Inseam",
+            "left: 45%; top: 2%;": "Waist"
         }
     }
 }
