@@ -93,9 +93,9 @@ function compareMeasurements(measurementList, activeItem, measurementMap) {
     displayActiveTitle(measurementList, activeItem);
     for (let i = 0; i < activeKeys.length; i++) {
         if (Object.hasOwn(originalMeasurements, activeKeys[i])) {
-            let activeValues = currentSystem === "inch" ? activeItem.measurements[activeKeys[i]][0] : activeItem.measurements[activeKeys[i]][1];
-            let valueDifference = (originalMeasurements[activeKeys[i]].measurement - activeValues).toFixed(2);
-            displayDifferences(originalMeasurements[activeKeys[i]].element, valueDifference, currentSystem);
+            let activeValue = currentSystem === "inch" ? activeItem.measurements[activeKeys[i]][0] : activeItem.measurements[activeKeys[i]][1];
+            let valueDifference = (originalMeasurements[activeKeys[i]].measurement - activeValue).toFixed(2);
+            displayDifferences(originalMeasurements[activeKeys[i]].element, valueDifference, activeValue);
         }
     }
 }
@@ -118,7 +118,7 @@ function displayActiveTitle(measurementList, item) {
     activeTitle.classList.add("measured-difference");
     activeTitle.innerHTML +=
         `<p "style="color:grey">
-            Comparing to ${item.title}
+            Measured: Comparing to ${item.title}
         </p>`;
     measurementList.parentNode.parentNode.insertBefore(activeTitle, measurementList.parentNode);
 }
@@ -126,19 +126,27 @@ function displayActiveTitle(measurementList, item) {
 // Have to use this method to add classes and append right beside the list item element
 // Adding directly in the innerHtml list item element causes issues with measurement/unit changes
 // (Changes from inches to cm)
-function displayDifferences(listItemElement, difference) {
+function displayDifferences(listItemElement, difference, activeValue) {
     //Use p tag instead of ul,li or div to not conflict with css
     const newDifferenceElement = document.createElement("p");
     newDifferenceElement.classList.add("measured-difference");
     newDifferenceElement.style.whiteSpace = "nowrap";
     function formatDifference(difference) {
+        const sign = difference > 0 ? "+" : "";
+        const color = difference > 0 ? "green" : "red";
+        const unit = currentSystem === "inch" ? ' "' : " cm";
         if (parseFloat(difference) === 0.00) {
-            return `<span style="background-color: white; color:grey">=</span>`;
+            return `<span style="background-color: white; color:grey">
+                        ${activeValue}${unit}
+                        =
+                        <br>
+                    </span>`;
         } else {
-            const color = difference > 0 ? "green" : "red";
-            const sign = difference > 0 ? "+" : "";
-            const unit = currentSystem === "inch" ? ' "' : " cm";
-            return `<span style="background-color: white; color: ${color}">${sign}${difference} ${unit}</span>`;
+            return `<span style="background-color:white;">   
+                        <span style="color:grey">${activeValue}${unit}</span>
+                        <br>
+                        <span style="color: ${color}">${sign}${difference} ${unit}</span>
+                    </span >`
         }
     }
 

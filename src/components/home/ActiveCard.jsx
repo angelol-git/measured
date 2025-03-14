@@ -5,7 +5,7 @@ import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
 function ActiveCard({ key, id, values, activeItem }) {
-  const { active, category, title, imageSrc, measurements } = values;
+  const { category, title, imageSrc, measurements } = values;
   const [detailView, setDetailView] = useState(false);
   function handleClick() {
     setDetailView((detailView) => !detailView);

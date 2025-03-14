@@ -83,7 +83,7 @@ function displayActiveTitle(measurementTable, item) {
     const activeTitle = document.createElement("div");
     activeTitle.innerHTML +=
         `<p style="font-size:1.4rem;text-align:right">
-            Comparing to <span style="color:grey">${item.title}</span>
+            Measured: Comparing to <span style="color:grey">${item.title}</span>
         </p>`;
     measurementTable.parentNode.insertBefore(activeTitle, measurementTable);
 }
