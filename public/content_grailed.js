@@ -96,10 +96,10 @@ function displayDifferences(tableRowElement, inchDifference, cmDifference, origi
         const num = parseFloat(value);
         //accommodate for edge cases due to rounding conversation errors 
         const num2 = parseFloat(value2);
-        if (num === 0 || num2 === 0) return `<span style="color: grey; font-weight:bold">=</span>`;
+        if (num === 0 || num2 === 0) return `<span style="color: grey;>=</span>`;
         const color = num > 0 ? "green" : "red";
         const sign = num > 0 ? "+" : "";
-        return `<span style="color: ${color}; font-weight:bold">${sign}${value} ${unit}</span>`;
+        return `<span style="color: ${color};">${sign}${value} ${unit}</span>`;
     }
 
     inchCell.innerHTML =

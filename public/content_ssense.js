@@ -117,8 +117,8 @@ function displayActiveTitle(measurementList, item) {
     const activeTitle = document.createElement("div");
     activeTitle.classList.add("measured-difference");
     activeTitle.innerHTML +=
-        `<p "style="color:grey">
-            Measured: Comparing to ${item.title}
+        `<p>
+            Measured: Comparing to <span style="color:grey">${item.title}</span>
         </p>`;
     measurementList.parentNode.parentNode.insertBefore(activeTitle, measurementList.parentNode);
 }
@@ -172,14 +172,19 @@ function closeModal(inchButton, cmButton, sizeButtons, closeButton) {
 }
 
 async function getActiveItem(category) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-undef
         chrome.runtime.sendMessage({ action: 'getItem', key: 'items', category: category }, (response) => {
-            const item = response.items;
+            // eslint-disable-next-line no-undef 
+            if (chrome.runtime.lastError) {
+                // eslint-disable-next-line no-undef
+                return reject(chrome.runtime.lastError);
+            }
+
+            const item = response?.items || {};
             if (Object.keys(item).length === 0) {
                 resolve(-1);
-            }
-            else {
+            } else {
                 resolve(Object.values(item)[0]);
             }
         });

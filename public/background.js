@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'getItem') {
         chrome.storage.local.get("items", (result) => {
@@ -17,7 +18,5 @@ function returnValidItems(items, category) {
         }
         return result;
     }, {});
-
     return activeItems;
-
 }
