@@ -20,7 +20,6 @@ function Home({ items, activeItem }) {
       <section className="item-counter sub-row text-small item-counter-row">
         <p>
           <span style={{ color: "blue", fontWeight: "bold" }}>
-            {" "}
             {activeItemsLength}{" "}
           </span>
           Active Item&#40;s&#41;

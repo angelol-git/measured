@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import MeasurementValues from "../items/measurementValues/MeasurementValues";
 import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
@@ -6,14 +7,6 @@ import "./ActiveCard.css";
 function ActiveCard({ key, id, values, activeItem }) {
   const { active, category, title, imageSrc, measurements } = values;
   const [detailView, setDetailView] = useState(false);
-  const activeButtonElement = active ? (
-    <button
-      className="primary-button inactive-button-color"
-      onClick={() => activeItem(id, false)}
-    >
-      Set as Inactive
-    </button>
-  ) : null;
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
@@ -49,7 +42,17 @@ function ActiveCard({ key, id, values, activeItem }) {
             textSize={"text-base"}
           />
         </div>
-        <footer className="active-button-row">{activeButtonElement}</footer>
+        <footer className="active-button-row">
+          <button
+            className="primary-button inactive-button-color"
+            onClick={() => activeItem(id, false)}
+          >
+            Set as Inactive
+          </button>
+          <Link to={`/items/${id}`}>
+            <button className="primary-button">View Details</button>
+          </Link>
+        </footer>
       </section>
     </article>
   );

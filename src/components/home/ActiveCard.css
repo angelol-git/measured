@@ -51,5 +51,7 @@
 }
 
 .active-button-row {
-    text-align: right;
+    display: flex;
+    gap: 15px;
+    justify-content: end;
 }
