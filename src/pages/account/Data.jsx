@@ -36,7 +36,6 @@ function Data({ items, setItems }) {
         const importLength = Object.keys(jsonObject).length;
         setImportError(``);
         setImportMessage(`Imported ${importLength} Items`);
-        console.log(importMessage);
         handleImport(jsonObject);
       } catch (error) {
         setImportMessage(`${event.target.files[0].name}`);

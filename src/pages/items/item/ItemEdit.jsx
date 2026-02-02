@@ -63,7 +63,6 @@ function ItemEdit({ items, settings, updateItem }) {
 
       newItem.measurements[categoryKey] = categoryValue;
     }
-    console.log(newItem);
     updateItem(newItem);
     navigate(-1);
   }

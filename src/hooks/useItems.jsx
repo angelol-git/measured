@@ -18,12 +18,10 @@ function useItems() {
   };
 
   const updateItem = (item) => {
-    //console.log("item: ", item);
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
 
       updatedItems[item.id] = item;
-      //console.log("updateditems: ", updatedItems);
       return updatedItems;
     });
   };
@@ -32,7 +30,6 @@ function useItems() {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
 
-      //console.log(updatedItems[itemId.id]);
       if (!isNewItem) {
         updatedItems[itemId].active = !updatedItems[itemId].active;
       }
