@@ -3,7 +3,16 @@ function mutationObserverTable() {
     '[class*="Sidebar_sidebar__"]',
   );
   const config = { childList: true, subtree: true };
-  const callback = async (mutationsList, observer) => {
+
+  const debounce = (fn, ms) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), ms);
+    };
+  };
+
+  const callback = debounce(async (mutationsList, observer) => {
     const measurementTable = document.querySelector('[class*="Table_table__"]');
     const requestButton = document.querySelector(
       '[class*="RequestAction_button__"]',
@@ -22,7 +31,7 @@ function mutationObserverTable() {
       console.log("Measured: Error - No measurements provided.");
       observer.disconnect();
     }
-  };
+  }, 100);
 
   const observer = new MutationObserver(callback);
   observer.observe(sideBarContainer, config);
@@ -51,6 +60,8 @@ function getGrailedCategory() {
 
 function getGrailedCategoryBreadCrumbs() {
   const classList = document.querySelectorAll('[class*="Breadcrumbs_link__"]');
+  if (classList.length < 3) return null;
+
   const lastElement = classList[2].innerText.split(" ").length;
   return classList[2].innerText.split(" ")[lastElement - 1];
 }
