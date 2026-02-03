@@ -2,39 +2,51 @@ function mutationObserverTable() {
   const sideBarContainer = document.querySelector(
     '[class*="Sidebar_sidebar__"]',
   );
+
+  if (!sideBarContainer) {
+    console.log("Measured: Sidebar not found.");
+    return;
+  }
+
   const config = { childList: true, subtree: true };
 
-  const debounce = (fn, ms) => {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), ms);
-    };
-  };
-
-  const callback = debounce(async (mutationsList, observer) => {
+  const callback = (mutationsList, observer) => {
     const measurementTable = document.querySelector('[class*="Table_table__"]');
     const requestButton = document.querySelector(
       '[class*="RequestAction_button__"]',
     );
-    if (measurementTable) {
+
+    if (measurementTable || requestButton) {
       observer.disconnect();
-      console.log("Measured: Found Table.");
-      const category = getGrailedCategory();
-      const activeItem = await getActiveItem(category);
-      if (activeItem === -1) {
-        console.log("Measured: Error - No active items.");
-        return;
-      }
-      compareMeasurements(measurementTable, activeItem);
-    } else if (requestButton) {
-      console.log("Measured: Error - No measurements provided.");
-      observer.disconnect();
+      clearTimeout(timeoutId);
     }
-  }, 100);
+
+    if (measurementTable) {
+      handleMeasurementTable(measurementTable);
+    } else if (requestButton) {
+      console.warn("Measured: No measurements provided.");
+    }
+  };
 
   const observer = new MutationObserver(callback);
   observer.observe(sideBarContainer, config);
+
+  const timeoutId = setTimeout(() => {
+    observer.disconnect();
+    console.warn("Measured: Timeout - stopped observing");
+  }, 10000);
+}
+
+async function handleMeasurementTable(measurementTable) {
+  const category = getGrailedCategory();
+  const activeItem = await getActiveItem(category);
+
+  if (activeItem === -1) {
+    console.warn("Measured: No active items.");
+    return;
+  }
+
+  compareMeasurements(measurementTable, activeItem);
 }
 
 function getGrailedCategory() {
@@ -72,6 +84,12 @@ async function getActiveItem(category) {
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },
       (response) => {
+        // eslint-disable-next-line no-undef
+        if (chrome.runtime.lastError || !response?.items) {
+          resolve(-1);
+          return;
+        }
+
         const item = response.items;
         if (Object.keys(item).length === 0) {
           resolve(-1);
@@ -110,11 +128,14 @@ function compareMeasurements(measurementTable, activeItem) {
 }
 
 function getOriginalMeasurements(measurementTable) {
+  if (!measurementTable?.children?.length) return {};
+
   const measurements = {};
   for (let i = 0; i < measurementTable.children.length; i++) {
     const parsedRow = measurementTable.children[i].innerText
       .split("\n")
       .filter(Boolean);
+
     measurements[parsedRow[0]] = {
       element: measurementTable.children[i],
       measurements: [parsedRow[1].split(" ")[0], parsedRow[2].split(" ")[0]],
