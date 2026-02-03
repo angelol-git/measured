@@ -29,6 +29,27 @@ function mutationObserverTable() {
 }
 
 function getGrailedCategory() {
+  const nextDataScript = document.getElementById("__NEXT_DATA__");
+  if (!nextDataScript) return getGrailedCategoryBreadCrumbs();
+
+  try {
+    const data = JSON.parse(nextDataScript.textContent);
+    const listing = data.props?.pageProps?.listing;
+
+    if (!listing) return null;
+
+    //  department: listing.department,
+    //  category: listing.category,
+    //  subcategory: listing.subcategory,
+    //  fullPath: listing.categoryPath,
+    return listing.category.charAt(0).toUpperCase() + listing.category.slice(1);
+  } catch (e) {
+    console.error("Failed to parse __NEXT_DATA__:", e);
+    return getGrailedCategoryBreadCrumbs();
+  }
+}
+
+function getGrailedCategoryBreadCrumbs() {
   const classList = document.querySelectorAll('[class*="Breadcrumbs_link__"]');
   const lastElement = classList[2].innerText.split(" ").length;
   return classList[2].innerText.split(" ")[lastElement - 1];
