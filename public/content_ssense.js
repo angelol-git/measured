@@ -1,5 +1,8 @@
 let currentSystem = "inch";
 let modalObserver = null;
+const OBSERVER_TIMEOUT_MS = 10000;
+const SIZE_CHANGE_DELAY_MS = 10;
+const DECIMAL_PRECISION = 2;
 
 document.addEventListener("click", (e) => {
   if (e.target.closest(".pdp-size-chart__view-guide")) {
@@ -32,7 +35,7 @@ function observeModalContent(modal) {
 
   setTimeout(() => {
     modalObserver?.disconnect();
-  }, 10000);
+  }, OBSERVER_TIMEOUT_MS);
 }
 
 function isModalReady(modal) {
@@ -90,7 +93,7 @@ async function handleMeasurementModal(modal) {
     if (target.closest(".pdp-size-chart__size-buttons-list")) {
       setTimeout(
         () => compareMeasurements(measurementList, activeItem, measurementMap),
-        10,
+        SIZE_CHANGE_DELAY_MS,
       );
       return;
     }
@@ -121,7 +124,7 @@ function compareMeasurements(measurementList, activeItem, measurementMap) {
           : activeItem.measurements[activeKeys[i]][1];
       let valueDifference = (
         originalMeasurements[activeKeys[i]].measurement - activeValue
-      ).toFixed(2);
+      ).toFixed(DECIMAL_PRECISION);
       displayDifferences(
         originalMeasurements[activeKeys[i]].element,
         valueDifference,

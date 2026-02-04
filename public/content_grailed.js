@@ -1,3 +1,5 @@
+const OBSERVER_TIMEOUT_MS = 10000;
+
 function mutationObserverTable() {
   const sideBarContainer = document.querySelector(
     '[class*="Sidebar_sidebar__"]',
@@ -48,7 +50,7 @@ function mutationObserverTable() {
   const timeoutId = setTimeout(() => {
     observer.disconnect();
     console.warn("Measured: Timeout - stopped observing");
-  }, 10000);
+  }, OBSERVER_TIMEOUT_MS);
 }
 
 async function handleMeasurementTable(measurementTable) {
