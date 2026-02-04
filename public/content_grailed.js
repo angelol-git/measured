@@ -4,27 +4,41 @@ function mutationObserverTable() {
   );
 
   if (!sideBarContainer) {
-    console.log("Measured: Sidebar not found.");
+    console.warn("Measured: Sidebar not found.");
     return;
   }
 
   const config = { childList: true, subtree: true };
 
   const callback = (mutationsList, observer) => {
-    const measurementTable = document.querySelector('[class*="Table_table__"]');
-    const requestButton = document.querySelector(
-      '[class*="RequestAction_button__"]',
-    );
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType !== 1) continue;
 
-    if (measurementTable || requestButton) {
-      observer.disconnect();
-      clearTimeout(timeoutId);
-    }
+          const measurementTable = node.matches('[class*="Table_table__"]')
+            ? node
+            : node.querySelector('[class*="Table_table__"]');
 
-    if (measurementTable) {
-      handleMeasurementTable(measurementTable);
-    } else if (requestButton) {
-      console.warn("Measured: No measurements provided.");
+          const requestButton = node.matches(
+            '[class*="RequestAction_button__"]',
+          )
+            ? node
+            : node.querySelector('[class*="RequestAction_button__"]');
+
+          if (measurementTable || requestButton) {
+            observer.disconnect();
+            clearTimeout(timeoutId);
+
+            if (measurementTable) {
+              handleMeasurementTable(measurementTable);
+            } else {
+              console.warn("Measured: No measurements provided.");
+            }
+            return;
+          }
+        }
+      }
     }
   };
 

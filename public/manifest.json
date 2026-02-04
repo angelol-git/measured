@@ -14,7 +14,7 @@
     },
     {
       "matches": ["https://www.ssense.com/*/product/*"],
-      "js": ["content_ssense.js"]
+      "js": ["content_ssense.js", "ssenseData.js"]
     }
   ],
   "background": {
