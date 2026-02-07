@@ -1,6 +1,7 @@
 import { useState, useEffect, useId } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { useItemsContext } from "../../../../context/ItemsContext";
 import SubHeader from "../../../../components/header/SubHeader";
 import { measurementCategory } from "../../../../components/items/measurementInput/categoriesData";
 import MeasurementInput from "../../../../components/items/measurementInput/MeasurementInput";
@@ -12,7 +13,9 @@ import {
   isValidUrl,
 } from "../../../../components/items/forms/FormInputs";
 import "./ItemAdd.css";
-function Add({ activeItem, addItem, settings }) {
+
+function Add({ settings }) {
+  const { activeItem, addItem } = useItemsContext();
   const navigate = useNavigate();
   const [category, setCategory] = useState("Tops");
   const [imageUrl, setImageUrl] = useState("");

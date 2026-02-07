@@ -1,6 +1,9 @@
+import { useItemsContext } from "../context/ItemsContext";
 import ActiveCard from "../components/home/ActiveCard";
 
-function Home({ items, activeItem }) {
+function Home() {
+  const { items } = useItemsContext();
+  
   let itemsLength = Object.keys(items).length;
   let activeItemsLength = 0;
   let activeCardElements;
@@ -10,7 +13,7 @@ function Home({ items, activeItem }) {
         activeItemsLength++;
       }
       return value.active ? (
-        <ActiveCard key={key} id={key} values={value} activeItem={activeItem} />
+        <ActiveCard key={key} id={key} values={value} />
       ) : null;
     });
   }

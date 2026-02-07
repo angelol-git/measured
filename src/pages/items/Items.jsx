@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
+import { useItemsContext } from "../../context/ItemsContext";
 import ItemCard from "../../components/items/ItemCard";
 import "./Items.css";
-function Items({ items, activeItem, deleteItem }) {
+
+function Items() {
+  const { items } = useItemsContext();
+  
   const itemsLength = Object.keys(items).length;
   let itemCardElements;
 
@@ -20,8 +24,6 @@ function Items({ items, activeItem, deleteItem }) {
           <ItemCard
             key={key}
             items={value}
-            activeItem={activeItem}
-            deleteItem={deleteItem}
           />
         );
       });

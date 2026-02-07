@@ -1,10 +1,12 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { useItemsContext } from "../../../../context/ItemsContext";
 import SubHeader from "../../../../components/header/SubHeader";
 import MeasurementValues from "../../../../components/items/measurementValues/MeasurementValues";
 import ItemImage from "../../../../components/items/itemImage/ItemImage";
 import "./ItemDetail.css";
 
-function ItemDetail({ items, activeItem, deleteItem }) {
+function ItemDetail() {
+  const { items, activeItem, deleteItem } = useItemsContext();
   const navigate = useNavigate();
   const { id } = useParams();
 

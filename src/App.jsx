@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import useItems from "./hooks/useItems";
+import { ItemsProvider } from "./context/ItemsContext";
 import useSettings from "./hooks/useSettings";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
@@ -14,74 +14,35 @@ import FilterSizes from "./pages/account/filter/FilterSizes";
 import "./App.css";
 
 function App() {
-  const [items, setItems, addItem, deleteItem, updateItem, activeItem] =
-    useItems({});
   const [settings, handleSizeUpdate] = useSettings({});
 
   return (
-    <div className="app">
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home items={items} activeItem={activeItem} />}
-        />
-        <Route
-          path="items"
-          element={
-            <Items
-              items={items}
-              deleteItem={deleteItem}
-              activeItem={activeItem}
-            />
-          }
-        />
-        <Route
-          path="items/add"
-          element={
-            <ItemAdd
-              activeItem={activeItem}
-              addItem={addItem}
-              settings={settings}
-            />
-          }
-        />
-        <Route
-          path="items/:id"
-          element={
-            <ItemDetail
-              items={items}
-              activeItem={activeItem}
-              deleteItem={deleteItem}
-            />
-          }
-        />
-        <Route
-          path="items/:id/edit"
-          element={
-            <ItemEdit
-              items={items}
-              settings={settings}
-              updateItem={updateItem}
-            />
-          }
-        />
-        <Route path="account" element={<Account />} />
-        <Route
-          path="account/data"
-          element={<Data items={items} setItems={setItems} />}
-        />
-        <Route
-          path="account/filterSizes"
-          element={
-            <FilterSizes
-              settings={settings}
-              handleSizeUpdate={handleSizeUpdate}
-            />
-          }
-        />
-      </Routes>
-    </div>
+    <ItemsProvider>
+      <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="items" element={<Items />} />
+          <Route path="items/add" element={<ItemAdd settings={settings} />} />
+          <Route path="items/:id" element={<ItemDetail />} />
+          <Route
+            path="items/:id/edit"
+            element={<ItemEdit settings={settings} />}
+          />
+          <Route path="account" element={<Account />} />
+          <Route path="account/data" element={<Data />} />
+          <Route
+            path="account/filterSizes"
+            element={
+              <FilterSizes
+                settings={settings}
+                handleSizeUpdate={handleSizeUpdate}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </ItemsProvider>
   );
 }
 

@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useItemsContext } from "../../context/ItemsContext";
 import MeasurementValues from "../items/measurementValues/MeasurementValues";
 import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
-function ActiveCard({ key, id, values, activeItem }) {
+function ActiveCard({ key, id, values }) {
+  const { activeItem } = useItemsContext();
   const { category, title, imageSrc, measurements } = values;
   const [detailView, setDetailView] = useState(false);
+  
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
+  
   function handleKeyDown(event) {
     if (event.key === "Enter") {
       setDetailView((detailView) => !detailView);

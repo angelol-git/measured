@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useItemsContext } from "../../../context/ItemsContext";
 import SubHeader from "../../../components/header/SubHeader";
 import "./Data.css";
 
-function Data({ items, setItems }) {
+function Data() {
+  const { items, setItems } = useItemsContext();
   const navigate = useNavigate();
   const [importMessage, setImportMessage] = useState("");
   const [importError, setImportError] = useState("");
