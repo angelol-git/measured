@@ -83,7 +83,7 @@ async function handleMeasurementModal(modal) {
     // Unit buttons either Inch or CM
     const unitBtn = target.closest(".pdp-size-chart__unit-buttons-list");
     if (unitBtn) {
-      const isCm = unitBtn.innerText.includes("CM");
+      const isCm = unitBtn.innerText?.trim().includes("CM");
       currentSystem = isCm ? "cm" : "inch";
       compareMeasurements(measurementList, activeItem, measurementMap);
       return;

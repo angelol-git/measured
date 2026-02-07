@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import "./Category.css";
 
 function Category({ category, categoryType, setCategory }) {
@@ -37,38 +38,26 @@ function Category({ category, categoryType, setCategory }) {
             {!isCategoryOpen
               ? category.map((item) => {
                   if (item.checked === true) {
-                    return <p class="text-small">{item.value}</p>;
+                    return (
+                      <p key={item.id} className="text-small">
+                        {item.value}
+                      </p>
+                    );
                   }
                 })
               : null}
           </div>
         </div>
         {isCategoryOpen ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            title="Shrink arrow"
-          >
-            <path d="M0 16.67l2.829 2.83 9.175-9.339 9.167 9.339 2.829-2.83-11.996-12.17z" />
-          </svg>
+          <ChevronUp size={20} strokeWidth={1} />
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            title="Expand arrow"
-          >
-            <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
-          </svg>
+          <ChevronDown size={20} strokeWidth={1} />
         )}
       </div>
 
       <div className={"checkbox-container" + (isCategoryOpen ? " show" : "")}>
         {category.map((item) => (
-          <div className="flex align-center gap-5">
+          <div key={item.id} className="flex align-center gap-5">
             <input
               type="checkbox"
               id={`${categoryType}-${item.value}`}

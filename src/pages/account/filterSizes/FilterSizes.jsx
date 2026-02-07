@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { outerwearSizes, topsSizes, bottomsSizes } from "./sizesData";
 import Category from "./Category";
 import SubHeader from "../../../components/header/SubHeader";
-
 import "./FilterSizes.css";
 
 function FilterSizes({ settings, handleSizeUpdate }) {

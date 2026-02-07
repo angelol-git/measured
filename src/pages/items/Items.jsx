@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import ItemCard from "../../components/items/ItemCard";
 import "./Items.css";
