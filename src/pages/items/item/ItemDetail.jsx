@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import SubHeader from "../../../components/header/SubHeader";
 import MeasurementValues from "../../../components/items/measurementValues/MeasurementValues";
@@ -8,10 +7,24 @@ import "./ItemDetail.css";
 function ItemDetail({ items, activeItem, deleteItem }) {
   const navigate = useNavigate();
   const { id } = useParams();
-  const item = Object.values(items).filter((item) => {
-    return item.id === id;
-  });
-  const { active, category, size, imageSrc, measurements, title } = item[0];
+
+  const item = Object.values(items).find((item) => item.id === id);
+
+  if (!item) {
+    return (
+      <main className="main-container">
+        <SubHeader navigate={navigate} title={"Item Not Found"} />
+        <section className="item-detail-container">
+          <p>Item with ID {id} was not found.</p>
+          <button onClick={() => navigate("/items")} className="primary-button">
+            Back to Items
+          </button>
+        </section>
+      </main>
+    );
+  }
+
+  const { active, category, size, imageSrc, measurements, title } = item;
 
   return (
     <main className="main-container">

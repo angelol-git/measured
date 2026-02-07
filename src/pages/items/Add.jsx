@@ -71,7 +71,7 @@ function Add({ activeItem, addItem, settings }) {
       <main>
         <form id="add-form" onSubmit={handleSubmit}>
           <TextInput
-            id={useId}
+            id={useId()}
             label={"Title"}
             name={"title"}
             type={"text"}
@@ -80,7 +80,7 @@ function Add({ activeItem, addItem, settings }) {
           />
 
           <SelectInput
-            id={useId}
+            id={useId()}
             label={"Category"}
             name={"category"}
             options={Object.keys(measurementCategory)}

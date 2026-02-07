@@ -14,25 +14,36 @@ function ItemEdit({ items, settings, updateItem }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
-
-  let item;
-  //if the item was passed through item details get current parameters
-  //else (not currently possible): Find the item info.
-  if (location.state) {
-    item = location.state;
-  } else {
-    item = Object.values(items).filter((item) => {
-      return item.id === id;
-    });
-  }
-  const { active, category, size, imageSrc, measurements, title } = item[0];
-
   const [unit, setUnit] = useState("in");
   const [currMeasurements, setCurrMeasurements] = useState(measurements);
   const [currCategory, setCurrCategory] = useState(category);
   const [currImageSrc, setCurrImageSrc] = useState(imageSrc);
-
   const [imageStatus, setImageStatus] = useState("");
+
+  useEffect(() => {
+    setImageStatus("");
+  }, [currImageSrc]);
+
+  let item;
+  if (location.state) {
+    item = location.state[0];
+  } else {
+    item = Object.values(items).find((item) => item.id === id);
+  }
+
+  if (!item) {
+    return (
+      <main className="main-container">
+        <SubHeader navigate={navigate} title={"Item Not Found"} />
+        <p>
+          Item not found
+          <button onClick={() => navigate("/items")}>Go Back</button>
+        </p>
+      </main>
+    );
+  }
+
+  const { active, category, size, imageSrc, measurements, title } = item;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -66,10 +77,6 @@ function ItemEdit({ items, settings, updateItem }) {
     updateItem(newItem);
     navigate(-1);
   }
-
-  useEffect(() => {
-    setImageStatus("");
-  }, [currImageSrc]);
 
   return (
     <main className="main-container">

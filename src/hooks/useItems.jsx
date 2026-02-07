@@ -36,7 +36,10 @@ function useItems() {
 
       //Make sure the other itemIds in the category is set to inactive
       Object.entries(updatedItems).forEach(([id, values]) => {
-        if (id !== itemId && values.category === itemId.category) {
+        if (
+          id !== itemId &&
+          values.category === updatedItems[itemId].category
+        ) {
           updatedItems[id].active = false;
         }
       });
