@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { outerwearSizes, topsSizes, bottomsSizes } from "./sizesData";
-import Category from "./Category";
+import { outerwearSizes, topsSizes, bottomsSizes } from "../../../assets/data/sizesData";
+import Category from "../../../components/account/Category";
 import SubHeader from "../../../components/header/SubHeader";
 import "./FilterSizes.css";
 

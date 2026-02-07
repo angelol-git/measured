@@ -1,49 +1,54 @@
 import { useState, useEffect, useId } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import SubHeader from "../../../components/header/SubHeader";
-import { measurementCategory } from "../../../components/items/measurementInput/categoriesData";
-import MeasurementInput from "../../../components/items/measurementInput/MeasurementInput";
+import { measurementCategory } from "../../../../components/items/measurementInput/categoriesData";
+import SubHeader from "../../../../components/header/SubHeader";
+import MeasurementInput from "../../../../components/items/measurementInput/MeasurementInput";
 import {
   TextInput,
   SelectInput,
   ImageInput,
-} from "../../../components/forms/FormInputs";
+  isValidUrl,
+} from "../../../../components/forms/FormInputs";
 import "./ItemEdit.css";
 
 function ItemEdit({ items, settings, updateItem }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const item =
+    location.state || Object.values(items).find((item) => item.id === id);
+  const titleId = useId();
+  const categoryId = useId();
+  const sizeId = useId();
+
   const [unit, setUnit] = useState("in");
-  const [currMeasurements, setCurrMeasurements] = useState(measurements);
-  const [currCategory, setCurrCategory] = useState(category);
-  const [currImageSrc, setCurrImageSrc] = useState(imageSrc);
+  const [currMeasurements, setCurrMeasurements] = useState(
+    () => item?.measurements || {},
+  );
+  const [currCategory, setCurrCategory] = useState(() => item?.category || "");
+  const [currImageSrc, setCurrImageSrc] = useState(() => item?.imageSrc || "");
   const [imageStatus, setImageStatus] = useState("");
 
   useEffect(() => {
     setImageStatus("");
   }, [currImageSrc]);
 
-  let item;
-  if (location.state) {
-    item = location.state[0];
-  } else {
-    item = Object.values(items).find((item) => item.id === id);
-  }
-
   if (!item) {
     return (
       <main className="main-container">
         <SubHeader navigate={navigate} title={"Item Not Found"} />
-        <p>
-          Item not found
-          <button onClick={() => navigate("/items")}>Go Back</button>
-        </p>
+        <div style={{ padding: "20px" }}>
+          <p>Item not found.</p>
+          <button onClick={() => navigate("/items")} className="primary-button">
+            Go Back
+          </button>
+        </div>
       </main>
     );
   }
 
-  const { active, category, size, imageSrc, measurements, title } = item;
+  const { active, category, size, title } = item;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -111,15 +116,19 @@ function ItemEdit({ items, settings, updateItem }) {
           label={"Image:"}
           value={currImageSrc}
           onChange={(event) => {
-            setImageStatus("loading");
-            setCurrImageSrc(event.target.value);
+            const url = event.target.value;
+            console.log(url);
+            if (!url || isValidUrl(url)) {
+              setImageStatus("loading");
+              setCurrImageSrc(url);
+            }
           }}
           imageStatus={imageStatus}
           setImageStatus={setImageStatus}
         />
 
         <TextInput
-          id={useId}
+          id={titleId}
           label={"Title:"}
           name={"title"}
           type={"text"}
@@ -130,7 +139,7 @@ function ItemEdit({ items, settings, updateItem }) {
         <div className="grey-line"></div>
         <div className="edit-category-size-row">
           <SelectInput
-            id={useId}
+            id={categoryId}
             label={"Category:"}
             name={"category"}
             options={Object.keys(measurementCategory)}
@@ -139,7 +148,7 @@ function ItemEdit({ items, settings, updateItem }) {
           />
 
           <SelectInput
-            id={useId}
+            id={sizeId}
             label={"Size:"}
             name={"size"}
             value={size}

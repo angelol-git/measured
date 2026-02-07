@@ -1,18 +1,26 @@
 import { useState, useEffect, useId } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import SubHeader from "../../components/header/SubHeader";
-import { measurementCategory } from "../../components/items/measurementInput/categoriesData";
-import MeasurementInput from "../../components/items/measurementInput/MeasurementInput";
+import SubHeader from "../../../../components/header/SubHeader";
+import { measurementCategory } from "../../../../components/items/measurementInput/categoriesData";
+import MeasurementInput from "../../../../components/items/measurementInput/MeasurementInput";
 import {
   TextInput,
   SelectInput,
   ImageInput,
   CheckboxInput,
-} from "../../components/forms/FormInputs";
-import "./Add.css";
-function Add({ activeItem, addItem, settings }) {
+  isValidUrl,
+} from "../../../../components/forms/FormInputs";
+import "./ItemAdd.css";
+
+function ItemAdd({ activeItem, addItem, settings }) {
   const navigate = useNavigate();
+  const titleId = useId();
+  const categoryId = useId();
+  const sizeId = useId();
+  const imageId = useId();
+  const activeId = useId();
+  
   const [category, setCategory] = useState("Tops");
   const [imageUrl, setImageUrl] = useState("");
   const [imageStatus, setImageStatus] = useState("");
@@ -71,7 +79,7 @@ function Add({ activeItem, addItem, settings }) {
       <main>
         <form id="add-form" onSubmit={handleSubmit}>
           <TextInput
-            id={useId()}
+            id={titleId}
             label={"Title"}
             name={"title"}
             type={"text"}
@@ -80,7 +88,7 @@ function Add({ activeItem, addItem, settings }) {
           />
 
           <SelectInput
-            id={useId()}
+            id={categoryId}
             label={"Category"}
             name={"category"}
             options={Object.keys(measurementCategory)}
@@ -89,7 +97,7 @@ function Add({ activeItem, addItem, settings }) {
           />
 
           <SelectInput
-            id={useId}
+            id={sizeId}
             label={"Size"}
             name={"size"}
             options={settings.sizes[category]}
@@ -99,8 +107,11 @@ function Add({ activeItem, addItem, settings }) {
             label={"Image"}
             value={imageUrl}
             onChange={(event) => {
-              setImageStatus("loading");
-              setImageUrl(event.target.value);
+              const url = event.target.value;
+              if (!url || isValidUrl(url)) {
+                setImageStatus("loading");
+                setImageUrl(event.target.value);
+              }
             }}
             imageStatus={imageStatus}
             setImageStatus={setImageStatus}
@@ -111,7 +122,7 @@ function Add({ activeItem, addItem, settings }) {
               {imageStatus !== "error" && (
                 <div className="image-container skeleton">
                   <img
-                    id={useId}
+                    id={imageId}
                     alt="preview thumbnail"
                     src={imageUrl}
                     className="medium-thumbnail"
@@ -129,7 +140,7 @@ function Add({ activeItem, addItem, settings }) {
 
           <CheckboxInput
             label={"Set as active"}
-            id={useId}
+            id={activeId}
             name={"active"}
             checked={false}
           />
@@ -156,4 +167,4 @@ function Add({ activeItem, addItem, settings }) {
   );
 }
 
-export default Add;
+export default ItemAdd;

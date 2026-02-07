@@ -4,12 +4,12 @@ import useSettings from "./hooks/useSettings";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
 import Items from "./pages/items/Items";
-import ItemDetail from "./pages/items/item/ItemDetail";
-import EditDetail from "./pages/items/item/ItemEdit";
-import Add from "./pages/items/Add";
+import ItemDetail from "./pages/items/item/itemDetail/ItemDetail";
+import ItemEdit from "./pages/items/item/itemEdit/ItemEdit";
+import ItemAdd from "./pages/items/item/itemAdd/ItemAdd";
 import Account from "./pages/account/Account";
-import Data from "./pages/account/Data";
-import FilterSizes from "./pages/account/filterSizes/FilterSizes";
+import Data from "./pages/account/data/Data";
+import FilterSizes from "./pages/account/filter/FilterSizes";
 
 import "./App.css";
 
@@ -39,7 +39,7 @@ function App() {
         <Route
           path="items/add"
           element={
-            <Add
+            <ItemAdd
               activeItem={activeItem}
               addItem={addItem}
               settings={settings}
@@ -59,7 +59,7 @@ function App() {
         <Route
           path="items/:id/edit"
           element={
-            <EditDetail
+            <ItemEdit
               items={items}
               settings={settings}
               updateItem={updateItem}

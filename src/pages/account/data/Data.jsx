@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SubHeader from "../../components/header/SubHeader";
+import SubHeader from "../../../components/header/SubHeader";
 import "./Data.css";
 
 function Data({ items, setItems }) {
