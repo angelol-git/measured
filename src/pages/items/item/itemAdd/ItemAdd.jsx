@@ -10,17 +10,10 @@ import {
   ImageInput,
   CheckboxInput,
   isValidUrl,
-} from "../../../../components/forms/FormInputs";
+} from "../../../../components/items/forms/FormInputs";
 import "./ItemAdd.css";
-
-function ItemAdd({ activeItem, addItem, settings }) {
+function Add({ activeItem, addItem, settings }) {
   const navigate = useNavigate();
-  const titleId = useId();
-  const categoryId = useId();
-  const sizeId = useId();
-  const imageId = useId();
-  const activeId = useId();
-  
   const [category, setCategory] = useState("Tops");
   const [imageUrl, setImageUrl] = useState("");
   const [imageStatus, setImageStatus] = useState("");
@@ -79,7 +72,7 @@ function ItemAdd({ activeItem, addItem, settings }) {
       <main>
         <form id="add-form" onSubmit={handleSubmit}>
           <TextInput
-            id={titleId}
+            id={useId()}
             label={"Title"}
             name={"title"}
             type={"text"}
@@ -88,7 +81,7 @@ function ItemAdd({ activeItem, addItem, settings }) {
           />
 
           <SelectInput
-            id={categoryId}
+            id={useId()}
             label={"Category"}
             name={"category"}
             options={Object.keys(measurementCategory)}
@@ -97,7 +90,7 @@ function ItemAdd({ activeItem, addItem, settings }) {
           />
 
           <SelectInput
-            id={sizeId}
+            id={useId}
             label={"Size"}
             name={"size"}
             options={settings.sizes[category]}
@@ -122,7 +115,7 @@ function ItemAdd({ activeItem, addItem, settings }) {
               {imageStatus !== "error" && (
                 <div className="image-container skeleton">
                   <img
-                    id={imageId}
+                    id={useId}
                     alt="preview thumbnail"
                     src={imageUrl}
                     className="medium-thumbnail"
@@ -140,7 +133,7 @@ function ItemAdd({ activeItem, addItem, settings }) {
 
           <CheckboxInput
             label={"Set as active"}
-            id={activeId}
+            id={useId}
             name={"active"}
             checked={false}
           />
@@ -167,4 +160,4 @@ function ItemAdd({ activeItem, addItem, settings }) {
   );
 }
 
-export default ItemAdd;
+export default Add;

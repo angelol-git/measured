@@ -8,7 +8,7 @@ import {
   SelectInput,
   ImageInput,
   isValidUrl,
-} from "../../../../components/forms/FormInputs";
+} from "../../../../components/items/forms/FormInputs";
 import "./ItemEdit.css";
 
 function ItemEdit({ items, settings, updateItem }) {
