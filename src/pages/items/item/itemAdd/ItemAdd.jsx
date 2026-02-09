@@ -18,12 +18,12 @@ import "./ItemAdd.css";
 function Add() {
   const { activeItem, addItem } = useItemsContext();
   const { settings } = useSettingsContext();
-  const navigate = useNavigate();
+  const [measurements, setMeasurements] = useState([]);
   const [category, setCategory] = useState("Tops");
   const [imageUrl, setImageUrl] = useState("");
   const [imageStatus, setImageStatus] = useState("");
   const [unit, setUnit] = useState("in");
-  const [measurements, setMeasurements] = useState([]);
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -106,13 +106,14 @@ function Add() {
             value={imageUrl}
             onChange={(event) => {
               const url = event.target.value;
+              setImageUrl(url);
               if (!url || isValidUrl(url)) {
                 setImageStatus("loading");
-                setImageUrl(event.target.value);
+              } else {
+                setImageStatus("error");
               }
             }}
             imageStatus={imageStatus}
-            setImageStatus={setImageStatus}
           />
 
           {imageUrl.length !== 0 ? (

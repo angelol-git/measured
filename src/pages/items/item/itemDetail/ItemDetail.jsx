@@ -7,10 +7,9 @@ import "./ItemDetail.css";
 
 function ItemDetail() {
   const { items, activeItem, deleteItem } = useItemsContext();
-  const navigate = useNavigate();
   const { id } = useParams();
-
   const item = Object.values(items).find((item) => item.id === id);
+  const navigate = useNavigate();
 
   if (!item) {
     return (

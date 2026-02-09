@@ -16,9 +16,9 @@ import "./ItemEdit.css";
 function ItemEdit() {
   const { items, updateItem } = useItemsContext();
   const { settings } = useSettingsContext();
-  const location = useLocation();
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const item =
     location.state || Object.values(items).find((item) => item.id === id);
@@ -121,14 +121,14 @@ function ItemEdit() {
           value={currImageSrc}
           onChange={(event) => {
             const url = event.target.value;
-            console.log(url);
+            setCurrImageSrc(url);
             if (!url || isValidUrl(url)) {
               setImageStatus("loading");
-              setCurrImageSrc(url);
+            } else {
+              setImageStatus("error");
             }
           }}
           imageStatus={imageStatus}
-          setImageStatus={setImageStatus}
         />
 
         <TextInput
