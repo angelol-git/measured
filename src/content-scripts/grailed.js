@@ -1,3 +1,5 @@
+/* global chrome */
+
 const OBSERVER_TIMEOUT_MS = 10000;
 
 function mutationObserverTable() {

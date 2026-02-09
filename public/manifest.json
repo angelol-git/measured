@@ -16,11 +16,11 @@
   "content_scripts": [
     {
       "matches": ["https://www.grailed.com/listings/*"],
-      "js": ["content_grailed.js"]
+      "js": ["contentGrailed.js"]
     },
     {
       "matches": ["https://www.ssense.com/*/product/*"],
-      "js": ["content_ssense.js", "ssenseData.js"]
+      "js": ["contentSsense.js"]
     }
   ],
   "background": {

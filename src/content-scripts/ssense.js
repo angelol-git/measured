@@ -1,3 +1,6 @@
+/* global chrome */
+import { imageData } from "./ssenseData.js";
+
 /*global chrome*/
 let currentSystem = "inch";
 let modalObserver = null;

@@ -1,4 +1,4 @@
-const imageData = {
+export const imageData = {
   Tops: {
     "https://res.cloudinary.com/ssense/image/upload/v1485365329/size_guide/category_215.jpg":
       {
