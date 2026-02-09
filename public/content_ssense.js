@@ -1,3 +1,4 @@
+/*global chrome*/
 let currentSystem = "inch";
 let modalObserver = null;
 const OBSERVER_TIMEOUT_MS = 10000;
@@ -68,14 +69,15 @@ async function handleMeasurementModal(modal) {
     ".pdp-size-chart__guide-image-measurements",
   );
   const imgSrc = measurementModalImage.children[0].src;
-  // eslint-disable-next-line no-undef
-  const measurementMap = imageData[category][imgSrc];
+
   // eslint-disable-next-line no-undef
   if (!imageData[category] || !imageData[category][imgSrc]) {
     console.warn("Measured: No mapping found for this image.");
     return;
   }
 
+  // eslint-disable-next-line no-undef
+  const measurementMap = imageData[category][imgSrc];
   const measurementList = measurementModalImage.children[1];
   modal.addEventListener("click", (e) => {
     const target = e.target;
@@ -183,11 +185,9 @@ function deletePreviousMeasurements() {
 
 async function getActiveItem(category) {
   return new Promise((resolve, reject) => {
-    // eslint-disable-next-line no-undef
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },
       (response) => {
-        // eslint-disable-next-line no-undef
         if (chrome.runtime.lastError) return reject(chrome.runtime.lastError);
         const item = response?.items || {};
         if (Object.keys(item).length === 0) {

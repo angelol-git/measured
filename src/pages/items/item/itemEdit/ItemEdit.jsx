@@ -1,6 +1,7 @@
 import { useState, useEffect, useId } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useItemsContext } from "../../../../context/ItemsContext";
+import { useSettingsContext } from "../../../../context/SettingsContext";
 import { measurementCategory } from "../../../../components/items/measurementInput/categoriesData";
 import SubHeader from "../../../../components/header/SubHeader";
 import MeasurementInput from "../../../../components/items/measurementInput/MeasurementInput";
@@ -12,8 +13,9 @@ import {
 } from "../../../../components/items/forms/FormInputs";
 import "./ItemEdit.css";
 
-function ItemEdit({ settings }) {
+function ItemEdit() {
   const { items, updateItem } = useItemsContext();
+  const { settings } = useSettingsContext();
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();

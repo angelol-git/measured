@@ -1,3 +1,4 @@
+/* global chrome */
 import { useState, useEffect } from "react";
 
 function useSettings() {
@@ -9,28 +10,40 @@ function useSettings() {
     },
   });
 
+  useEffect(() => {
+    chrome.storage.local.get("settings", (result) => {
+      if (chrome.runtime.lastError) {
+        console.error(
+          "Failed to load settings from storage: ",
+          chrome.runtime.lastError,
+        );
+        return;
+      }
+      if (result.settings) {
+        setSettings(result.settings);
+      } else {
+        chrome.storage.local.set({ settings });
+      }
+    });
+  }, [settings]);
+
+  useEffect(() => {
+    chrome.storage.local.set({ settings }, () => {
+      if (chrome.runtime.lastError) {
+        console.error(
+          "Storage save failed: ",
+          chrome.runtime.lastError.message,
+        );
+      }
+    });
+  }, [settings]);
+
   function handleSizeUpdate(newSizes) {
     setSettings((prevSettings) => {
       return { ...prevSettings, sizes: newSizes };
     });
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.get("settings", (result) => {
-      if (result.settings) {
-        setSettings(result.settings);
-      } else {
-        // eslint-disable-next-line no-undef
-        chrome.storage.local.set({ settings });
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.set({ settings }, () => {});
-  }, [settings]);
   return [settings, handleSizeUpdate];
 }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ItemImage from "./itemImage/ItemImage";
@@ -9,11 +8,6 @@ function ItemCard({ key, items }) {
   const { active, title, imageSrc } = items;
   const [hover, setHover] = useState(false);
 
-  // function handleKeyDown(event){
-  //   if(event.key === "Enter"){
-  //     se
-  //   }
-  // }
   let titleElement = title;
 
   function handleHover() {

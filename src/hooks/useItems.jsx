@@ -1,7 +1,34 @@
+/* global chrome */
 import { useState, useEffect } from "react";
 
 function useItems() {
   const [items, setItems] = useState({});
+
+  useEffect(() => {
+    chrome.storage.local.get("items", (result) => {
+      if (chrome.runtime.lastError) {
+        console.error(
+          "Failed to load items from storage: ",
+          chrome.runtime.lastError,
+        );
+        setItems({});
+        return;
+      }
+      const savedItems = result.items;
+      setItems(savedItems || {});
+    });
+  }, []);
+
+  useEffect(() => {
+    chrome.storage.local.set({ items }, () => {
+      if (chrome.runtime.lastError) {
+        console.error(
+          "Storage save failed: ",
+          chrome.runtime.lastError.message,
+        );
+      }
+    });
+  }, [items]);
 
   const addItem = (newItem) => {
     setItems((prevItems) => {
@@ -20,7 +47,6 @@ function useItems() {
   const updateItem = (item) => {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-
       updatedItems[item.id] = item;
       return updatedItems;
     });
@@ -34,7 +60,6 @@ function useItems() {
         updatedItems[itemId].active = !updatedItems[itemId].active;
       }
 
-      //Make sure the other itemIds in the category is set to inactive
       Object.entries(updatedItems).forEach(([id, values]) => {
         if (
           id !== itemId &&
@@ -51,21 +76,6 @@ function useItems() {
   // function handleImport(importedItems) {
   //   setItems(importedItems);
   // }
-
-  //Load data from local storage
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.get("items", (result) => {
-      const savedItems = result.items;
-      setItems(savedItems || {});
-    });
-  }, []);
-
-  //Save data to local storage
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    chrome.storage.local.set({ items });
-  }, [items]);
 
   return [items, setItems, addItem, deleteItem, updateItem, activeItem];
 }

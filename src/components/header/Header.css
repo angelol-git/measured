@@ -1,61 +1,62 @@
 .header-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 10px;
-    border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  border-bottom: 1px solid black;
 }
 
 .header-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px 5px 10px;
-    background-color: var(--primary-bkg-color);
-    text-decoration: none;
-    list-style-type: none;
-    cursor: pointer;
-    border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px 5px 10px;
+  background-color: var(--primary-bkg-color);
+  text-decoration: none;
+  list-style-type: none;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.15s ease;
 }
 
 .header-title {
-    text-decoration: none;
-    color: var(--primary-text-color);
+  text-decoration: none;
+  color: var(--primary-text-color);
 }
 
 .header-position-left {
-    position: absolute;
-    margin-left: 10px;
-    left: 0px;
+  position: absolute;
+  margin-left: 10px;
+  left: 0px;
 }
 
 .header-position-right {
-    position: absolute;
-    margin-right: 10px;
-    right: 0px;
+  position: absolute;
+  margin-right: 10px;
+  right: 0px;
 }
 
 .nav-bar {
-    display: flex;
-    border-bottom: 1px solid var(--primary-text-color);
-
+  display: flex;
+  border-bottom: 1px solid var(--primary-text-color);
 }
 
 .nav-bar a:first-child {
-    border-right: 1px solid var(--primary-text-color);
+  border-right: 1px solid var(--primary-text-color);
 }
 
 .nav-bar-links {
-    display: flex;
-    justify-content: center;
-    padding: 7px;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
+  display: flex;
+  justify-content: center;
+  padding: 7px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
 }
 
 .header-icon:hover,
 .nav-bar-links:hover {
-    background-color: var(--secondary-bkg-color);
+  background-color: var(--secondary-bkg-color);
 }

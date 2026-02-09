@@ -15,15 +15,14 @@
   --secondary-text-color: white;
   --primary-bkg-color: white;
   --primary-button-bkg: black;
-  --primary-button-bkg-hover: rgb(47, 47, 47);
+  --primary-button-bkg-hover: rgb(72, 72, 72);
   --secondary-button-bkg: white;
   --secondary-button-bkg-hover: rgb(218, 218, 218);
   --secondary-bkg-color: rgb(232, 232, 232);
   --error-text: red;
   --error-border: red;
   --accent-blue: blue;
-  --accent-blue-hover: #0055FF;
-
+  --accent-blue-hover: #0055ff;
 }
 
 #root {
@@ -165,7 +164,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -182,6 +181,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

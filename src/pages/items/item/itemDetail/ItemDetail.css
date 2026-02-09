@@ -47,7 +47,7 @@
     font-weight: bold;
     padding: 5px 10px 5px 10px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: background-color 0.15s ease;
     color: var(--secondary-text-color);
     background-color: var(--accent-blue);
 }

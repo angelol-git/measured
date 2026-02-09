@@ -1,265 +1,265 @@
 /* CONTAINERS */
 .app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .main-container {
-    height: 100%;
-    padding: 17px;
-    position: relative;
-    overflow-y: auto;
-    scrollbar-gutter: stable both-edges;
+  height: 100%;
+  padding: 17px;
+  position: relative;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
 }
 
 /* TEXT */
 
 .text-small {
-    font-size: 0.75rem;
-    line-height: 1rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .text-base {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-large {
-    font-size: 1rem;
-    line-height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .text-xl {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .text-normal {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .black-text {
-    color: var(--primary-text-color);
+  color: var(--primary-text-color);
 }
 
 .white-text {
-    color: var(--secondary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
-
 
 /* GENERAL */
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .active {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .align-center {
-    align-items: center;
+  align-items: center;
 }
 
 .align-end {
-    align-items: end;
+  align-items: end;
 }
 
 .justify-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .justify-space-between {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .gap-5 {
-    gap: 5px;
+  gap: 5px;
 }
 
 .gap-10 {
-    gap: 10px;
+  gap: 10px;
 }
 
 .gap-15 {
-    gap: 15px;
+  gap: 15px;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .show {
-    visibility: visible;
+  visibility: visible;
 }
 
 .pre {
-    white-space: pre;
+  white-space: pre;
 }
 
 /* COMPONENTS*/
 .sub-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding-bottom: 15px;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 15px;
+  position: relative;
 }
 
 .sub-row .position-right {
-    position: absolute;
-    right: 0;
+  position: absolute;
+  right: 0;
 }
 
 .sub-row .position-left {
-    position: absolute;
-    left: 0;
+  position: absolute;
+  left: 0;
 }
 
 .item-counter {
-    color: var(--primary-text-color);
+  color: var(--primary-text-color);
 }
 
 /* BUTTONS */
 .primary-button {
-    border: none;
-    font-weight: bold;
-    padding: 5px 10px 5px 10px;
-    cursor: pointer;
-    transition: 0.2s;
-    color: var(--secondary-text-color);
-    background-color: var(--primary-button-bkg);
+  border: none;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: var(--secondary-text-color);
+  background-color: var(--primary-button-bkg);
 }
 
 .primary-button:hover {
-    background-color: var(--primary-button-bkg-hover);
+  background-color: var(--primary-button-bkg-hover);
 }
 
 .secondary-button-color {
-    color: var(--primary-text-color);
-    background-color: var(--secondary-button-bkg);
+  color: var(--primary-text-color);
+  background-color: var(--secondary-button-bkg);
+  transition: background-color 0.15s ease;
 }
 
 .secondary-button-color:hover {
-    background-color: var(--secondary-button-bkg-hover);
+  background-color: var(--secondary-button-bkg-hover);
 }
 
 .inactive-button-color {
-    color: black;
-    background-color: rgb(207, 207, 207);
+  color: black;
+  background-color: rgb(207, 207, 207);
+  transition: background-color 0.15s ease;
 }
 
 .inactive-button-color:hover {
-    background-color: rgb(196, 196, 196);
+  background-color: rgb(196, 196, 196);
 }
 
 .button-with-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .button-icon {
-    width: 12px;
-    height: 12px;
+  width: 12px;
+  height: 12px;
 }
 
 .deactivate {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .back-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 10px 5px 10px;
-    background-color: var(--secondary-button-bkg);
-    border: none;
-    cursor: pointer;
-    transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px 5px 10px;
+  background-color: var(--secondary-button-bkg);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .back-button:hover {
-    background-color: var(--secondary-bkg-color);
+  background-color: var(--secondary-bkg-color);
 }
 
 .black-border {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .error-text {
-    display: block;
-    color: var(--error-text);
+  display: block;
+  color: var(--error-text);
 }
 
 .error-border {
-    border-color: var(--error-border);
+  border-color: var(--error-border);
 }
 
 .error-border:focus {
-    outline: none !important;
-    border-color: var(--error-border);
+  outline: none !important;
+  border-color: var(--error-border);
 }
 
 .submit-button {
-    width: 100%;
+  width: 100%;
 }
 
 /* IMAGES */
 .full-cover-thumbnail {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .medium-thumbnail {
-    object-fit: cover;
-    width: 150px;
-    height: 150px;
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
 }
 
 .large-thumbnail {
-    object-fit: cover;
-    width: 180px;
-    height: 180px;
-    position: relative;
+  object-fit: cover;
+  width: 180px;
+  height: 180px;
+  position: relative;
 }
 
-
 .skeleton {
-    animation: skeleton-loading 1s linear infinite alternate;
+  animation: skeleton-loading 1s linear infinite alternate;
 }
 
 @keyframes skeleton-loading {
-    0% {
-        background-color: rgb(167, 167, 167);
-    }
+  0% {
+    background-color: rgb(167, 167, 167);
+  }
 
-    100% {
-        background-color: lightgrey;
-    }
+  100% {
+    background-color: lightgrey;
+  }
 }

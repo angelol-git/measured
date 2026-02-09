@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { ItemsProvider } from "./context/ItemsContext";
-import useSettings from "./hooks/useSettings";
+import { SettingsProvider } from "./context/SettingsContext";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
 import Items from "./pages/items/Items";
@@ -14,34 +14,23 @@ import FilterSizes from "./pages/account/filter/FilterSizes";
 import "./App.css";
 
 function App() {
-  const [settings, handleSizeUpdate] = useSettings({});
-
   return (
     <ItemsProvider>
-      <div className="app">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="items" element={<Items />} />
-          <Route path="items/add" element={<ItemAdd settings={settings} />} />
-          <Route path="items/:id" element={<ItemDetail />} />
-          <Route
-            path="items/:id/edit"
-            element={<ItemEdit settings={settings} />}
-          />
-          <Route path="account" element={<Account />} />
-          <Route path="account/data" element={<Data />} />
-          <Route
-            path="account/filterSizes"
-            element={
-              <FilterSizes
-                settings={settings}
-                handleSizeUpdate={handleSizeUpdate}
-              />
-            }
-          />
-        </Routes>
-      </div>
+      <SettingsProvider>
+        <div className="app">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="items" element={<Items />} />
+            <Route path="items/add" element={<ItemAdd />} />
+            <Route path="items/:id" element={<ItemDetail />} />
+            <Route path="items/:id/edit" element={<ItemEdit />} />
+            <Route path="account" element={<Account />} />
+            <Route path="account/data" element={<Data />} />
+            <Route path="account/filterSizes" element={<FilterSizes />} />
+          </Routes>
+        </div>
+      </SettingsProvider>
     </ItemsProvider>
   );
 }
