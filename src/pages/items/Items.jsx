@@ -8,7 +8,7 @@ function Items() {
 
   const itemsLength = Object.keys(items).length;
 
-  let itemCardElements = {};
+  let itemCardElements;
   if (itemsLength) {
     itemCardElements = Object.entries(items)
       //Put the active items first, and by alphabetically
