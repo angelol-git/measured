@@ -12,7 +12,6 @@
   padding: 17px;
   position: relative;
   overflow-y: auto;
-  scrollbar-gutter: stable both-edges;
 }
 
 /* TEXT */

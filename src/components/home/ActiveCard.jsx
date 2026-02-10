@@ -5,15 +5,15 @@ import MeasurementValues from "../items/measurementValues/MeasurementValues";
 import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
-function ActiveCard({ key, id, values }) {
+function ActiveCard({ key, item }) {
   const { activeItem } = useItemsContext();
-  const { category, title, imageSrc, measurements } = values;
+  const { category, title, imageSrc, measurements } = item;
   const [detailView, setDetailView] = useState(false);
-  
+
   function handleClick() {
     setDetailView((detailView) => !detailView);
   }
-  
+
   function handleKeyDown(event) {
     if (event.key === "Enter") {
       setDetailView((detailView) => !detailView);
@@ -49,11 +49,11 @@ function ActiveCard({ key, id, values }) {
         <footer className="active-button-row">
           <button
             className="primary-button inactive-button-color"
-            onClick={() => activeItem(id, false)}
+            onClick={() => activeItem(item.id, false)}
           >
             Set as Inactive
           </button>
-          <Link to={`/items/${id}`}>
+          <Link to={`/items/${item.id}`}>
             <button className="primary-button">View Details</button>
           </Link>
         </footer>

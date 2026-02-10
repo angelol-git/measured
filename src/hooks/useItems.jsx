@@ -52,31 +52,26 @@ function useItems() {
     });
   };
 
-  const activeItem = (item, isNewItem = false) => {
-    console.log("Item: ", item);
+  const activeItem = (itemId, isNewItem = false) => {
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-      console.log(updatedItems);
+
+      // When isNewItem is true, itemId is actually the full item object
+      const id = isNewItem ? itemId.id : itemId;
+
       if (!isNewItem) {
-        updatedItems[item.id].active = !updatedItems[item.id].active;
+        updatedItems[id].active = !updatedItems[id].active;
       }
 
-      Object.entries(updatedItems).forEach(([id, values]) => {
-        if (
-          id !== item.id &&
-          values.category === updatedItems[item.id].category
-        ) {
-          updatedItems[id].active = false;
+      Object.entries(updatedItems).forEach(([otherId, values]) => {
+        if (otherId !== id && values.category === updatedItems[id].category) {
+          updatedItems[otherId].active = false;
         }
       });
 
       return updatedItems;
     });
   };
-
-  // function handleImport(importedItems) {
-  //   setItems(importedItems);
-  // }
 
   return [items, setItems, addItem, deleteItem, updateItem, activeItem];
 }
