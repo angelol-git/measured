@@ -52,18 +52,19 @@ function useItems() {
     });
   };
 
-  const activeItem = (itemId, isNewItem = false) => {
+  const activeItem = (item, isNewItem = false) => {
+    console.log("Item: ", item);
     setItems((prevItems) => {
       const updatedItems = { ...prevItems };
-
+      console.log(updatedItems);
       if (!isNewItem) {
-        updatedItems[itemId].active = !updatedItems[itemId].active;
+        updatedItems[item.id].active = !updatedItems[item.id].active;
       }
 
       Object.entries(updatedItems).forEach(([id, values]) => {
         if (
-          id !== itemId &&
-          values.category === updatedItems[itemId].category
+          id !== item.id &&
+          values.category === updatedItems[item.id].category
         ) {
           updatedItems[id].active = false;
         }

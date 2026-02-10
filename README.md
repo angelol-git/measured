@@ -1,4 +1,4 @@
-# <img src="https://github.com/angelol-git/measured/blob/main/.github//logo.png?raw=true" width="32" align="center" /> Measured
+# <img src="https://github.com/angelol-git/measured/blob/main/.github//logo.png?raw=true" width="32" /> Measured
 
 Measured is a Chrome extension that compares clothing measurements from online shops (Grailed, SSense) with your own items.
 
@@ -17,7 +17,7 @@ Measured features:
 
 ## Installation Guide
 
-1. Download the [measured-v1.0.zip](https://github.com/angelol-git/measured/tree/main/packages/build) file.
+1. Download the [measured-v1.0.zip](https://github.com/angelol-git/measured/tree/main/packages/) file.
 2. Unzip the file.
 3. Open Chrome and navigate to chrome://extensions/.
 4. Enable "Developer mode" if it is not already enabled.
