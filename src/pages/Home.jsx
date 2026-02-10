@@ -7,7 +7,7 @@ function Home() {
 
   let itemsLength = Object.keys(items).length;
 
-  let activeCardElements;
+  let activeCardElements = {};
   if (itemsLength) {
     activeCardElements = Object.entries(items)
       .filter(([, item]) => item.active)
