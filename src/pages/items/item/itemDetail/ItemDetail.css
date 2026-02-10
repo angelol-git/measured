@@ -1,62 +1,63 @@
 .item-detail-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
 }
 
 .item-detail-image-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .item-detail-title-container {
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .item-detail-title {
-    text-align: center;
+  text-align: center;
 }
 
 .grey-line {
-    width: 100%;
-    border-top: 1px solid var(--secondary-bkg-color);
+  width: 100%;
+  border-top: 1px solid var(--secondary-bkg-color);
 }
 
 .item-detail-category-size-row {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
 .item-measurements {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
 }
 
 .bottom-button-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 30px;
 }
 
 .active-button {
-    border: none;
-    font-weight: bold;
-    padding: 5px 10px 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-    color: var(--secondary-text-color);
-    background-color: var(--accent-blue);
+  border: none;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: var(--secondary-text-color);
+  background-color: var(--accent-blue);
 }
 
 .active-button:hover {
-    background-color: var(--accent-blue-hover);
+  background-color: var(--accent-blue-hover);
 }
 
 .measurement-label-value-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
