@@ -98,7 +98,9 @@ function ItemEdit() {
         {currImageSrc.length !== 0 ? (
           <div className="image-preview-container">
             {imageStatus !== "error" && (
-              <div className="large-thumbnail  skeleton">
+              <div
+                className={`large-thumbnail ${!imageStatus ? "skeleton" : ""}`}
+              >
                 <img
                   id="image"
                   alt={`thumbnail`}

@@ -1,18 +1,18 @@
 .item-image-container {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .image-replacement {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--secondary-bkg-color);
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary-bkg-color);
+  font-weight: bold;
+  height: 100%;
+  width: 100%;
 }
 
 .active-card.image-replacement {
-    background-color: var(--primary-bkg-color);
+  background-color: var(--primary-bkg-color);
 }
