@@ -5,7 +5,7 @@ import "./Items.css";
 
 function Items() {
   const { items } = useItemsContext();
-  
+
   const itemsLength = Object.keys(items).length;
   let itemCardElements;
 
@@ -20,35 +20,20 @@ function Items() {
         }
       })
       .map(([key, value]) => {
-        return (
-          <ItemCard
-            key={key}
-            items={value}
-          />
-        );
+        return <ItemCard key={key} items={value} />;
       });
   }
 
   return (
     <main className="main-container">
-      <section
-        className="sub-row item-counter-row"
-        aria-label="Item Counter and Actions"
-      >
-        {/* <button
-          className="primary-button inactive-button-color position-left"
-          onClick={handleClickClose}
-        >
-          <div className="button-with-icon">
-            <img src="./data/images/filter.png" className="button-icon"></img>
-            <p> Filter</p>
-          </div>
-        </button> */}
-        <p className="item-counter text-small">{itemsLength} Item&#40;s&#41;</p>
+      <section className="sub-row" aria-label="Item Counter and Actions">
+        <div className="item-counter-row text-small">
+          <div className="text-bold">{itemsLength}</div>
+          <div> Item&#40;s&#41;</div>
+        </div>
         <Link
           to="/items/add"
           className="primary-button position-right text-base"
-          // tabIndex={fullModalOpen}
         >
           + Add
         </Link>

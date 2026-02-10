@@ -140,10 +140,6 @@ a {
   left: 0;
 }
 
-.item-counter {
-  color: var(--primary-text-color);
-}
-
 /* BUTTONS */
 .primary-button {
   border: none;

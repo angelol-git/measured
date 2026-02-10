@@ -1,32 +1,29 @@
 import { useItemsContext } from "../context/ItemsContext";
 import ActiveCard from "../components/home/ActiveCard";
+import "./Home.css";
 
 function Home() {
   const { items } = useItemsContext();
-  
+
   let itemsLength = Object.keys(items).length;
-  let activeItemsLength = 0;
+
   let activeCardElements;
   if (itemsLength) {
-    activeCardElements = Object.entries(items).map(([key, value]) => {
-      if (value.active) {
-        activeItemsLength++;
-      }
-      return value.active ? (
-        <ActiveCard key={key} id={key} values={value} />
-      ) : null;
-    });
+    activeCardElements = Object.entries(items)
+      .filter(([, item]) => item.active)
+      .sort(([, itemA], [, itemB]) => itemA.title.localeCompare(itemB.title))
+      .map(([key, value]) => {
+        return value.active ? (
+          <ActiveCard key={key} id={key} values={value} />
+        ) : null;
+      });
   }
 
   return (
     <main className="main-container">
       <section className="item-counter sub-row text-small item-counter-row">
-        <p>
-          <span style={{ color: "blue", fontWeight: "bold" }}>
-            {activeItemsLength}{" "}
-          </span>
-          Active Item&#40;s&#41;
-        </p>
+        <div className="active-items-length">{activeCardElements?.length}</div>
+        <div>Active Item&#40;s&#41;</div>
       </section>
       <div className="flex-column gap-15 " style={{ paddingBottom: "20px" }}>
         {activeCardElements}

@@ -1,0 +1,8 @@
+.item-counter-row {
+  display: flex;
+  gap: 6px;
+}
+.active-items-length {
+  color: blue;
+  font-weight: bold;
+}
