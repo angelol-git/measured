@@ -2,8 +2,11 @@
   width: 100%;
   height: 150px;
   position: relative;
-  color: var(--primary-text-color);
   cursor: pointer;
+}
+
+.item-card a {
+  color: var(--primary-text-color);
 }
 
 .title-hover {
@@ -14,24 +17,37 @@
   height: 0px;
   background-color: var(--primary-bkg-color);
   visibility: hidden;
+  opacity: 0;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: height 0.2s ease, opacity 0.2s ease, visibility 0.2s;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.item-card:hover .title-hover {
+.item-card:hover .title-hover,
+.item-card:focus-within .title-hover {
   height: 60%;
   visibility: visible;
+  opacity: 1;
 }
 
-.item-card:hover .item-image-container {
+.item-card:hover .item-image-container,
+.item-card:focus-within .item-image-container {
   background-color: rgb(152, 152, 152);
   filter: brightness(70%);
-  transition: all 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .item-card-title {
-  padding: 10px;
-  word-break: break-all;
+  margin: 0;
+  line-height: 1.3em;
+  max-height: 2.6em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .active-tag {
@@ -39,12 +55,13 @@
   top: 5px;
   left: 5px;
   visibility: hidden;
+  opacity: 0;
   padding: 2px 5px 2px 5px;
-
   background-color: var(--accent-blue);
   color: var(--secondary-text-color);
 }
 
 .active-tag.show {
   visibility: visible;
+  opacity: 1;
 }

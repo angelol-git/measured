@@ -3,7 +3,6 @@ import "./ItemImage.css";
 
 function ItemImage({ imageSrc, title }) {
   const [isLoading, setIsLoading] = useState(imageSrc ? false : true);
-  console.log(isLoading);
   return (
     <div className={`item-image-container ${!isLoading ? "skeleton" : ""}`}>
       {imageSrc.length === 0 ? (
