@@ -188,10 +188,6 @@ function deletePreviousMeasurements() {
 }
 
 async function getActiveItem(category) {
-  //Currently no support for Tops category on extension.
-  if (category === "Outerwear") {
-    category = "Tops";
-  }
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },

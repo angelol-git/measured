@@ -57,9 +57,6 @@ function mutationObserverTable() {
 
 async function handleMeasurementTable(measurementTable) {
   let category = getGrailedCategory();
-  if (category === "Outerwear") {
-    category = "Tops";
-  }
   const activeItem = await getActiveItem(category);
 
   if (activeItem === -1) {
