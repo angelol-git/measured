@@ -56,7 +56,7 @@ function isModalReady(modal) {
 }
 
 async function handleMeasurementModal(modal) {
-  const category = getSSenseCategory();
+  let category = getSSenseCategory();
   if (!category) {
     console.warn("Measured: Unknown category for this product");
     return;
@@ -72,6 +72,8 @@ async function handleMeasurementModal(modal) {
     ".pdp-size-chart__guide-image-measurements",
   );
   const imgSrc = measurementModalImage.children[0].src;
+  console.log(imageData);
+  // console.log(imageData[category][imgSrc]);
 
   // eslint-disable-next-line no-undef
   if (!imageData[category] || !imageData[category][imgSrc]) {
@@ -187,6 +189,10 @@ function deletePreviousMeasurements() {
 }
 
 async function getActiveItem(category) {
+  //Currently no support for Tops category on extension.
+  if (category === "Outerwear") {
+    category = "Tops";
+  }
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },
@@ -213,6 +219,7 @@ function getSSenseCategory() {
     )
   )
     return "Tops";
+
   if (/Jacket|Bomber|Coat|Peacoat|Vest/.test(text)) return "Outerwear";
   if (/Pants|Trousers|Sweatpants|Jeans/.test(text)) return "Bottoms";
   return null;

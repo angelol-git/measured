@@ -56,7 +56,10 @@ function mutationObserverTable() {
 }
 
 async function handleMeasurementTable(measurementTable) {
-  const category = getGrailedCategory();
+  let category = getGrailedCategory();
+  if (category === "Outerwear") {
+    category = "Tops";
+  }
   const activeItem = await getActiveItem(category);
 
   if (activeItem === -1) {
@@ -76,7 +79,6 @@ function getGrailedCategory() {
     const listing = data.props?.pageProps?.listing;
 
     if (!listing) return null;
-
     //  department: listing.department,
     //  category: listing.category,
     //  subcategory: listing.subcategory,
