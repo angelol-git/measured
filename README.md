@@ -12,7 +12,7 @@ Measured features:
 
 ## Demo
 
-<img src="https://github.com/angelol-git/measured/blob/main/.github/measured_demo.gif?raw=true" width="32" />
+<img src="https://github.com/angelol-git/measured/blob/main/.github/measured_demo.gif?raw=true"  />
 
 ## Websites supported
 
