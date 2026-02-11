@@ -1,4 +1,4 @@
-# <img src="https://github.com/angelol-git/measured/blob/main/.github//logo.png?raw=true" width="32" /> Measured
+# <img src="https://github.com/angelol-git/measured/blob/main/.github/logo.png?raw=true" width="32" /> Measured
 
 Measured is a Chrome extension that compares clothing measurements from online shops (Grailed, SSense) with your own items.
 
@@ -9,6 +9,10 @@ Measured features:
 - View size differences in both inches and centimeters
 - Color-coded results: green (larger), red (smaller), exact matches
 - Import and export your data for backup or transfer
+
+## Demo
+
+<img src="https://github.com/angelol-git/measured/blob/main/.github/measured_demo.gif?raw=true" width="32" />
 
 ## Websites supported
 

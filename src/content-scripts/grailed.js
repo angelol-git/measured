@@ -58,7 +58,6 @@ function mutationObserverTable() {
 async function handleMeasurementTable(measurementTable) {
   let category = getGrailedCategory();
   const activeItem = await getActiveItem(category);
-
   if (activeItem === -1) {
     console.warn("Measured: No active items.");
     return;
