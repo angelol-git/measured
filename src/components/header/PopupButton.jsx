@@ -15,7 +15,7 @@ function PopupButton() {
     window.close();
     // eslint-disable-next-line no-undef
     const popupURL = chrome.runtime.getURL("index.html");
-    const windowFeatures = "width=375,height=500";
+    const windowFeatures = "width=375,height=550";
     window.open(popupURL, "popup", windowFeatures);
   }
 
