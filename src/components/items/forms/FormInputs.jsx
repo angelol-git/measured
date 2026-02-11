@@ -71,6 +71,7 @@ export function ImageInput({ label, value, onChange, imageStatus }) {
         id="image"
         name="image"
         placeholder="Image URL"
+        autoComplete="off"
         className={`input-text ${
           imageStatus === "error" ? "error-border" : ""
         }`}

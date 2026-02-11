@@ -83,6 +83,7 @@ function MeasurementInput({
                 max={maxUnit}
                 step=".1"
                 placeholder="0.00"
+                autoComplete="off"
                 onChange={handleUnitInput}
               />
               {unit}
