@@ -1,7 +1,6 @@
 /* global chrome */
 import { imageData } from "./ssenseData.js";
 
-/*global chrome*/
 let currentSystem = "inch";
 let modalObserver = null;
 const OBSERVER_TIMEOUT_MS = 10000;
