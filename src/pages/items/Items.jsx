@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
 import { useItemsContext } from "../../context/ItemsContext";
 import ItemCard from "../../components/items/ItemCard";
 import "./Items.css";
 
 function Items() {
-  const { items } = useItemsContext();
+  const { items, isLoaded } = useItemsContext();
 
   const itemsLength = Object.keys(items).length;
 
@@ -23,24 +24,30 @@ function Items() {
         return <ItemCard key={key} items={value} />;
       });
   }
+  if (!isLoaded)
+    return (
+      <main className="main-container">
+        <LoaderCircle size={20} className="loading-spinner" />
+      </main>
+    );
+  else
+    return (
+      <main className="main-container">
+        <section className="sub-row" aria-label="Item Counter and Actions">
+          <div className="item-counter-row text-small">
+            <div className="text-bold">{itemsLength}</div>
+            <div> Item&#40;s&#41;</div>
+          </div>
+          <Link
+            to="/items/add"
+            className="primary-button position-right text-base"
+          >
+            + Add
+          </Link>
+        </section>
 
-  return (
-    <main className="main-container">
-      <section className="sub-row" aria-label="Item Counter and Actions">
-        <div className="item-counter-row text-small">
-          <div className="text-bold">{itemsLength}</div>
-          <div> Item&#40;s&#41;</div>
-        </div>
-        <Link
-          to="/items/add"
-          className="primary-button position-right text-base"
-        >
-          + Add
-        </Link>
-      </section>
-
-      <section className="item-container">{itemCardElements}</section>
-    </main>
-  );
+        <section className="item-container">{itemCardElements}</section>
+      </main>
+    );
 }
 export default Items;

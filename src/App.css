@@ -227,6 +227,19 @@ a {
   width: 100%;
 }
 
+.loading-spinner {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* IMAGES */
 .full-cover-thumbnail {
   object-fit: cover;

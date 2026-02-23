@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 function useItems() {
   const [items, setItems] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     chrome.storage.local.get("items", (result) => {
@@ -12,23 +13,26 @@ function useItems() {
           chrome.runtime.lastError,
         );
         setItems({});
+        setIsLoaded(true);
         return;
       }
-      const savedItems = result.items;
-      setItems(savedItems || {});
+      setItems(result.items || {});
+      setIsLoaded(true);
     });
   }, []);
 
   useEffect(() => {
-    chrome.storage.local.set({ items }, () => {
-      if (chrome.runtime.lastError) {
-        console.error(
-          "Storage save failed: ",
-          chrome.runtime.lastError.message,
-        );
-      }
-    });
-  }, [items]);
+    if (isLoaded) {
+      chrome.storage.local.set({ items }, () => {
+        if (chrome.runtime.lastError) {
+          console.error(
+            "Storage save failed: ",
+            chrome.runtime.lastError.message,
+          );
+        }
+      });
+    }
+  }, [items, isLoaded]);
 
   const addItem = (newItem) => {
     setItems((prevItems) => {
@@ -38,42 +42,47 @@ function useItems() {
 
   const deleteItem = (id) => {
     setItems((prevItems) => {
-      const updatedItems = { ...prevItems };
-      delete updatedItems[id];
-      return updatedItems;
+      // eslint-disable-next-line no-unused-vars
+      const { [id]: _, ...rest } = prevItems;
+      return rest;
     });
   };
 
   const updateItem = (item) => {
+    setItems((prevItems) => ({
+      ...prevItems,
+      [item.id]: item,
+    }));
+  };
+
+  const toggleActiveItem = (id, shouldActivate) => {
     setItems((prevItems) => {
-      const updatedItems = { ...prevItems };
-      updatedItems[item.id] = item;
-      return updatedItems;
+      const item = prevItems[id];
+      const targetCategory = item.category;
+      const newActiveState = shouldActivate ?? !item.active;
+      return Object.fromEntries(
+        Object.entries(prevItems).map(([key, value]) => {
+          if (key === id) {
+            return [key, { ...value, active: newActiveState }];
+          }
+          if (value.category === targetCategory && newActiveState) {
+            return [key, { ...value, active: false }];
+          }
+          return [key, value];
+        }),
+      );
     });
   };
 
-  const activeItem = (itemId, isNewItem = false) => {
-    setItems((prevItems) => {
-      const updatedItems = { ...prevItems };
-
-      // When isNewItem is true, itemId is actually the full item object
-      const id = isNewItem ? itemId.id : itemId;
-
-      if (!isNewItem) {
-        updatedItems[id].active = !updatedItems[id].active;
-      }
-
-      Object.entries(updatedItems).forEach(([otherId, values]) => {
-        if (otherId !== id && values.category === updatedItems[id].category) {
-          updatedItems[otherId].active = false;
-        }
-      });
-
-      return updatedItems;
-    });
-  };
-
-  return [items, setItems, addItem, deleteItem, updateItem, activeItem];
+  return [
+    items,
+    setItems,
+    addItem,
+    deleteItem,
+    updateItem,
+    toggleActiveItem,
+    isLoaded,
+  ];
 }
 
 export default useItems;

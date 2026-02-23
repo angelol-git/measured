@@ -16,7 +16,7 @@ import {
 import "./ItemAdd.css";
 
 function Add() {
-  const { activeItem, addItem } = useItemsContext();
+  const { toggleActiveItem, addItem } = useItemsContext();
   const { settings } = useSettingsContext();
   const [measurements, setMeasurements] = useState([]);
   const [category, setCategory] = useState("Tops");
@@ -57,7 +57,7 @@ function Add() {
 
     addItem(newItem);
     if (event.target.active.checked) {
-      activeItem(newItem, true);
+      toggleActiveItem(newItem, true);
     }
     navigate("/items");
   }

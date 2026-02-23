@@ -6,7 +6,7 @@ import ItemImage from "../../../../components/items/itemImage/ItemImage";
 import "./ItemDetail.css";
 
 function ItemDetail() {
-  const { items, activeItem, deleteItem } = useItemsContext();
+  const { items, toggleActiveItem, deleteItem } = useItemsContext();
   const { id } = useParams();
   const item = Object.values(items).find((item) => item.id === id);
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function ItemDetail() {
           className={`active-button position-right ${
             active ? "inactive-button-color" : ""
           }`}
-          onClick={() => activeItem(id, false)}
+          onClick={() => toggleActiveItem(id, false)}
         >
           {active ? "Set as Inactive" : "Set as Active"}
         </button>

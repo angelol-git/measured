@@ -6,7 +6,7 @@ import ItemImage from "../items/itemImage/ItemImage";
 import "./ActiveCard.css";
 
 function ActiveCard({ key, item }) {
-  const { activeItem } = useItemsContext();
+  const { toggleActiveItem } = useItemsContext();
   const { category, title, imageSrc, measurements } = item;
   const [detailView, setDetailView] = useState(false);
 
@@ -49,7 +49,7 @@ function ActiveCard({ key, item }) {
         <footer className="active-button-row">
           <button
             className="primary-button inactive-button-color"
-            onClick={() => activeItem(item.id, false)}
+            onClick={() => toggleActiveItem(item.id, false)}
           >
             Set as Inactive
           </button>

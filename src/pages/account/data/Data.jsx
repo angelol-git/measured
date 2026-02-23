@@ -95,7 +95,7 @@ function Data() {
             onChange={handleFileChange}
             className="display-none"
           />
-          <p>{importMessage}</p>
+          <p className="text-base">{importMessage}</p>
         </div>
         <p className="import-error error-text" role="alert">
           {importError}

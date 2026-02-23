@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSettingsContext } from "../../../context/SettingsContext";
-import { outerwearSizes, topsSizes, bottomsSizes } from "../../../assets/data/sizesData";
+import {
+  outerwearSizes,
+  topsSizes,
+  bottomsSizes,
+} from "../../../assets/data/sizesData";
 import Category from "../../../components/account/Category";
 import SubHeader from "../../../components/header/SubHeader";
 import "./FilterSizes.css";
@@ -11,18 +15,21 @@ function FilterSizes() {
   const navigate = useNavigate();
   const { sizes } = settings;
   const isInitialRender = useRef(true);
+
   const [outerwear, setOuterwear] = useState(
     outerwearSizes.map((size) => ({
       value: size,
       checked: sizes["Outerwear"].includes(size),
     })),
   );
+
   const [tops, setTops] = useState(
     topsSizes.map((size) => ({
       value: size,
       checked: sizes["Tops"].includes(size),
     })),
   );
+
   const [bottoms, setBottoms] = useState(
     bottomsSizes.map((size) => ({
       value: size,

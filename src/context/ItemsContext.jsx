@@ -4,8 +4,15 @@ import useItems from "../hooks/useItems";
 const ItemsContext = createContext(null);
 
 export function ItemsProvider({ children }) {
-  const [items, setItems, addItem, deleteItem, updateItem, activeItem] =
-    useItems();
+  const [
+    items,
+    setItems,
+    addItem,
+    deleteItem,
+    updateItem,
+    toggleActiveItem,
+    isLoaded,
+  ] = useItems();
 
   const value = {
     items,
@@ -13,7 +20,8 @@ export function ItemsProvider({ children }) {
     addItem,
     deleteItem,
     updateItem,
-    activeItem,
+    toggleActiveItem,
+    isLoaded,
   };
 
   return (
