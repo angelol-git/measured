@@ -67,7 +67,7 @@ function ItemDetail() {
           className={`active-button position-right ${
             active ? "inactive-button-color" : ""
           }`}
-          onClick={() => toggleActiveItem(id, false)}
+          onClick={() => toggleActiveItem(id, !active)}
         >
           {active ? "Set as Inactive" : "Set as Active"}
         </button>
