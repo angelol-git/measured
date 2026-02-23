@@ -160,7 +160,7 @@ function getOriginalMeasurements(measurementTable) {
   return measurements;
 }
 
-function displayActiveTitle(measurementTable, item) {
+function displayActiveTitle(measurementTable, selectedItem) {
   const activeTitle = document.createElement("div");
   const p = document.createElement("p");
   p.style.fontSize = "1.4rem";
@@ -170,7 +170,7 @@ function displayActiveTitle(measurementTable, item) {
 
   const span = document.createElement("span");
   span.style.color = "grey";
-  span.textContent = item.title; // safe
+  span.textContent = selectedItem.title;
 
   p.appendChild(span);
   activeTitle.appendChild(p);

@@ -71,9 +71,11 @@ async function handleMeasurementModal(modal) {
     ".pdp-size-chart__guide-image-measurements",
   );
   const imgSrc = measurementModalImage.children[0].src;
-  // console.log(imageData[category][imgSrc]);
+  if (!imgSrc) {
+    console.warn("Measured: No measurement image found.");
+    return;
+  }
 
-  // eslint-disable-next-line no-undef
   if (!imageData[category] || !imageData[category][imgSrc]) {
     console.warn("Measured: No mapping found for this image.");
     return;
@@ -94,7 +96,6 @@ async function handleMeasurementModal(modal) {
       return;
     }
 
-    //Size buttons
     if (target.closest(".pdp-size-chart__size-buttons-list")) {
       setTimeout(
         () => compareMeasurements(measurementList, activeItem, measurementMap),
@@ -103,7 +104,6 @@ async function handleMeasurementModal(modal) {
       return;
     }
 
-    //Close button or backdrop close
     if (target.closest(".modal-close, .modal-btn-close, #backdrop")) {
       currentSystem = "inch";
     }
@@ -214,11 +214,15 @@ function deletePreviousMeasurements() {
 }
 
 async function getActiveItem(category) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },
       (response) => {
-        if (chrome.runtime.lastError) return reject(chrome.runtime.lastError);
+        if (chrome.runtime.lastError) {
+          console.error("Chrome runtime error:", chrome.runtime.lastError);
+          resolve(-1);
+          return;
+        }
         const item = response?.items || {};
         if (Object.keys(item).length === 0) {
           resolve(-1);

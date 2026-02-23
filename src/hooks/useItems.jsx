@@ -22,7 +22,7 @@ function useItems() {
   }, []);
 
   useEffect(() => {
-    if (isLoaded) {
+    if (isLoaded && typeof chrome !== "undefined" && chrome.storage) {
       chrome.storage.local.set({ items }, () => {
         if (chrome.runtime.lastError) {
           console.error(
