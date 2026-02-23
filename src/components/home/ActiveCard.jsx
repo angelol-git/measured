@@ -29,6 +29,7 @@ function ActiveCard({ key, item }) {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
       role="button"
       aria-expanded={detailView}
+      tabIndex={0}
     >
       <header className="active-header">
         <div className="active-title-container">
@@ -53,8 +54,8 @@ function ActiveCard({ key, item }) {
           >
             Set as Inactive
           </button>
-          <Link to={`/items/${item.id}`}>
-            <button className="primary-button">View Details</button>
+          <Link to={`/items/${item.id}`} className="primary-button">
+            View Details
           </Link>
         </footer>
       </section>
