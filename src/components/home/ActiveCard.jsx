@@ -26,7 +26,6 @@ function ActiveCard({ key, item }) {
       className="active-card text-base"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
       role="button"
       aria-expanded={detailView}
       tabIndex={0}

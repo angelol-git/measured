@@ -39,7 +39,7 @@ function Data() {
         setImportError(``);
         setImportMessage(`Imported ${importLength} Items`);
         handleImport(jsonObject);
-      } catch (error) {
+      } catch (_error) {
         setImportMessage(`${event.target.files[0].name}`);
         if (event.target.files[0].type !== "application/JSON") {
           setImportError(
