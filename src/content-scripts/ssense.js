@@ -157,7 +157,16 @@ function getOriginalMeasurements(measurementList, measurementMap) {
 function displayActiveTitle(measurementList, item) {
   const activeTitle = document.createElement("div");
   activeTitle.classList.add("measured-difference");
-  activeTitle.innerHTML = `<p>Measured: Comparing to <span style="color:grey">${item.title}</span></p>`;
+
+  const p = document.createElement("p");
+  p.textContent = "Measured: Comparing to ";
+  const span = document.createElement("span");
+  span.style.color = "grey";
+  span.textContent = item.title;
+
+  p.appendChild(span);
+  activeTitle.appendChild(p);
+
   measurementList.parentNode.parentNode.insertBefore(
     activeTitle,
     measurementList.parentNode,
@@ -173,12 +182,30 @@ function displayDifferences(listItemElement, difference, activeValue) {
   const color = difference > 0 ? "green" : "red";
   const unit = currentSystem === "inch" ? ' "' : " cm";
 
+  const outerSpan = document.createElement("span");
+  outerSpan.style.backgroundColor = "white";
+
   if (parseFloat(difference) === 0.0) {
-    newDifferenceElement.innerHTML = `<span style="background-color: white; color:grey">${activeValue}${unit} = <br></span>`;
+    const valueSpan = document.createElement("span");
+    valueSpan.style.color = "grey";
+    valueSpan.textContent = `${activeValue}${unit} = `;
+    outerSpan.appendChild(valueSpan);
+    outerSpan.appendChild(document.createElement("br"));
   } else {
-    newDifferenceElement.innerHTML = `<span style="background-color:white;"><span style="color:grey">${activeValue}${unit}</span><br><span style="color: ${color}">${sign}${difference} ${unit}</span></span>`;
+    const valueSpan = document.createElement("span");
+    valueSpan.style.color = "grey";
+    valueSpan.textContent = `${activeValue}${unit}`;
+    outerSpan.appendChild(valueSpan);
+    outerSpan.appendChild(document.createElement("br"));
+
+    const diffSpan = document.createElement("span");
+    diffSpan.style.color = color;
+    diffSpan.textContent = `${sign}${difference} ${unit}`;
+    outerSpan.appendChild(diffSpan);
   }
-  listItemElement.append(newDifferenceElement);
+
+  newDifferenceElement.appendChild(outerSpan);
+  listItemElement.appendChild(newDifferenceElement);
 }
 
 function deletePreviousMeasurements() {

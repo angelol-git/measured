@@ -162,9 +162,18 @@ function getOriginalMeasurements(measurementTable) {
 
 function displayActiveTitle(measurementTable, item) {
   const activeTitle = document.createElement("div");
-  activeTitle.innerHTML += `<p style="font-size:1.4rem;text-align:right">
-            Measured: Comparing to <span style="color:grey">${item.title}</span>
-        </p>`;
+  const p = document.createElement("p");
+  p.style.fontSize = "1.4rem";
+  p.style.textAlign = "right";
+
+  p.append("Measured: Comparing to ");
+
+  const span = document.createElement("span");
+  span.style.color = "grey";
+  span.textContent = item.title; // safe
+
+  p.appendChild(span);
+  activeTitle.appendChild(p);
   measurementTable.parentNode.insertBefore(activeTitle, measurementTable);
 }
 
@@ -177,31 +186,52 @@ function displayDifferences(
   activeInch,
   activeCm,
 ) {
-  // eslint-disable-next-line no-unused-vars
-  const [_, inchCell, cmCell] = tableRowElement.children;
+  const [, inchCell, cmCell] = tableRowElement.children;
 
-  function formatDifference(value, value2, unit) {
+  function formatDifferenceNode(value, value2, unit) {
     const num = parseFloat(value);
-    //accommodate for edge cases due to rounding conversation errors
     const num2 = parseFloat(value2);
-    if (num === 0 || num2 === 0) return `<span style="color: grey;">=</span>`;
-    const color = num > 0 ? "green" : "red";
+
+    const span = document.createElement("span");
+
+    if (num === 0 || num2 === 0) {
+      span.style.color = "grey";
+      span.textContent = "=";
+      return span;
+    }
+
+    span.style.color = num > 0 ? "green" : "red";
     const sign = num > 0 ? "+" : "";
-    return `<span style="color: ${color};">${sign}${value} ${unit}</span>`;
+    span.textContent = `${sign}${value} ${unit}`;
+    return span;
   }
 
-  inchCell.innerHTML = `${originalInch}<span style="color: grey;">/${activeInch}</span> 
-                        <br> ${formatDifference(
-                          inchDifference,
-                          cmDifference,
-                          "in",
-                        )}`;
-  cmCell.innerHTML = `${originalCm}<span style="color: grey;">/${activeCm}</span> 
-                        <br> ${formatDifference(
-                          cmDifference,
-                          inchDifference,
-                          "cm",
-                        )}`;
+  function buildCell(cell, original, active, diffNode) {
+    cell.textContent = "";
+    cell.append(document.createTextNode(original));
+
+    const span = document.createElement("span");
+    span.style.color = "grey";
+    span.textContent = `/${active}`;
+
+    cell.appendChild(span);
+    cell.appendChild(document.createElement("br"));
+    cell.appendChild(diffNode);
+  }
+
+  buildCell(
+    inchCell,
+    originalInch,
+    activeInch,
+    formatDifferenceNode(inchDifference, cmDifference, "in"),
+  );
+
+  buildCell(
+    cmCell,
+    originalCm,
+    activeCm,
+    formatDifferenceNode(cmDifference, inchDifference, "cm"),
+  );
 }
 
 mutationObserverTable();
