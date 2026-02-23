@@ -71,7 +71,6 @@ async function handleMeasurementModal(modal) {
     ".pdp-size-chart__guide-image-measurements",
   );
   const imgSrc = measurementModalImage.children[0].src;
-  console.log(imageData);
   // console.log(imageData[category][imgSrc]);
 
   // eslint-disable-next-line no-undef
