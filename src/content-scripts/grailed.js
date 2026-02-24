@@ -148,7 +148,10 @@ function getOriginalMeasurements(measurementTable) {
 
   const measurements = {};
   for (let i = 0; i < measurementTable.children.length; i++) {
-    const parsedRow = (measurementTable.children[i].innerText || measurementTable.children[i].textContent)
+    const parsedRow = (
+      measurementTable.children[i].innerText ||
+      measurementTable.children[i].textContent
+    )
       .split("\n")
       .filter(Boolean);
 
@@ -169,7 +172,7 @@ function displayActiveTitle(measurementTable, selectedItem) {
   p.append("Measured: Comparing to ");
 
   const span = document.createElement("span");
-  span.style.color = "grey";
+  span.style.color = "#737373";
   span.textContent = selectedItem.title;
 
   p.appendChild(span);
@@ -184,12 +187,12 @@ function formatDifferenceNode(value, value2, unit) {
   const span = document.createElement("span");
 
   if (num === 0 || num2 === 0) {
-    span.style.color = "grey";
+    span.style.color = "#737373";
     span.textContent = "=";
     return span;
   }
 
-  span.style.color = num > 0 ? "green" : "red";
+  span.style.color = num > 0 ? "blue" : "#B35C00";
   const sign = num > 0 ? "+" : "";
   span.textContent = `${sign}${value} ${unit}`;
   return span;
@@ -211,7 +214,7 @@ function displayDifferences(
     cell.append(document.createTextNode(original));
 
     const span = document.createElement("span");
-    span.style.color = "grey";
+    span.style.color = "#737373";
     span.textContent = `/${active}`;
 
     cell.appendChild(span);
