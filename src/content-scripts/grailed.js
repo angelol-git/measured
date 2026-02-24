@@ -148,7 +148,7 @@ function getOriginalMeasurements(measurementTable) {
 
   const measurements = {};
   for (let i = 0; i < measurementTable.children.length; i++) {
-    const parsedRow = measurementTable.children[i].innerText
+    const parsedRow = (measurementTable.children[i].innerText || measurementTable.children[i].textContent)
       .split("\n")
       .filter(Boolean);
 
@@ -177,6 +177,24 @@ function displayActiveTitle(measurementTable, selectedItem) {
   measurementTable.parentNode.insertBefore(activeTitle, measurementTable);
 }
 
+function formatDifferenceNode(value, value2, unit) {
+  const num = parseFloat(value);
+  const num2 = parseFloat(value2);
+
+  const span = document.createElement("span");
+
+  if (num === 0 || num2 === 0) {
+    span.style.color = "grey";
+    span.textContent = "=";
+    return span;
+  }
+
+  span.style.color = num > 0 ? "green" : "red";
+  const sign = num > 0 ? "+" : "";
+  span.textContent = `${sign}${value} ${unit}`;
+  return span;
+}
+
 function displayDifferences(
   tableRowElement,
   inchDifference,
@@ -187,24 +205,6 @@ function displayDifferences(
   activeCm,
 ) {
   const [, inchCell, cmCell] = tableRowElement.children;
-
-  function formatDifferenceNode(value, value2, unit) {
-    const num = parseFloat(value);
-    const num2 = parseFloat(value2);
-
-    const span = document.createElement("span");
-
-    if (num === 0 || num2 === 0) {
-      span.style.color = "grey";
-      span.textContent = "=";
-      return span;
-    }
-
-    span.style.color = num > 0 ? "green" : "red";
-    const sign = num > 0 ? "+" : "";
-    span.textContent = `${sign}${value} ${unit}`;
-    return span;
-  }
 
   function buildCell(cell, original, active, diffNode) {
     cell.textContent = "";
@@ -233,5 +233,8 @@ function displayDifferences(
     formatDifferenceNode(cmDifference, inchDifference, "cm"),
   );
 }
+
+// Export functions for testing
+export { getOriginalMeasurements, formatDifferenceNode };
 
 mutationObserverTable();
