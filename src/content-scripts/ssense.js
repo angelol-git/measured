@@ -81,7 +81,6 @@ async function handleMeasurementModal(modal) {
     return;
   }
 
-  // eslint-disable-next-line no-undef
   const measurementMap = imageData[category][imgSrc];
   const measurementList = measurementModalImage.children[1];
   modal.addEventListener("click", (e) => {
@@ -90,7 +89,7 @@ async function handleMeasurementModal(modal) {
     // Unit buttons either Inch or CM
     const unitBtn = target.closest(".pdp-size-chart__unit-buttons-list");
     if (unitBtn) {
-      const isCm = unitBtn.innerText?.trim().includes("CM");
+      const isCm = target.innerText?.trim().includes("CM");
       currentSystem = isCm ? "cm" : "inch";
       compareMeasurements(measurementList, activeItem, measurementMap);
       return;
@@ -161,7 +160,7 @@ function displayActiveTitle(measurementList, item) {
   const p = document.createElement("p");
   p.textContent = "Measured: Comparing to ";
   const span = document.createElement("span");
-  span.style.color = "grey";
+  span.style.color = "#888";
   span.textContent = item.title;
 
   p.appendChild(span);
@@ -179,7 +178,7 @@ function displayDifferences(listItemElement, difference, activeValue) {
   newDifferenceElement.style.whiteSpace = "nowrap";
 
   const sign = difference > 0 ? "+" : "";
-  const color = difference > 0 ? "green" : "red";
+  const color = difference > 0 ? "blue" : "#B35C00";
   const unit = currentSystem === "inch" ? ' "' : " cm";
 
   const outerSpan = document.createElement("span");
@@ -187,13 +186,13 @@ function displayDifferences(listItemElement, difference, activeValue) {
 
   if (parseFloat(difference) === 0.0) {
     const valueSpan = document.createElement("span");
-    valueSpan.style.color = "grey";
+    valueSpan.style.color = "#888";
     valueSpan.textContent = `${activeValue}${unit} = `;
     outerSpan.appendChild(valueSpan);
     outerSpan.appendChild(document.createElement("br"));
   } else {
     const valueSpan = document.createElement("span");
-    valueSpan.style.color = "grey";
+    valueSpan.style.color = "#888";
     valueSpan.textContent = `${activeValue}${unit}`;
     outerSpan.appendChild(valueSpan);
     outerSpan.appendChild(document.createElement("br"));
