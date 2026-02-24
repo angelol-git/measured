@@ -65,12 +65,28 @@ function useItems() {
           if (key === id) {
             return [key, { ...value, active: newActiveState }];
           }
+
           if (value.category === targetCategory && newActiveState) {
             return [key, { ...value, active: false }];
           }
           return [key, value];
         }),
       );
+    });
+  };
+
+  const addItemWithActive = (newItem) => {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems, [newItem.id]: newItem };
+      Object.keys(updatedItems).forEach((key) => {
+        if (
+          key !== newItem.id &&
+          updatedItems[key].category === newItem.category
+        ) {
+          updatedItems[key] = { ...updatedItems[key], active: false };
+        }
+      });
+      return updatedItems;
     });
   };
 
@@ -81,6 +97,7 @@ function useItems() {
     deleteItem,
     updateItem,
     toggleActiveItem,
+    addItemWithActive,
     isLoaded,
   ];
 }

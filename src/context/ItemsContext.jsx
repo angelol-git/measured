@@ -11,6 +11,7 @@ export function ItemsProvider({ children }) {
     deleteItem,
     updateItem,
     toggleActiveItem,
+    addItemWithActive,
     isLoaded,
   ] = useItems();
 
@@ -21,6 +22,7 @@ export function ItemsProvider({ children }) {
     deleteItem,
     updateItem,
     toggleActiveItem,
+    addItemWithActive,
     isLoaded,
   };
 
