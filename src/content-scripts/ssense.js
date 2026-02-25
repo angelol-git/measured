@@ -162,7 +162,6 @@ function displayActiveTitle(measurementList, item) {
   const span = document.createElement("span");
   span.style.color = "#888";
   span.textContent = item.title;
-
   p.appendChild(span);
   activeTitle.appendChild(p);
 
@@ -176,6 +175,9 @@ function displayDifferences(listItemElement, difference, activeValue) {
   const newDifferenceElement = document.createElement("p");
   newDifferenceElement.classList.add("measured-difference");
   newDifferenceElement.style.whiteSpace = "nowrap";
+  newDifferenceElement.style.display = "flex";
+  newDifferenceElement.style.flexDirection = "column";
+  newDifferenceElement.style.alignItems = "center";
 
   const sign = difference > 0 ? "+" : "";
   const color = difference > 0 ? "blue" : "#B35C00";
@@ -184,24 +186,25 @@ function displayDifferences(listItemElement, difference, activeValue) {
   const outerSpan = document.createElement("span");
   outerSpan.style.backgroundColor = "white";
 
-  if (parseFloat(difference) === 0.0) {
-    const valueSpan = document.createElement("span");
-    valueSpan.style.color = "#888";
-    valueSpan.textContent = `${activeValue}${unit} = `;
-    outerSpan.appendChild(valueSpan);
-    outerSpan.appendChild(document.createElement("br"));
-  } else {
-    const valueSpan = document.createElement("span");
-    valueSpan.style.color = "#888";
-    valueSpan.textContent = `${activeValue}${unit}`;
-    outerSpan.appendChild(valueSpan);
-    outerSpan.appendChild(document.createElement("br"));
+  const valueSpan = document.createElement("span");
+  valueSpan.style.color = "#888";
+  valueSpan.textContent = `${activeValue}${unit}`;
+  // valueSpan.style.fontFamily = "monospace";
+  outerSpan.appendChild(valueSpan);
+  outerSpan.appendChild(document.createElement("br"));
 
-    const diffSpan = document.createElement("span");
-    diffSpan.style.color = color;
+  const diffSpan = document.createElement("span");
+  diffSpan.style.color = color;
+  diffSpan.style.fontFamily = "monospace";
+
+  if (parseFloat(difference) === 0.0) {
+    diffSpan.style.color = "#888";
+    diffSpan.textContent = "=";
+  } else {
     diffSpan.textContent = `${sign}${difference} ${unit}`;
-    outerSpan.appendChild(diffSpan);
   }
+  outerSpan.appendChild(diffSpan);
+  // }
 
   newDifferenceElement.appendChild(outerSpan);
   listItemElement.appendChild(newDifferenceElement);

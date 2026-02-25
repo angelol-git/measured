@@ -96,11 +96,9 @@ function getGrailedCategoryBreadCrumbs() {
 
 async function getActiveItem(category) {
   return new Promise((resolve) => {
-    // eslint-disable-next-line no-undef
     chrome.runtime.sendMessage(
       { action: "getItem", key: "items", category: category },
       (response) => {
-        // eslint-disable-next-line no-undef
         if (chrome.runtime.lastError || !response?.items) {
           resolve(-1);
           return;
@@ -117,11 +115,22 @@ async function getActiveItem(category) {
   });
 }
 
+function setAllCellWidths(measurementTable) {
+  if (!measurementTable?.children?.length) return;
+  for (let i = 0; i < measurementTable.children.length; i++) {
+    const row = measurementTable.children[i];
+    for (let j = 0; j < row.children.length; j++) {
+      row.children[j].style.width = "140px";
+    }
+  }
+}
+
 function compareMeasurements(measurementTable, activeItem) {
   const originalMeasurements = getOriginalMeasurements(measurementTable);
   const activeKeys = Object.keys(activeItem.measurements);
 
   displayActiveTitle(measurementTable, activeItem);
+  setAllCellWidths(measurementTable);
   for (let i = 0; i < activeKeys.length; i++) {
     if (Object.hasOwn(originalMeasurements, activeKeys[i])) {
       const activeValues = activeItem.measurements[activeKeys[i]];
@@ -191,7 +200,8 @@ function formatDifferenceNode(value, value2, unit) {
     span.textContent = "=";
     return span;
   }
-
+  span.style.fontSize += "12px";
+  span.style.fontFamily += "monospace";
   span.style.color = num > 0 ? "blue" : "#B35C00";
   const sign = num > 0 ? "+" : "";
   span.textContent = `${sign}${value} ${unit}`;
@@ -215,7 +225,7 @@ function displayDifferences(
 
     const span = document.createElement("span");
     span.style.color = "#737373";
-    span.textContent = `/${active}`;
+    span.textContent = ` → ${active}`;
 
     cell.appendChild(span);
     cell.appendChild(document.createElement("br"));
